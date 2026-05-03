@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ReactNode, useState, useEffect } from 'react';
+import { ReactNode } from 'react';
 
 interface AnimatedSectionProps {
   children: ReactNode;
