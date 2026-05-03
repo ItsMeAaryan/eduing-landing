@@ -62,7 +62,7 @@ export default function Navbar() {
             Log in
           </a>
           <a
-            href="https://app.eduing.in/auth/student/register"
+            href="https://app.eduing.in/"
             className="bg-white text-[#08080A] px-4 py-2 rounded-btn text-[14px] font-semibold transition-all duration-150 hover:bg-white/90"
             id="get-started-btn"
           >
