@@ -1,6 +1,5 @@
 'use client'
 import { motion } from 'framer-motion'
-import Link from 'next/link'
 import React from 'react'
 
 export default function Hero() {
@@ -44,7 +43,6 @@ export default function Hero() {
         
         {/* LEFT SIDE: Text and CTAs */}
         <div style={{ flex: '1 1 500px', display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
-          {/* Heading */}
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -63,7 +61,6 @@ export default function Hero() {
             }}>in One Place</span>
           </motion.h1>
 
-          {/* Subtext */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -77,21 +74,20 @@ export default function Hero() {
             Complete your profile, apply seamlessly, and track your admission status — all in one platform.
           </motion.p>
 
-          {/* Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', position: 'relative' }}
           >
-            {/* Glow behind primary button */}
             <div style={{
               position: 'absolute', top: '50%', left: '80px', transform: 'translate(-50%, -50%)',
               width: '120px', height: '60px', background: '#5B5FEF', filter: 'blur(40px)',
               opacity: 0.6, zIndex: -1, borderRadius: '50%', pointerEvents: 'none'
             }} />
             
-            <Link href="/auth/student/register" style={{ textDecoration: 'none' }}>
+            {/* ✅ External link to student portal */}
+            <a href="https://app.eduing.in/auth/student/register" style={{ textDecoration: 'none' }}>
               <motion.button
                 whileHover={{ scale: 1.03, y: -2, boxShadow: '0 10px 25px rgba(91,95,239,0.4)' }}
                 whileTap={{ scale: 0.98 }}
@@ -103,8 +99,10 @@ export default function Hero() {
               >
                 Start Application
               </motion.button>
-            </Link>
-            <Link href="#universities" style={{ textDecoration: 'none' }}>
+            </a>
+
+            {/* ✅ Internal anchor — stays as is */}
+            <a href="#universities" style={{ textDecoration: 'none' }}>
               <motion.button
                 whileHover={{ borderColor: 'rgba(255,255,255,0.3)', background: 'rgba(255,255,255,0.05)' }}
                 whileTap={{ scale: 0.98 }}
@@ -119,7 +117,7 @@ export default function Hero() {
               >
                 Explore Universities
               </motion.button>
-            </Link>
+            </a>
           </motion.div>
         </div>
 
@@ -130,7 +128,6 @@ export default function Hero() {
           transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
           style={{ flex: '1 1 500px', position: 'relative', perspective: '1000px', display: 'flex', justifyContent: 'center' }}
         >
-          {/* Main Dashboard Card */}
           <motion.div
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
@@ -143,7 +140,6 @@ export default function Hero() {
               overflow: 'hidden', transform: 'rotateY(-5deg) rotateX(5deg)', transformStyle: 'preserve-3d'
             }}
           >
-            {/* Mockup Header */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '20px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
                 <div style={{ width: '44px', height: '44px', borderRadius: '50%', background: 'linear-gradient(135deg, #5B5FEF, #7C3AED)' }} />
@@ -157,7 +153,6 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* Application Progress (Previously floating, now attached visually) */}
             <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '16px', padding: '20px', marginBottom: '20px' }}>
               <div style={{ fontSize: '14px', fontWeight: '600', color: 'white', marginBottom: '16px', fontFamily: 'DM Sans, sans-serif' }}>Application Progress</div>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -178,7 +173,6 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* Mockup Body Content */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
               {[
                 { title: 'Applied', value: '4', icon: '📝' },
