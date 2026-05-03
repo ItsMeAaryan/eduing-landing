@@ -24,7 +24,7 @@ export default function DownloadSection() {
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
             <a 
-              href="#" 
+              href="https://drive.google.com/file/d/1aYbvkL0WC7Tr_9aKOSmNfYk66YskWCjc/view?usp=sharing" 
               className="group flex items-center gap-2 bg-white text-[#08080A] px-8 py-4 rounded-[16px] font-bold transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]"
             >
               <svg viewBox="0 0 512 512" width="20" height="20" fill="currentColor">
@@ -37,7 +37,7 @@ export default function DownloadSection() {
             </a>
 
             <a 
-              href="#" 
+              href="https://drive.google.com/file/d/1aYbvkL0WC7Tr_9aKOSmNfYk66YskWCjc/view?usp=sharing" 
               className="group flex items-center gap-2 bg-white text-[#08080A] px-8 py-4 rounded-[16px] font-bold transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]"
             >
               <svg viewBox="0 0 384 512" width="18" height="18" fill="currentColor">
