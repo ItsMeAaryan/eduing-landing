@@ -51,8 +51,8 @@ export default function Navbar() {
 
         {/* Right Buttons — Desktop */}
         <div className="hidden md:flex items-center gap-4">
-          <Link
-            href="#"
+          <a
+            href="https://app.eduing.in/auth/student/login"
             className="text-[14px] transition-colors duration-150"
             style={{ color: 'rgba(255,255,255,0.55)' }}
             onMouseEnter={(e) => (e.currentTarget.style.color = '#fff')}
@@ -60,14 +60,14 @@ export default function Navbar() {
             id="login-btn"
           >
             Log in
-          </Link>
-          <Link
-            href="#"
+          </a>
+          <a
+            href="https://app.eduing.in/auth/student/register"
             className="bg-white text-[#08080A] px-4 py-2 rounded-btn text-[14px] font-semibold transition-all duration-150 hover:bg-white/90"
             id="get-started-btn"
           >
             Get started
-          </Link>
+          </a>
         </div>
 
         {/* Mobile Hamburger */}
@@ -118,21 +118,21 @@ export default function Navbar() {
                 </Link>
               ))}
               <div className="flex flex-col gap-4 mt-8 w-64">
-                <Link
-                  href="#"
+                <a
+                  href="https://app.eduing.in/auth/student/login"
                   className="text-center py-3 rounded-btn text-[15px] font-medium"
                   style={{ color: 'rgba(255,255,255,0.55)', border: '1px solid rgba(255,255,255,0.15)' }}
                   onClick={() => setMobileOpen(false)}
                 >
                   Log in
-                </Link>
-                <Link
-                  href="#"
+                </a>
+                <a
+                  href="https://app.eduing.in/auth/student/register"
                   className="text-center py-3 rounded-btn bg-white text-[#08080A] text-[15px] font-semibold"
                   onClick={() => setMobileOpen(false)}
                 >
                   Get started
-                </Link>
+                </a>
               </div>
             </div>
           </motion.div>
