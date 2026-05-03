@@ -87,7 +87,7 @@ export default function Hero() {
             }} />
             
             {/* ✅ External link to student portal */}
-            <a href="https://app.eduing.in/auth/student/register" style={{ textDecoration: 'none' }}>
+            <a href="https://app.eduing.in" style={{ textDecoration: 'none' }}>
               <motion.button
                 whileHover={{ scale: 1.03, y: -2, boxShadow: '0 10px 25px rgba(91,95,239,0.4)' }}
                 whileTap={{ scale: 0.98 }}
