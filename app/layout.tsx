@@ -18,6 +18,10 @@ export const metadata: Metadata = {
     title: "EDUING.in — Unified University Admissions Platform",
     description: "One profile. Hundreds of universities. Zero repeated forms.",
   },
+  icons: {
+    icon: '/bandwlogo.PNG',
+    apple: '/bandwlogo.PNG',
+  },
 };
 
 export default function RootLayout({
