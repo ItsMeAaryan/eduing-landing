@@ -52,7 +52,7 @@ export default function Navbar() {
         {/* Right Buttons — Desktop */}
         <div className="hidden md:flex items-center gap-4">
           <a
-            href="https://app.eduing.in/auth/student/login"
+            href="https://app.eduing.in"
             className="text-[14px] transition-colors duration-150"
             style={{ color: 'rgba(255,255,255,0.55)' }}
             onMouseEnter={(e) => (e.currentTarget.style.color = '#fff')}
