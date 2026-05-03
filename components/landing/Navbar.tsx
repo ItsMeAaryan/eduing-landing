@@ -95,7 +95,7 @@ export default function Navbar() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: 1, justifyContent: 'flex-end' }}>
           
           {/* ✅ Log in — external link */}
-          <a href="https://app.eduing.in/auth/student/login" style={{ textDecoration: 'none' }}>
+          <a href="https://app.eduing.in" style={{ textDecoration: 'none' }}>
             <span style={{
               padding: '8px 16px', fontSize: '14px', fontWeight: '500', 
               color: 'rgba(255, 255, 255, 0.6)', cursor: 'pointer',
