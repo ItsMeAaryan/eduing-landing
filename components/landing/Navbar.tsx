@@ -48,22 +48,14 @@ export default function Navbar() {
       >
         {/* Logo Section */}
         <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px', flex: 1 }}>
-          <div style={{
-            width: '30px', height: '30px', borderRadius: '8px',
-            background: 'linear-gradient(135deg, #5B5FEF, #7C3AED)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: '15px', fontWeight: '900', color: 'white',
-            position: 'relative',
-          }}>
-            E
-            <div style={{
-              position: 'absolute', top: '-2px', right: '-2px',
-              width: '8px', height: '8px', borderRadius: '50%',
-              background: '#F59E0B', border: '1.5px solid #06060A',
-            }} />
-          </div>
+          {/* ✅ Logo image */}
+          <img
+            src="/bandwlogo.PNG"
+            alt="EDUING Logo"
+            style={{ width: '30px', height: '30px', objectFit: 'contain', filter: 'invert(1)' }}
+          />
           <span style={{ fontFamily: 'Syne, sans-serif', fontSize: '18px', fontWeight: '800', letterSpacing: '-0.03em', color: '#FFFFFF' }}>
-            EDUING<span style={{ color: '#F59E0B', fontSize: '12px' }}>.in</span>
+            EDUING<span style={{ color: '#818CF8', fontSize: '12px' }}>.in</span>
           </span>
         </Link>
 
@@ -94,7 +86,7 @@ export default function Navbar() {
         {/* CTA Section */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: 1, justifyContent: 'flex-end' }}>
           
-          {/* ✅ Log in — external link */}
+          {/* Log in */}
           <a href="https://app.eduing.in" style={{ textDecoration: 'none' }}>
             <span style={{
               padding: '8px 16px', fontSize: '14px', fontWeight: '500', 
@@ -107,7 +99,7 @@ export default function Navbar() {
             </span>
           </a>
           
-          {/* ✅ Get started — external link */}
+          {/* Get started */}
           <a href="https://app.eduing.in/" style={{ 
             textDecoration: 'none',
             opacity: scrolled ? 1 : 0,
