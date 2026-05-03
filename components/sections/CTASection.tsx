@@ -23,7 +23,7 @@ export default function CTASection() {
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="/auth/student/register" className="btn-primary" style={{ padding: '16px 40px', fontSize: '16px' }}>
+            <a href="app.eduing.in" className="btn-primary" style={{ padding: '16px 40px', fontSize: '16px' }}>
               Create your profile →
             </a>
             <a href="/about" style={{
