@@ -108,7 +108,7 @@ export default function Navbar() {
           </a>
           
           {/* ✅ Get started — external link */}
-          <a href="https://app.eduing.in/auth/student/register" style={{ 
+          <a href="https://app.eduing.in/" style={{ 
             textDecoration: 'none',
             opacity: scrolled ? 1 : 0,
             transform: scrolled ? 'translateY(0) scale(1)' : 'translateY(24px) scale(0.92)',
