@@ -93,7 +93,9 @@ export default function Navbar() {
 
         {/* CTA Section */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: 1, justifyContent: 'flex-end' }}>
-          <Link href="/auth/login" style={{ textDecoration: 'none' }}>
+          
+          {/* ✅ Log in — external link */}
+          <a href="https://app.eduing.in/auth/student/login" style={{ textDecoration: 'none' }}>
             <span style={{
               padding: '8px 16px', fontSize: '14px', fontWeight: '500', 
               color: 'rgba(255, 255, 255, 0.6)', cursor: 'pointer',
@@ -103,10 +105,10 @@ export default function Navbar() {
             onMouseLeave={e => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.6)'}>
               Log in
             </span>
-          </Link>
+          </a>
           
-          {/* Premium Animated CTA Button */}
-          <Link href="/auth/register" style={{ 
+          {/* ✅ Get started — external link */}
+          <a href="https://app.eduing.in/auth/student/register" style={{ 
             textDecoration: 'none',
             opacity: scrolled ? 1 : 0,
             transform: scrolled ? 'translateY(0) scale(1)' : 'translateY(24px) scale(0.92)',
@@ -131,7 +133,7 @@ export default function Navbar() {
             >
               Get started
             </motion.div>
-          </Link>
+          </a>
         </div>
       </motion.nav>
     </div>
