@@ -1,7 +1,7 @@
 'use client'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import React from 'react'
 
 export default function Hero() {
   return (
