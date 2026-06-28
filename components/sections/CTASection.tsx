@@ -18,9 +18,7 @@ export default function CTASection() {
             Ready to start your<br />
             <span style={{ color: 'var(--indigo)' }}>university journey?</span>
           </h2>
-          <p className="mb-12 mx-auto" style={{ fontSize: '18px', color: 'rgba(255,255,255,0.5)', maxWidth: '500px', lineHeight: 1.6 }}>
-            Join 50,000+ students who use EDUING.in to discover and apply to their dream universities.
-          </p>
+          
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a href="app.eduing.in" className="btn-primary" style={{ padding: '16px 40px', fontSize: '16px' }}>

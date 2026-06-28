@@ -93,9 +93,10 @@ export default function AboutPage() {
       <section className="section-padding" style={{ background: '#0C0C10' }} id="about-founder">
         <div className="mx-auto" style={{ maxWidth: '900px' }}>
           <AnimatedSection>
-            <span className="section-label text-center block">FOUNDER</span>
-            <h2 className="section-title mb-8 text-center" style={{ fontSize: '36px' }}>Meet the Founder</h2>
-            <div className="mob-card max-w-[600px] mx-auto text-center">
+            <span className="section-label text-center block">FOUNDERS</span>
+            <h2 className="section-title mb-8 text-center" style={{ fontSize: '36px' }}>Meet the Founders</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="mob-card text-center">
               <div
                 className="w-20 h-20 rounded-full flex items-center justify-center text-[32px] mx-auto mb-4"
                 style={{ background: 'rgba(79,70,229,0.15)' }}
@@ -103,7 +104,9 @@ export default function AboutPage() {
                 👨‍💻
               </div>
               <h3 className="text-[22px] font-bold text-white mb-1">Aaryan Sharma</h3>
-              <p className="text-[15px] font-medium mb-1" style={{ color: '#6366F1' }}>Founder & CEO</p>
+              <p className="text-[15px] font-medium mb-1" style={{ color: '#6366F1' }}>
+                Founder & CEO
+              </p>
               <p className="text-[14px] mb-6" style={{ color: 'rgba(255,255,255,0.4)' }}>
                 B.Tech CSE, Dayananda Sagar University
               </p>
@@ -120,6 +123,33 @@ export default function AboutPage() {
                 We&apos;re building it so that no student has to go through that chaos again.&rdquo;
               </blockquote>
             </div>
+
+            <div className="mob-card text-center">
+              <div
+                className="w-20 h-20 rounded-full flex items-center justify-center text-[32px] mx-auto mb-4"
+                style={{ background: 'rgba(79,70,229,0.15)' }}
+              >
+                👨‍💻
+              </div>
+              <h3 className="text-[22px] font-bold text-white mb-1">Lakshya Pandey</h3>
+              <p className="text-[15px] font-medium mb-1" style={{ color: '#6366F1' }}>
+                Founder & CEO
+              </p>
+              <p className="text-[14px] mb-6" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                B.Tech CSE - AI ML, Dayananda Sagar University
+              </p>
+              <blockquote
+                className="text-[16px] leading-relaxed italic text-left pl-5"
+                style={{
+                  color: 'rgba(255,255,255,0.6)',
+                  borderLeft: '3px solid #4F46E5',
+                }}
+              >
+                &ldquo;As someone passionate about building technology that solves real problems, I wanted to create a platform that simplifies one of the most important journeys in a student's life. EDUING.in is our commitment to making higher education more accessible through innovation.&rdquo;
+              </blockquote>
+            </div>
+
+          </div>
           </AnimatedSection>
         </div>
       </section>

@@ -113,8 +113,8 @@ export default function PrivacyPage() {
                 <p className="text-[15px] leading-relaxed" style={{ color: 'rgba(255,255,255,0.55)' }}>
                   If you have questions about this Privacy Policy, contact us at:<br />
                   <strong className="text-white">Email:</strong>{' '}
-                  <a href="mailto:aaryanlsichey007@gmail.com" className="hover:text-white transition-colors" style={{ color: '#818CF8' }}>
-                    aaryanlsichey007@gmail.com
+                  <a href="mailto:eduing.in2026@gmail.com" className="hover:text-white transition-colors" style={{ color: '#818CF8' }}>
+                    eduing.in2026@gmail.com
                   </a><br />
                   <strong className="text-white">Location:</strong> Bengaluru, Karnataka, India
                 </p>

@@ -112,8 +112,8 @@ export default function TrademarkPage() {
                   For trademark licensing requests, press kit access, or brand usage permissions,
                   please contact us at:<br />
                   <strong className="text-white">Email:</strong>{' '}
-                  <a href="mailto:aaryanlsichey007@gmail.com" className="hover:text-white transition-colors" style={{ color: '#818CF8' }}>
-                    aaryanlsichey007@gmail.com
+                  <a href="mailto:eduing.in2026@gmail.com" className="hover:text-white transition-colors" style={{ color: '#818CF8' }}>
+                    eduing.in2026@gmail.com
                   </a>
                 </p>
               </div>

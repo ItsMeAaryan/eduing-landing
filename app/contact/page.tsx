@@ -74,33 +74,16 @@ export default function ContactPage() {
                     <div>
                       <p className="text-[15px] font-medium text-white mb-1">Email</p>
                       <a
-                        href="mailto:aaryanlsichey007@gmail.com"
+                        href="mailto:eduing.in2026@gmail.com"
                         className="text-[14px] hover:text-white transition-colors"
                         style={{ color: '#818CF8' }}
                       >
-                        aaryanlsichey007@gmail.com
+                        eduing.in2026@gmail.com
                       </a>
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-4">
-                    <div
-                      className="w-10 h-10 rounded-lg flex items-center justify-center text-[18px] flex-shrink-0"
-                      style={{ background: 'rgba(34,197,94,0.15)' }}
-                    >
-                      📞
-                    </div>
-                    <div>
-                      <p className="text-[15px] font-medium text-white mb-1">Phone</p>
-                      <a
-                        href="tel:7908732866"
-                        className="text-[14px] hover:text-white transition-colors"
-                        style={{ color: '#818CF8' }}
-                      >
-                        7908732866
-                      </a>
-                    </div>
-                  </div>
+                  
 
                   <div className="flex items-start gap-4">
                     <div
@@ -127,11 +110,11 @@ export default function ContactPage() {
                     Interested in bringing EDUING.in to your institution?
                   </p>
                   <a
-                    href="mailto:aaryanlsichey007@gmail.com"
+                    href="mailto:eduing.in2026@gmail.com"
                     className="text-[14px] font-medium hover:text-white transition-colors"
                     style={{ color: '#818CF8' }}
                   >
-                    aaryanlsichey007@gmail.com →
+                    eduing.in2026@gmail.com →
                   </a>
                 </div>
               </div>

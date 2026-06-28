@@ -4,9 +4,9 @@ import AnimatedSection from '@/components/ui/AnimatedSection';
 
 const testimonials = [
   {
-    quote: 'EDUING saved me hours. Applied to 5 universities in one afternoon.',
-    name: 'Priya S.',
-    role: 'Karnataka',
+    quote: 'The application process felt much simpler with everything available in one place.',
+    name: 'Aarav M.',
+    role: 'Maharashtra',
     color: '#4F46E5',
   },
   {
