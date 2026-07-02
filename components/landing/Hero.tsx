@@ -1,75 +1,59 @@
 'use client'
-import { motion } from 'framer-motion'
-import React from 'react'
+import { motion, useReducedMotion } from 'framer-motion'
+
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.eduing.in'
+
+const STATS = [
+  { title: 'Applied', value: '4', icon: '📝' },
+  { title: 'Offers', value: '2', icon: '🎉', highlight: true },
+  { title: 'Pending', value: '2', icon: '⏳' },
+]
 
 export default function Hero() {
+  const reduceMotion = useReducedMotion()
+
   return (
-    <section style={{
-      minHeight: '100vh', display: 'flex',
-      alignItems: 'center', justifyContent: 'center',
-      padding: '140px 5% 80px', background: '#06060A',
-      position: 'relative', overflow: 'hidden',
-    }}>
+    <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-bg px-[5%] pb-20 pt-[140px]">
       {/* Background elements */}
-      <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
-        <motion.div 
-          animate={{ 
-            scale: [1, 1.1, 1],
-            opacity: [0.08, 0.12, 0.08],
-          }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          style={{
-            position: 'absolute', width: '800px', height: '800px',
-            top: '30%', left: '30%', transform: 'translate(-50%, -50%)',
-            background: 'radial-gradient(circle, #5B5FEF 0%, transparent 70%)',
-            borderRadius: '50%', filter: 'blur(80px)',
-          }} 
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        <motion.div
+          animate={reduceMotion ? {} : { scale: [1, 1.1, 1], opacity: [0.08, 0.12, 0.08] }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute left-[30%] top-[30%] h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[80px]"
+          style={{ background: 'radial-gradient(circle, #5B5FEF 0%, transparent 70%)' }}
         />
-        <div style={{
-          position: 'absolute', inset: 0,
-          backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
-          backgroundSize: '80px 80px',
-          maskImage: 'radial-gradient(ellipse 70% 50% at 50% 50%, black, transparent)',
-          WebkitMaskImage: 'radial-gradient(ellipse 70% 50% at 50% 50%, black, transparent)',
-        }} />
+        <div
+          className="absolute inset-0 [background-size:80px_80px]"
+          style={{
+            backgroundImage:
+              'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
+            maskImage: 'radial-gradient(ellipse 70% 50% at 50% 50%, black, transparent)',
+            WebkitMaskImage: 'radial-gradient(ellipse 70% 50% at 50% 50%, black, transparent)',
+          }}
+        />
       </div>
 
-      <div style={{ 
-        position: 'relative', zIndex: 1, 
-        maxWidth: '1280px', width: '100%', 
-        display: 'flex', flexWrap: 'wrap', 
-        alignItems: 'center', gap: '60px' 
-      }}>
-        
-        {/* LEFT SIDE: Text and CTAs */}
-        <div style={{ flex: '1 1 500px', display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
+      <div className="relative z-10 flex w-full max-w-[1280px] flex-wrap items-center gap-[60px]">
+        {/* LEFT: Text and CTAs */}
+        <div className="flex flex-[1_1_500px] flex-col text-left">
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            style={{
-              fontFamily: 'Syne, sans-serif', fontSize: 'clamp(48px, 6vw, 72px)',
-              fontWeight: '800', lineHeight: '1.05', letterSpacing: '-0.04em',
-              color: '#FFFFFF', margin: '0 0 24px',
-            }}
+            className="mb-6 font-display text-[clamp(48px,6vw,72px)] font-extrabold leading-[1.05] tracking-[-0.04em] text-white"
           >
-            Apply to Top Universities<br />
-            <span style={{
-              background: 'linear-gradient(135deg, #818CF8 0%, #5B5FEF 50%, #A78BFA 100%)',
-              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-            }}>in One Place</span>
+            Apply to Top Universities
+            <br />
+            <span className="bg-gradient-to-br from-[#818CF8] via-accent to-[#A78BFA] bg-clip-text text-transparent">
+              in One Place
+            </span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            style={{
-              fontFamily: 'DM Sans, sans-serif', fontSize: 'clamp(18px, 2vw, 20px)',
-              color: 'rgba(255,255,255,0.6)', lineHeight: '1.6',
-              maxWidth: '540px', margin: '0 0 40px',
-            }}
+            className="mb-10 max-w-[540px] text-[clamp(18px,2vw,20px)] leading-relaxed text-text-secondary"
           >
             Complete your profile, apply seamlessly, and track your admission status — all in one platform.
           </motion.p>
@@ -78,42 +62,28 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', position: 'relative' }}
+            className="relative flex flex-wrap gap-4"
           >
-            <div style={{
-              position: 'absolute', top: '50%', left: '80px', transform: 'translate(-50%, -50%)',
-              width: '120px', height: '60px', background: '#5B5FEF', filter: 'blur(40px)',
-              opacity: 0.6, zIndex: -1, borderRadius: '50%', pointerEvents: 'none'
-            }} />
-            
-            {/* ✅ External link to student portal */}
-            <a href="https://app.eduing.in" style={{ textDecoration: 'none' }}>
+            <div
+              className="pointer-events-none absolute left-20 top-1/2 -z-10 h-[60px] w-[120px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent opacity-60 blur-[40px]"
+              aria-hidden="true"
+            />
+
+            <a href={APP_URL} rel="noopener noreferrer" className="no-underline">
               <motion.button
                 whileHover={{ scale: 1.03, y: -2, boxShadow: '0 10px 25px rgba(91,95,239,0.4)' }}
                 whileTap={{ scale: 0.98 }}
-                style={{ 
-                  fontSize: '16px', padding: '16px 36px', borderRadius: '100px', fontWeight: '600',
-                  background: 'white', color: '#06060A', border: 'none', cursor: 'pointer',
-                  fontFamily: 'DM Sans, sans-serif', transition: 'box-shadow 0.2s ease',
-                }}
+                className="rounded-full border-none bg-white px-9 py-4 text-base font-semibold text-bg transition-shadow duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-lighter focus-visible:outline-offset-2"
               >
                 Start Application
               </motion.button>
             </a>
 
-            {/* ✅ Internal anchor — stays as is */}
-            <a href="#universities" style={{ textDecoration: 'none' }}>
+            <a href="#universities" className="no-underline">
               <motion.button
                 whileHover={{ borderColor: 'rgba(255,255,255,0.3)', background: 'rgba(255,255,255,0.05)' }}
                 whileTap={{ scale: 0.98 }}
-                style={{
-                  padding: '16px 36px', borderRadius: '100px',
-                  border: '1px solid rgba(255,255,255,0.15)',
-                  background: 'transparent', color: 'white',
-                  fontSize: '16px', fontWeight: '500',
-                  fontFamily: 'DM Sans, sans-serif', cursor: 'pointer',
-                  transition: 'all 0.2s ease',
-                }}
+                className="rounded-full border border-white/15 bg-transparent px-9 py-4 text-base font-medium text-white transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-lighter focus-visible:outline-offset-2"
               >
                 Explore Universities
               </motion.button>
@@ -121,73 +91,68 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* RIGHT SIDE: Visual Mockups */}
+        {/* RIGHT: decorative mockup */}
         <motion.div
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          style={{ flex: '1 1 500px', position: 'relative', perspective: '1000px', display: 'flex', justifyContent: 'center' }}
+          className="relative flex flex-[1_1_500px] justify-center [perspective:1000px]"
+          aria-hidden="true"
         >
           <motion.div
-            animate={{ y: [0, -10, 0] }}
+            animate={reduceMotion ? {} : { y: [0, -10, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-            style={{
-              width: '100%', maxWidth: '600px',
-              background: 'linear-gradient(145deg, rgba(30,30,35,0.9) 0%, rgba(15,15,20,0.9) 100%)',
-              border: '1px solid rgba(255,255,255,0.08)', borderRadius: '24px',
-              boxShadow: '0 30px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1)',
-              backdropFilter: 'blur(20px)', padding: '28px', display: 'flex', flexDirection: 'column',
-              overflow: 'hidden', transform: 'rotateY(-5deg) rotateX(5deg)', transformStyle: 'preserve-3d'
-            }}
+            className="flex w-full max-w-[600px] flex-col overflow-hidden rounded-3xl border border-white/[0.08] p-7 shadow-[0_30px_60px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-xl [transform:rotateY(-5deg)_rotateX(5deg)] [transform-style:preserve-3d]"
+            style={{ background: 'linear-gradient(145deg, rgba(30,30,35,0.9) 0%, rgba(15,15,20,0.9) 100%)' }}
           >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '20px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                <div style={{ width: '44px', height: '44px', borderRadius: '50%', background: 'linear-gradient(135deg, #5B5FEF, #7C3AED)' }} />
+            <div className="mb-6 flex items-center justify-between border-b border-white/5 pb-5">
+              <div className="flex items-center gap-3.5">
+                <div className="h-11 w-11 rounded-full bg-gradient-to-br from-accent to-violet" />
                 <div>
-                  <div style={{ fontSize: '15px', fontWeight: '600', color: 'white', fontFamily: 'DM Sans, sans-serif' }}>Rahul Sharma</div>
-                  <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.5)', fontFamily: 'DM Sans, sans-serif' }}>Profile 100% Complete</div>
+                  <div className="text-[15px] font-semibold text-white">Rahul Sharma</div>
+                  <div className="text-[13px] text-white/50">Profile 100% Complete</div>
                 </div>
               </div>
-              <div style={{ padding: '6px 14px', background: 'rgba(16,185,129,0.15)', color: '#10B981', borderRadius: '100px', fontSize: '12px', fontWeight: '600' }}>
+              <div className="rounded-full bg-success/15 px-3.5 py-1.5 text-xs font-semibold text-success">
                 Verified
               </div>
             </div>
 
-            <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '16px', padding: '20px', marginBottom: '20px' }}>
-              <div style={{ fontSize: '14px', fontWeight: '600', color: 'white', marginBottom: '16px', fontFamily: 'DM Sans, sans-serif' }}>Application Progress</div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
-                  <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#10B981', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '14px' }}>✓</div>
-                  <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.8)', fontFamily: 'DM Sans, sans-serif' }}>Submitted</div>
+            <div className="mb-5 rounded-2xl border border-white/5 bg-white/[0.03] p-5">
+              <div className="mb-4 text-sm font-semibold text-white">Application Progress</div>
+              <div className="flex items-center justify-between">
+                <div className="flex flex-col items-center gap-2">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-success text-sm text-white">✓</div>
+                  <div className="text-xs text-white/80">Submitted</div>
                 </div>
-                <div style={{ height: '2px', flex: 1, background: '#10B981', margin: '0 12px', opacity: 0.5, marginBottom: '24px' }} />
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
-                  <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#F59E0B', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '14px' }}>⏳</div>
-                  <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.8)', fontFamily: 'DM Sans, sans-serif' }}>Review</div>
+                <div className="mx-3 mb-6 h-0.5 flex-1 rounded-full bg-success/50" />
+                <div className="flex flex-col items-center gap-2">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gold text-sm text-white">⏳</div>
+                  <div className="text-xs text-white/80">Review</div>
                 </div>
-                <div style={{ height: '2px', flex: 1, background: 'rgba(255,255,255,0.1)', margin: '0 12px', marginBottom: '24px' }} />
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
-                  <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.3)', fontSize: '14px' }}>🎓</div>
-                  <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', fontFamily: 'DM Sans, sans-serif' }}>Admitted</div>
+                <div className="mx-3 mb-6 h-0.5 flex-1 rounded-full bg-white/10" />
+                <div className="flex flex-col items-center gap-2">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/5 text-sm text-white/30">🎓</div>
+                  <div className="text-xs text-white/40">Admitted</div>
                 </div>
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
-              {[
-                { title: 'Applied', value: '4', icon: '📝' },
-                { title: 'Offers', value: '2', icon: '🎉', highlight: true },
-                { title: 'Pending', value: '2', icon: '⏳' },
-              ].map((stat, i) => (
-                <div key={i} style={{
-                  background: stat.highlight ? 'rgba(91,95,239,0.1)' : 'rgba(255,255,255,0.03)',
-                  border: stat.highlight ? '1px solid rgba(91,95,239,0.3)' : '1px solid rgba(255,255,255,0.05)',
-                  borderRadius: '16px', padding: '16px', textAlign: 'left',
-                  boxShadow: stat.highlight ? '0 10px 20px rgba(91,95,239,0.1)' : 'none',
-                }}>
-                  <div style={{ fontSize: '24px', marginBottom: '8px' }}>{stat.icon}</div>
-                  <div style={{ fontSize: '24px', fontWeight: '700', color: 'white', fontFamily: 'Syne, sans-serif' }}>{stat.value}</div>
-                  <div style={{ fontSize: '13px', color: stat.highlight ? '#818CF8' : 'rgba(255,255,255,0.5)', fontFamily: 'DM Sans, sans-serif' }}>{stat.title}</div>
+            <div className="grid grid-cols-3 gap-4">
+              {STATS.map((stat) => (
+                <div
+                  key={stat.title}
+                  className={`rounded-2xl p-4 text-left ${
+                    stat.highlight
+                      ? 'border border-accent/30 bg-accent/10 shadow-[0_10px_20px_rgba(91,95,239,0.1)]'
+                      : 'border border-white/5 bg-white/[0.03]'
+                  }`}
+                >
+                  <div className="mb-2 text-2xl">{stat.icon}</div>
+                  <div className="font-display text-2xl font-bold text-white">{stat.value}</div>
+                  <div className={`text-[13px] ${stat.highlight ? 'text-accent-lighter' : 'text-white/50'}`}>
+                    {stat.title}
+                  </div>
                 </div>
               ))}
             </div>

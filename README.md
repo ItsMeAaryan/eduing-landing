@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EDUING.in — Landing Site
 
-## Getting Started
+Marketing/landing site for EDUING.in, a unified university admissions platform for India. Built with Next.js 14 (App Router), TypeScript, Tailwind CSS, and Framer Motion.
 
-First, run the development server:
+## Getting started
 
 ```bash
+npm install
+cp .env.example .env.local   # fill in NEXT_PUBLIC_APP_URL if different from default
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Command            | What it does                          |
+| ------------------ | -------------------------------------- |
+| `npm run dev`       | Local dev server                       |
+| `npm run build`     | Production build                       |
+| `npm run start`     | Serve the production build             |
+| `npm run lint`      | ESLint (incl. jsx-a11y checks)         |
+| `npm run typecheck` | TypeScript, no emit                    |
 
-## Learn More
+CI (`.github/workflows/ci.yml`) runs lint, typecheck, and build on every PR and push to `main`.
 
-To learn more about Next.js, take a look at the following resources:
+## Project structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+app/                  Route segments (App Router). One folder per route.
+  api/contact/         Contact form submission handler (stub — see Known TODOs)
+components/
+  landing/             Homepage-specific sections (Navbar, Hero, Features, HowItWorks)
+  sections/            Reusable page sections used across multiple routes
+  ui/                  Small shared primitives (AnimatedSection, SectionHeading)
+lib/                  Shared content/constants (nav links, footer links, copy)
+public/               Static assets
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Styling is Tailwind-first with theme tokens defined in `tailwind.config.ts`. Avoid introducing new inline `style={{}}` objects — extend the theme instead so colors/spacing stay consistent.
 
-## Deploy on Vercel
+## Known TODOs
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Contact form** (`app/api/contact/route.ts`) currently only validates and logs submissions server-side. Wire it up to a real email/CRM provider (e.g. Resend, SendGrid) before relying on it in production.
+- **OG image**: `app/layout.tsx` references `/og-image.png` for social previews, but no image has been generated yet — add one at `public/og-image.png` (1200×630).
+- Legal pages (`/privacy`, `/terms`, `/trademark`) should be reviewed by someone with legal context before launch — copy hasn't been verified against actual company policy.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deployment
+
+Deployed on Vercel (or any Next.js-compatible host). Set `NEXT_PUBLIC_APP_URL` in the hosting environment to point at the live student/admin app.

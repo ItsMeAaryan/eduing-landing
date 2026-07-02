@@ -33,11 +33,6 @@ html, body {
   width: 100%;
 }
 
-#__next {
-  margin: 0;
-  padding: 0;
-}
-
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -46,13 +41,21 @@ html, body {
   body {
     background: #06060A;
     color: #FFFFFF;
-    font-family: 'DM Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Syne', sans-serif;
+    font-family: var(--font-syne), sans-serif;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 
   ::selection {

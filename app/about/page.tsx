@@ -145,7 +145,7 @@ export default function AboutPage() {
                   borderLeft: '3px solid #4F46E5',
                 }}
               >
-                &ldquo;As someone passionate about building technology that solves real problems, I wanted to create a platform that simplifies one of the most important journeys in a student's life. EDUING.in is our commitment to making higher education more accessible through innovation.&rdquo;
+                &ldquo;As someone passionate about building technology that solves real problems, I wanted to create a platform that simplifies one of the most important journeys in a student&apos;s life. EDUING.in is our commitment to making higher education more accessible through innovation.&rdquo;
               </blockquote>
             </div>
 
