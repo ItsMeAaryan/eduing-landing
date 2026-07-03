@@ -8,13 +8,13 @@ test('Get started CTA is visible without scrolling (regression: was hidden until
 
 test('nav Features link navigates to the dedicated /features page', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('link', { name: 'Features' }).click();
+  await page.getByRole('navigation').getByRole('link', { name: 'Features' }).click();
   await expect(page).toHaveURL(/\/features/);
 });
 
 test('nav About link navigates correctly', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('link', { name: 'About' }).click();
+  await page.getByRole('navigation').getByRole('link', { name: 'About' }).click();
   await expect(page).toHaveURL(/\/about/);
 });
 
