@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 
 const faqs = [
@@ -22,68 +23,75 @@ const faqs = [
   },
 ];
 
+function FAQItem({ q, a, isOpen, onToggle }: { q: string; a: string; isOpen: boolean; onToggle: () => void }) {
+  return (
+    <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] transition-colors duration-300 hover:border-white/[0.15]">
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-expanded={isOpen}
+        className="flex w-full items-center justify-between gap-4 p-6 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-lighter focus-visible:outline-offset-2"
+      >
+        <h3 className="text-lg font-semibold text-white">{q}</h3>
+        <div
+          className={`flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-white/5 transition-transform duration-300 ${
+            isOpen ? 'rotate-45' : ''
+          }`}
+          aria-hidden="true"
+        >
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M6 1V11M1 6H11" stroke="white" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+        </div>
+      </button>
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden"
+          >
+            <p className="px-6 pb-6 text-[15px] leading-relaxed text-white/50">{a}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="section-padding" style={{ background: '#06060A' }} id="faq">
+    <section className="section-padding bg-bg" id="faq">
       <div className="container-main">
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-start">
-          {/* Left: Heading */}
+        <div className="flex flex-col items-start gap-12 lg:flex-row lg:gap-24">
           <div className="w-full lg:w-[40%]">
             <AnimatedSection>
               <span className="section-label">FAQ</span>
               <h2 className="section-title mb-6">
-                Common<br />questions.
+                Common
+                <br />
+                questions.
               </h2>
-              <p style={{ fontSize: '17px', color: 'rgba(255,255,255,0.45)', lineHeight: 1.6, maxWidth: '320px' }}>
+              <p className="max-w-[320px] text-[17px] leading-relaxed text-white/45">
                 Everything you need to know about the platform and the admission process.
               </p>
             </AnimatedSection>
           </div>
 
-          {/* Right: FAQ Accordion */}
           <div className="w-full lg:w-[60%]">
             <div className="flex flex-col gap-4">
               {faqs.map((faq, i) => (
-                <AnimatedSection key={i} delay={i * 0.1}>
-                  <div
-                    onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                    style={{
-                      background: 'rgba(255,255,255,0.02)',
-                      border: '1px solid rgba(255,255,255,0.06)',
-                      borderRadius: '16px',
-                      padding: '24px',
-                      cursor: 'pointer',
-                      transition: 'all 0.3s ease',
-                    }}
-                    onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)'}
-                    onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'}
-                  >
-                    <div className="flex justify-between items-center gap-4">
-                      <h3 style={{ fontSize: '18px', fontWeight: '600', color: 'white', fontFamily: 'DM Sans, sans-serif' }}>{faq.q}</h3>
-                      <div style={{
-                        width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(255,255,255,0.05)',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'transform 0.3s',
-                        transform: openIndex === i ? 'rotate(45deg)' : 'rotate(0)'
-                      }}>
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                          <path d="M6 1V11M1 6H11" stroke="white" strokeWidth="2" strokeLinecap="round" />
-                        </svg>
-                      </div>
-                    </div>
-                    
-                    <div style={{
-                      maxHeight: openIndex === i ? '200px' : '0',
-                      overflow: 'hidden',
-                      transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-                      opacity: openIndex === i ? 1 : 0,
-                    }}>
-                      <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.5)', marginTop: '16px', lineHeight: 1.6 }}>
-                        {faq.a}
-                      </p>
-                    </div>
-                  </div>
+                <AnimatedSection key={faq.q} delay={i * 0.1}>
+                  <FAQItem
+                    q={faq.q}
+                    a={faq.a}
+                    isOpen={openIndex === i}
+                    onToggle={() => setOpenIndex(openIndex === i ? null : i)}
+                  />
                 </AnimatedSection>
               ))}
             </div>

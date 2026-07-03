@@ -1,82 +1,26 @@
-import Link from 'next/link';
-
-const footerColumns = [
-  {
-    title: 'Platform',
-    links: [
-      { label: 'Features', href: '/#features' },
-      { label: 'Universities', href: '/#universities' },
-      { label: 'Programs', href: '#' },
-      { label: 'Mobile App', href: '#' },
-    ],
-  },
-  {
-    title: 'Students',
-    links: [
-      { label: 'Register Free', href: '#' },
-      { label: 'Dashboard', href: '#' },
-      { label: 'Documents', href: '#' },
-      { label: 'Track Applications', href: '#' },
-    ],
-  },
-  {
-    title: 'Universities',
-    links: [
-      { label: 'Register Institution', href: '#' },
-      { label: 'Admin Portal', href: '#' },
-      { label: 'Analytics', href: '#' },
-      { label: 'Pricing', href: '#' },
-    ],
-  },
-  {
-    title: 'Company',
-    links: [
-      { label: 'About', href: '/about' },
-      { label: 'Contact', href: '/contact' },
-      { label: 'Careers', href: '#' },
-      { label: 'Blog', href: '#' },
-    ],
-  },
-];
+import Link from 'next/link'
+import { FOOTER_COLUMNS } from '@/lib/content'
 
 export default function Footer() {
   return (
-    <footer
-      style={{
-        background: '#08080A',
-        borderTop: '1px solid rgba(255,255,255,0.08)',
-      }}
-      id="footer"
-    >
-      <div className="container-main px-6 md:px-10 pt-16 pb-10">
-        {/* Top Section */}
-        <div className="flex flex-col lg:flex-row justify-between gap-12 mb-12">
-          {/* Logo + Tagline */}
+    <footer className="border-t border-white/[0.08] bg-[#08080A]" id="footer">
+      <div className="container-main px-6 pb-10 pt-16 md:px-10">
+        <div className="mb-12 flex flex-col justify-between gap-12 lg:flex-row">
           <div className="lg:max-w-[280px]">
-            <Link href="/" className="flex items-baseline gap-0 mb-3 select-none">
-              <span className="text-xl font-extrabold text-white tracking-tight">EDU</span>
-              <span className="text-xl font-extrabold text-accent tracking-tight">ING</span>
-              <span className="text-[0.75em] font-bold text-gold ml-[1px]">.in</span>
+            <Link href="/" className="mb-3 flex select-none items-baseline gap-0">
+              <span className="text-xl font-extrabold tracking-tight text-white">EDU</span>
+              <span className="text-xl font-extrabold tracking-tight text-accent">ING</span>
+              <span className="ml-px text-[0.75em] font-bold text-gold">.in</span>
             </Link>
-            <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: '14px', lineHeight: 1.6 }}>
+            <p className="text-sm leading-relaxed text-white/30">
               Simplifying university admissions across India.
             </p>
           </div>
 
-          {/* Link Columns */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-16">
-            {footerColumns.map((col) => (
+          <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:gap-16">
+            {FOOTER_COLUMNS.map((col) => (
               <div key={col.title}>
-                <h4
-                  className="mb-4"
-                  style={{
-                    color: 'rgba(255,255,255,0.2)',
-                    fontSize: '12px',
-                    fontWeight: 600,
-                    letterSpacing: '0.1em',
-                    textTransform: 'uppercase',
-                  }}
-                >
+                <h4 className="mb-4 text-xs font-semibold uppercase tracking-[0.1em] text-white/20">
                   {col.title}
                 </h4>
                 <ul className="flex flex-col gap-3">
@@ -84,8 +28,7 @@ export default function Footer() {
                     <li key={link.label}>
                       <Link
                         href={link.href}
-                        className="text-[14px] transition-colors duration-150 hover:text-white"
-                        style={{ color: 'rgba(255,255,255,0.45)' }}
+                        className="text-sm text-white/45 transition-colors duration-150 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-lighter"
                       >
                         {link.label}
                       </Link>
@@ -97,39 +40,10 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div
-          className="flex flex-col md:flex-row items-center justify-between gap-4 pt-6"
-          style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
-        >
-          <p style={{ color: 'rgba(255,255,255,0.25)', fontSize: '13px' }}>
-            © 2026 EDUING.in
-          </p>
-          <div className="flex items-center gap-6">
-            <Link
-              href="/privacy"
-              className="text-[13px] transition-colors duration-150 hover:text-white"
-              style={{ color: 'rgba(255,255,255,0.25)' }}
-            >
-              Privacy
-            </Link>
-            <Link
-              href="/terms"
-              className="text-[13px] transition-colors duration-150 hover:text-white"
-              style={{ color: 'rgba(255,255,255,0.25)' }}
-            >
-              Terms
-            </Link>
-            <Link
-              href="/trademark"
-              className="text-[13px] transition-colors duration-150 hover:text-white"
-              style={{ color: 'rgba(255,255,255,0.25)' }}
-            >
-              Trademark
-            </Link>
-          </div>
+        <div className="flex flex-col items-center justify-between gap-4 border-t border-white/[0.06] pt-6 md:flex-row">
+          <p className="text-[13px] text-white/25">© {new Date().getFullYear()} EDUING.in</p>
         </div>
       </div>
     </footer>
-  );
+  )
 }

@@ -2,126 +2,78 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
+
+const NAV_LINKS = [
+  { label: 'Features', href: '/features' },
+  { label: 'About', href: '/about' },
+  { label: 'Contact', href: '/contact' },
+]
+
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.eduing.in'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 80)
-    }
-    window.addEventListener('scroll', handleScroll)
+    const handleScroll = () => setScrolled(window.scrollY > 80)
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   return (
-    <div style={{
-      position: 'fixed',
-      top: '20px',
-      left: '0',
-      width: '100%',
-      zIndex: 100,
-      display: 'flex',
-      justifyContent: 'center',
-      padding: '0 24px'
-    }}>
+    <div className="fixed top-5 left-0 w-full z-[100] flex justify-center px-6">
       <motion.nav
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        style={{
-          width: '100%',
-          maxWidth: '1100px',
-          background: 'rgba(6, 6, 10, 0.65)',
-          backdropFilter: 'blur(24px)',
-          WebkitBackdropFilter: 'blur(24px)',
-          border: '1px solid rgba(255, 255, 255, 0.08)',
-          borderRadius: '9999px',
-          padding: '8px 8px 8px 24px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          boxShadow: '0 12px 40px rgba(0, 0, 0, 0.4)',
-        }}
+        className={`w-full max-w-[1100px] flex items-center justify-between rounded-full border border-border pl-6 pr-2 py-2 shadow-[0_12px_40px_rgba(0,0,0,0.4)] backdrop-blur-2xl transition-colors duration-300 ${
+          scrolled ? 'bg-bg/85' : 'bg-bg/65'
+        }`}
       >
-        {/* Logo Section */}
-        <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px', flex: 1 }}>
-          {/* ✅ Logo image */}
-          <img
-            src="/bandwlogo.PNG"
-            alt="EDUING Logo"
-            style={{ width: '30px', height: '30px', objectFit: 'contain', filter: 'invert(1)' }}
-          />
-          <span style={{ fontFamily: 'Syne, sans-serif', fontSize: '18px', fontWeight: '800', letterSpacing: '-0.03em', color: '#FFFFFF' }}>
-            EDUING<span style={{ color: '#818CF8', fontSize: '12px' }}>.in</span>
+        {/* Logo */}
+        <Link href="/" className="flex flex-1 items-center gap-2.5 no-underline">
+          <Image src="/logo.png" alt="EDUING logo" width={30} height={30} className="object-contain invert" priority />
+          <span className="font-display text-lg font-extrabold tracking-tight text-white">
+            EDUING<span className="text-accent-lighter text-xs">.in</span>
           </span>
         </Link>
 
-        {/* Navigation Items */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-          {['Features', 'Download', 'About', 'Contact'].map(l => {
-            const href = l === 'Download' ? '/#download' : `/${l.toLowerCase()}`;
-            const isActive = pathname === href;
+        {/* Nav links */}
+        <div className="hidden md:flex items-center gap-1">
+          {NAV_LINKS.map((l) => {
+            const isActive = pathname === l.href
             return (
-              <Link key={l} href={href} style={{ textDecoration: 'none' }}>
-                <span style={{
-                  padding: '8px 18px', borderRadius: '9999px', fontSize: '14px',
-                  color: isActive ? '#FFFFFF' : 'rgba(255, 255, 255, 0.55)', 
-                  fontFamily: 'DM Sans, sans-serif',
-                  fontWeight: isActive ? '600' : '500', 
-                  background: isActive ? 'rgba(255,255,255,0.08)' : 'transparent',
-                  cursor: 'pointer', transition: 'all 0.2s',
-                }}
-                onMouseEnter={e => { e.currentTarget.style.color = 'white'; e.currentTarget.style.background = 'rgba(255,255,255,0.1)' }}
-                onMouseLeave={e => { e.currentTarget.style.color = isActive ? '#FFFFFF' : 'rgba(255, 255, 255, 0.55)'; e.currentTarget.style.background = isActive ? 'rgba(255,255,255,0.08)' : 'transparent' }}>
-                  {l}
-                </span>
+              <Link
+                key={l.label}
+                href={l.href}
+                className={`rounded-full px-4.5 py-2 text-sm transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-lighter focus-visible:outline-offset-2 hover:text-white hover:bg-white/10 ${
+                  isActive ? 'text-white font-semibold bg-white/[0.08]' : 'text-text-secondary font-medium'
+                }`}
+              >
+                {l.label}
               </Link>
-            );
+            )
           })}
         </div>
 
-        {/* CTA Section */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: 1, justifyContent: 'flex-end' }}>
-          
-          {/* Log in */}
-          <a href="https://app.eduing.in" style={{ textDecoration: 'none' }}>
-            <span style={{
-              padding: '8px 16px', fontSize: '14px', fontWeight: '500', 
-              color: 'rgba(255, 255, 255, 0.6)', cursor: 'pointer',
-              fontFamily: 'DM Sans, sans-serif', transition: 'color 0.2s',
-            }}
-            onMouseEnter={e => e.currentTarget.style.color = 'white'}
-            onMouseLeave={e => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.6)'}>
-              Log in
-            </span>
+        {/* CTAs */}
+        <div className="flex flex-1 items-center justify-end gap-2">
+          <a
+            href={APP_URL}
+            rel="noopener noreferrer"
+            className="rounded-full px-4 py-2 text-sm font-medium text-white/60 transition-colors duration-200 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-lighter focus-visible:outline-offset-2"
+          >
+            Log in
           </a>
-          
-          {/* Get started */}
-          <a href="https://app.eduing.in/" style={{ 
-            textDecoration: 'none',
-            opacity: scrolled ? 1 : 0,
-            transform: scrolled ? 'translateY(0) scale(1)' : 'translateY(24px) scale(0.92)',
-            filter: scrolled ? 'blur(0)' : 'blur(6px)',
-            pointerEvents: scrolled ? 'auto' : 'none',
-            transition: 'all 600ms cubic-bezier(0.16, 1, 0.3, 1)',
-            transitionDelay: scrolled ? '120ms' : '0ms',
-          }}>
-            <motion.div 
+          <a href={`${APP_URL}/`} rel="noopener noreferrer" className="no-underline">
+            <motion.div
               whileHover={{ scale: 1.05, y: -1 }}
               whileTap={{ scale: 0.98 }}
-              style={{
-                padding: '10px 22px', borderRadius: '9999px', fontSize: '14px',
-                fontWeight: '600', color: '#06060A', cursor: 'pointer',
-                fontFamily: 'DM Sans, sans-serif',
-                background: 'linear-gradient(135deg, #E0E0FF 0%, #FFFFFF 100%)',
-                boxShadow: '0 4px 15px rgba(255, 255, 255, 0.1)',
-                transition: 'box-shadow 0.2s ease',
-              }}
-              onMouseEnter={e => e.currentTarget.style.boxShadow = '0 8px 25px rgba(255, 255, 255, 0.15)'}
-              onMouseLeave={e => e.currentTarget.style.boxShadow = '0 4px 15px rgba(255, 255, 255, 0.1)'}
+              className="rounded-full bg-gradient-to-br from-[#E0E0FF] to-white px-5.5 py-2.5 text-sm font-semibold text-bg shadow-[0_4px_15px_rgba(255,255,255,0.1)] transition-shadow duration-200 hover:shadow-[0_8px_25px_rgba(255,255,255,0.15)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-lighter focus-visible:outline-offset-2"
             >
               Get started
             </motion.div>

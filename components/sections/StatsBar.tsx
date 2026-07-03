@@ -1,5 +1,3 @@
-'use client';
-
 const universities = [
   'IIT Delhi', 'BITS Pilani', 'VIT Vellore', 'Manipal MAHE', 'SRM',
   'LPU', 'Amity', 'Symbiosis', 'NMIMS', 'Christ', 'BHU',
@@ -13,45 +11,31 @@ export default function StatsBar() {
   return (
     <section
       id="stats-bar"
-      style={{
-        borderTop: '1px solid rgba(255,255,255,0.04)',
-        borderBottom: '1px solid rgba(255,255,255,0.04)',
-        background: 'rgba(6,6,10,0.4)',
-        padding: '32px 0',
-        overflow: 'hidden',
-        position: 'relative',
-      }}
+      className="relative overflow-hidden border-y border-white/[0.04] bg-bg/40 py-8"
     >
       {/* Fade masks */}
-      <div style={{
-        position: 'absolute', inset: 0, zIndex: 2, pointerEvents: 'none',
-        background: 'linear-gradient(90deg, #06060A 0%, transparent 15%, transparent 85%, #06060A 100%)'
-      }} />
+      <div
+        className="pointer-events-none absolute inset-0 z-[2]"
+        style={{
+          background:
+            'linear-gradient(90deg, #06060A 0%, transparent 15%, transparent 85%, #06060A 100%)',
+        }}
+        aria-hidden="true"
+      />
 
-      <div style={{ maxWidth: '1200px', margin: '0 auto', marginBottom: '24px', textAlign: 'center', opacity: 0.4 }}>
-        <span style={{ fontSize: '12px', fontWeight: '500', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'white' }}>
+      <div className="mx-auto mb-6 max-w-[1200px] text-center opacity-40">
+        <span className="text-xs font-medium uppercase tracking-[0.1em] text-white">
           Trusted by students applying to
         </span>
       </div>
 
       {/* Marquee */}
-      <div style={{ display: 'flex', overflow: 'hidden', userSelect: 'none' }}>
+      <div className="flex select-none overflow-hidden" aria-hidden="true">
         <div className="marquee-track">
           {items.map((uni, i) => (
             <div
               key={i}
-              style={{
-                background: 'rgba(255,255,255,0.03)',
-                border: '1px solid rgba(255,255,255,0.06)',
-                borderRadius: '12px',
-                padding: '10px 24px',
-                color: 'rgba(255,255,255,0.5)',
-                fontSize: '14px',
-                fontWeight: '500',
-                whiteSpace: 'nowrap',
-                fontFamily: 'DM Sans, sans-serif',
-                transition: 'all 0.3s ease',
-              }}
+              className="whitespace-nowrap rounded-xl border border-white/[0.06] bg-white/[0.03] px-6 py-2.5 text-sm font-medium text-white/50 transition-colors duration-300"
             >
               {uni}
             </div>

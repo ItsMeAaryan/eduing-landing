@@ -9,24 +9,28 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        bg: "#08080A",
+        bg: "#06060A",
+        "bg-2": "#0D0D14",
         surface: "#111114",
         "surface-2": "#18181C",
         "surface-alt": "#0C0C10",
         "surface-feature": "#13131A",
+        card: "rgba(255,255,255,0.04)",
+        "card-hover": "rgba(255,255,255,0.07)",
         border: "rgba(255,255,255,0.08)",
-        "border-hover": "rgba(255,255,255,0.15)",
+        "border-hover": "rgba(99,102,241,0.5)",
         "border-subtle": "rgba(255,255,255,0.06)",
-        "text-primary": "#FAFAFA",
-        "text-secondary": "rgba(255,255,255,0.5)",
+        "text-primary": "#FFFFFF",
+        "text-secondary": "rgba(255,255,255,0.55)",
         "text-muted": "rgba(255,255,255,0.25)",
         "text-body": "rgba(255,255,255,0.55)",
-        accent: "#4F46E5",
+        accent: "#5B5FEF",
         "accent-light": "#6366F1",
         "accent-lighter": "#818CF8",
-        "accent-glow": "rgba(79,70,229,0.15)",
+        "accent-glow": "rgba(91,95,239,0.2)",
+        violet: "#7C3AED",
         gold: "#F59E0B",
-        success: "#22C55E",
+        success: "#10B981",
       },
       borderRadius: {
         card: "16px",
@@ -34,7 +38,8 @@ const config: Config = {
         tag: "6px",
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
+        sans: ["var(--font-dm-sans)", "system-ui", "sans-serif"],
+        display: ["var(--font-syne)", "system-ui", "sans-serif"],
       },
       fontSize: {
         hero: [
