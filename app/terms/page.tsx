@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import AnimatedSection from '@/components/ui/AnimatedSection';
+import LegalPageLayout, { LegalSectionBlock, type LegalSection } from '@/components/ui/LegalPageLayout';
 
 export const metadata: Metadata = {
   title: 'Terms & Conditions — EDUING.in',
@@ -10,14 +10,16 @@ export const metadata: Metadata = {
   },
 };
 
-const sections = [
+const sections: LegalSection[] = [
   {
     title: '1. Acceptance of Terms',
-    content: 'By accessing and using EDUING.in (\u201Cthe Platform\u201D), you agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, you must not use the Platform. These terms apply to all users, including students, universities, and visitors.',
+    content:
+      'By accessing and using EDUING.in (\u201Cthe Platform\u201D), you agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, you must not use the Platform. These terms apply to all users, including students, universities, and visitors.',
   },
   {
     title: '2. Eligibility',
-    content: 'You must be at least 16 years of age to create an account on EDUING.in. Users under 18 must have consent from a parent or legal guardian. By creating an account, you represent that you meet these eligibility requirements. University accounts must be created by authorized institutional representatives.',
+    content:
+      'You must be at least 16 years of age to create an account on EDUING.in. Users under 18 must have consent from a parent or legal guardian. By creating an account, you represent that you meet these eligibility requirements. University accounts must be created by authorized institutional representatives.',
   },
   {
     title: '3. Student Responsibilities',
@@ -56,74 +58,51 @@ const sections = [
   },
   {
     title: '6. Intellectual Property',
-    content: 'EDUING.in owns all intellectual property rights in and to the Platform, including but not limited to the website design, logos, trademarks, software, and content. Users retain ownership of their uploaded documents and personal data but grant EDUING.in a license to use this content solely for the purpose of facilitating the admissions process.',
+    content:
+      'EDUING.in owns all intellectual property rights in and to the Platform, including but not limited to the website design, logos, trademarks, software, and content. Users retain ownership of their uploaded documents and personal data but grant EDUING.in a license to use this content solely for the purpose of facilitating the admissions process.',
   },
   {
     title: '7. Limitation of Liability',
-    content: 'EDUING.in acts as a facilitator between students and universities. We do not guarantee admission to any institution. We are not liable for admission decisions made by universities, delays in application processing, or any loss arising from use of the Platform. The Platform is provided \u201Cas is\u201D without warranties of any kind.',
+    content:
+      'EDUING.in acts as a facilitator between students and universities. We do not guarantee admission to any institution. We are not liable for admission decisions made by universities, delays in application processing, or any loss arising from use of the Platform. The Platform is provided \u201Cas is\u201D without warranties of any kind.',
   },
   {
     title: '8. Account Termination',
-    content: 'We reserve the right to suspend or terminate accounts that violate these Terms, engage in prohibited activities, or are inactive for an extended period. Users may delete their accounts at any time through their profile settings.',
+    content:
+      'We reserve the right to suspend or terminate accounts that violate these Terms, engage in prohibited activities, or are inactive for an extended period. Users may delete their accounts at any time through their profile settings.',
   },
   {
     title: '9. Governing Law & Dispute Resolution',
-    content: 'These Terms are governed by the laws of India, specifically the State of Karnataka. Any disputes arising from these Terms or use of the Platform shall be subject to the exclusive jurisdiction of the courts in Bengaluru, Karnataka, India. Parties agree to attempt mediation before pursuing litigation.',
+    content:
+      'These Terms are governed by the laws of India, specifically the State of Karnataka. Any disputes arising from these Terms or use of the Platform shall be subject to the exclusive jurisdiction of the courts in Bengaluru, Karnataka, India. Parties agree to attempt mediation before pursuing litigation.',
   },
   {
     title: '10. Changes to Terms',
-    content: 'EDUING.in reserves the right to modify these Terms at any time. Material changes will be communicated via email and/or a prominent notice on the Platform. Continued use of the Platform after changes constitutes acceptance of the revised Terms.',
+    content:
+      'EDUING.in reserves the right to modify these Terms at any time. Material changes will be communicated via email and/or a prominent notice on the Platform. Continued use of the Platform after changes constitutes acceptance of the revised Terms.',
   },
 ];
 
 export default function TermsPage() {
   return (
-    <section className="section-padding" style={{ background: '#08080A', paddingTop: '160px' }} id="terms">
-      <div className="mx-auto" style={{ maxWidth: '900px' }}>
-        <AnimatedSection>
-          <span className="section-label">LEGAL</span>
-          <h1 className="section-title mb-2" style={{ fontSize: '40px' }}>Terms & Conditions</h1>
-          <p className="text-[15px] mb-12" style={{ color: 'rgba(255,255,255,0.4)' }}>
-            Last Updated: April 2026
-          </p>
-        </AnimatedSection>
+    <LegalPageLayout title="Terms & Conditions" effectiveDate="April 2026" id="terms">
+      {sections.map((section, i) => (
+        <LegalSectionBlock key={i} section={section} />
+      ))}
 
-        <AnimatedSection delay={0.1}>
-          <div className="mob-card">
-            <div className="flex flex-col gap-10">
-              {sections.map((section, i) => (
-                <div key={i}>
-                  <h2 className="text-[20px] font-bold text-white mb-3">{section.title}</h2>
-                  {section.content && (
-                    <p className="text-[15px] leading-relaxed mb-2" style={{ color: 'rgba(255,255,255,0.55)' }}>
-                      {section.content}
-                    </p>
-                  )}
-                  {section.list && (
-                    <ul className="list-disc list-inside text-[15px] leading-relaxed flex flex-col gap-2 ml-2" style={{ color: 'rgba(255,255,255,0.55)' }}>
-                      {section.list.map((item, j) => (
-                        <li key={j}>{item}</li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              ))}
-
-              <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '16px' }}>
-                <h2 className="text-[20px] font-bold text-white mb-3">Contact</h2>
-                <p className="text-[15px] leading-relaxed" style={{ color: 'rgba(255,255,255,0.55)' }}>
-                  For questions about these Terms, contact us at:<br />
-                  <strong className="text-white">Email:</strong>{' '}
-                  <a href="mailto:eduing.in2026@gmail.com" className="hover:text-white transition-colors" style={{ color: '#818CF8' }}>
-                    eduing.in2026@gmail.com
-                  </a><br />
-                  <strong className="text-white">Location:</strong> Bengaluru, Karnataka, India
-                </p>
-              </div>
-            </div>
-          </div>
-        </AnimatedSection>
+      <div className="border-t border-white/[0.08] pt-4">
+        <h2 className="mb-3 text-xl font-bold text-white">Contact</h2>
+        <p className="text-[15px] leading-relaxed text-white/55">
+          For questions about these Terms, contact us at:
+          <br />
+          <strong className="text-white">Email:</strong>{' '}
+          <a href="mailto:eduing.in2026@gmail.com" className="text-accent-lighter transition-colors hover:text-white">
+            eduing.in2026@gmail.com
+          </a>
+          <br />
+          <strong className="text-white">Location:</strong> Bengaluru, Karnataka, India
+        </p>
       </div>
-    </section>
+    </LegalPageLayout>
   );
 }
