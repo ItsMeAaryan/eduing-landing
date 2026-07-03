@@ -42,6 +42,16 @@ export default function Footer() {
 
         <div className="flex flex-col items-center justify-between gap-4 border-t border-white/[0.06] pt-6 md:flex-row">
           <p className="text-[13px] text-white/25">© {new Date().getFullYear()} EDUING.in</p>
+          <p className="text-[13px] text-white/25">
+            Built by{' '}
+            <a
+              href="https://github.com/princemittalr"
+              rel="noopener noreferrer"
+              className="text-white/40 transition-colors hover:text-white"
+            >
+              Prince Mittal
+            </a>
+          </p>
         </div>
       </div>
     </footer>

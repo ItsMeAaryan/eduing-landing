@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import AnimatedSection from '@/components/ui/AnimatedSection';
+import LegalPageLayout, { LegalSectionBlock, type LegalSection } from '@/components/ui/LegalPageLayout';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy — EDUING.in',
@@ -10,10 +10,11 @@ export const metadata: Metadata = {
   },
 };
 
-const sections = [
+const sections: LegalSection[] = [
   {
     title: '1. Introduction',
-    content: 'EDUING.in (\u201Cwe,\u201D \u201Cour,\u201D or \u201Cus\u201D) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our platform at eduing.in and our mobile applications.',
+    content:
+      'EDUING.in (\u201Cwe,\u201D \u201Cour,\u201D or \u201Cus\u201D) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our platform at eduing.in and our mobile applications.',
   },
   {
     title: '2. Information We Collect',
@@ -40,11 +41,13 @@ const sections = [
   },
   {
     title: '4. Third-Party Services',
-    content: 'We use Google Firebase for authentication, database (Firestore), and file storage. Google\u2019s privacy practices are governed by Google\u2019s Privacy Policy. We do not sell your personal data to any third party. Your documents and academic information are only shared with universities you explicitly apply to.',
+    content:
+      'We use Google Firebase for authentication, database (Firestore), and file storage. Google\u2019s privacy practices are governed by Google\u2019s Privacy Policy. We do not sell your personal data to any third party. Your documents and academic information are only shared with universities you explicitly apply to.',
   },
   {
     title: '5. Data Retention',
-    content: 'We retain your personal data for as long as your account is active or as needed to provide our services. You may request deletion of your account and all associated data at any time. Upon account deletion, we will remove your data within 30 days, except where retention is required by law.',
+    content:
+      'We retain your personal data for as long as your account is active or as needed to provide our services. You may request deletion of your account and all associated data at any time. Upon account deletion, we will remove your data within 30 days, except where retention is required by law.',
   },
   {
     title: '6. Your Rights',
@@ -59,70 +62,46 @@ const sections = [
   },
   {
     title: '7. Data Security',
-    content: 'We implement industry-standard security measures through Firebase\u2019s enterprise-grade infrastructure. All data is encrypted at rest and in transit using AES-256 and TLS 1.2+ encryption. Access to user data is restricted and monitored.',
+    content:
+      'We implement industry-standard security measures through Firebase\u2019s enterprise-grade infrastructure. All data is encrypted at rest and in transit using AES-256 and TLS 1.2+ encryption. Access to user data is restricted and monitored.',
   },
   {
     title: '8. Cookies',
-    content: 'We use essential cookies to maintain your session and preferences. We do not use third-party advertising cookies. Analytics cookies are used in aggregate form only.',
+    content:
+      'We use essential cookies to maintain your session and preferences. We do not use third-party advertising cookies. Analytics cookies are used in aggregate form only.',
   },
   {
     title: '9. Changes to This Policy',
-    content: 'We may update this Privacy Policy periodically. We will notify you of any material changes via email or a prominent notice on our platform. Your continued use of EDUING.in after changes constitutes acceptance of the updated policy.',
+    content:
+      'We may update this Privacy Policy periodically. We will notify you of any material changes via email or a prominent notice on our platform. Your continued use of EDUING.in after changes constitutes acceptance of the updated policy.',
   },
   {
     title: '10. Governing Law',
-    content: 'This Privacy Policy is governed by the laws of India, including the Information Technology Act, 2000 and the Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011.',
+    content:
+      'This Privacy Policy is governed by the laws of India, including the Information Technology Act, 2000 and the Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011.',
   },
 ];
 
 export default function PrivacyPage() {
   return (
-    <section className="section-padding" style={{ background: '#08080A', paddingTop: '160px' }} id="privacy">
-      <div className="mx-auto" style={{ maxWidth: '900px' }}>
-        <AnimatedSection>
-          <span className="section-label">LEGAL</span>
-          <h1 className="section-title mb-2" style={{ fontSize: '40px' }}>Privacy Policy</h1>
-          <p className="text-[15px] mb-12" style={{ color: 'rgba(255,255,255,0.4)' }}>
-            Effective Date: April 2026
-          </p>
-        </AnimatedSection>
+    <LegalPageLayout title="Privacy Policy" effectiveDate="April 2026" id="privacy">
+      {sections.map((section, i) => (
+        <LegalSectionBlock key={i} section={section} />
+      ))}
 
-        <AnimatedSection delay={0.1}>
-          <div className="mob-card">
-            <div className="flex flex-col gap-10">
-              {sections.map((section, i) => (
-                <div key={i}>
-                  <h2 className="text-[20px] font-bold text-white mb-3">{section.title}</h2>
-                  {section.content && (
-                    <p className="text-[15px] leading-relaxed" style={{ color: 'rgba(255,255,255,0.55)' }}>
-                      {section.content}
-                    </p>
-                  )}
-                  {section.list && (
-                    <ul className="list-disc list-inside text-[15px] leading-relaxed flex flex-col gap-2 ml-2 mt-2" style={{ color: 'rgba(255,255,255,0.55)' }}>
-                      {section.list.map((item, j) => (
-                        <li key={j}>{item}</li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              ))}
-
-              <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '16px' }}>
-                <h2 className="text-[20px] font-bold text-white mb-3">Contact Us</h2>
-                <p className="text-[15px] leading-relaxed" style={{ color: 'rgba(255,255,255,0.55)' }}>
-                  If you have questions about this Privacy Policy, contact us at:<br />
-                  <strong className="text-white">Email:</strong>{' '}
-                  <a href="mailto:eduing.in2026@gmail.com" className="hover:text-white transition-colors" style={{ color: '#818CF8' }}>
-                    eduing.in2026@gmail.com
-                  </a><br />
-                  <strong className="text-white">Location:</strong> Bengaluru, Karnataka, India
-                </p>
-              </div>
-            </div>
-          </div>
-        </AnimatedSection>
+      <div className="border-t border-white/[0.08] pt-4">
+        <h2 className="mb-3 text-xl font-bold text-white">Contact Us</h2>
+        <p className="text-[15px] leading-relaxed text-white/55">
+          If you have questions about this Privacy Policy, contact us at:
+          <br />
+          <strong className="text-white">Email:</strong>{' '}
+          <a href="mailto:eduing.in2026@gmail.com" className="text-accent-lighter transition-colors hover:text-white">
+            eduing.in2026@gmail.com
+          </a>
+          <br />
+          <strong className="text-white">Location:</strong> Bengaluru, Karnataka, India
+        </p>
       </div>
-    </section>
+    </LegalPageLayout>
   );
 }
