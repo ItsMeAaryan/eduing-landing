@@ -3,7 +3,7 @@ import AnimatedSection from '@/components/ui/AnimatedSection';
 
 export const metadata: Metadata = {
   title: 'About — EDUING.in',
-  description: 'Learn about EDUING.in, our mission to simplify university admissions across India, and meet our founder Aaryan Sharma.',
+  description: 'Learn about EDUING.in, our mission to simplify university admissions across India, and meet the team behind it.',
   openGraph: {
     title: 'About — EDUING.in',
     description: 'Learn about EDUING.in, our mission to simplify university admissions across India.',
@@ -90,66 +90,53 @@ export default function AboutPage() {
       </section>
 
       {/* Founder */}
-      <section className="section-padding" style={{ background: '#0C0C10' }} id="about-founder">
-        <div className="mx-auto" style={{ maxWidth: '900px' }}>
+      <section className="section-padding bg-[#0C0C10]" id="about-founder">
+        <div className="mx-auto max-w-[900px]">
           <AnimatedSection>
-            <span className="section-label text-center block">FOUNDERS</span>
-            <h2 className="section-title mb-8 text-center" style={{ fontSize: '36px' }}>Meet the Founders</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="mob-card text-center">
-              <div
-                className="w-20 h-20 rounded-full flex items-center justify-center text-[32px] mx-auto mb-4"
-                style={{ background: 'rgba(79,70,229,0.15)' }}
-              >
-                👨‍💻
+            <span className="section-label block text-center">TEAM</span>
+            <h2 className="section-title mb-8 text-center text-4xl">Meet the Team</h2>
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+              <div className="mob-card text-center">
+                <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-accent/[0.15] text-[32px]" aria-hidden="true">
+                  👨‍💻
+                </div>
+                <h3 className="mb-1 text-xl font-bold text-white">Aaryan Sharma</h3>
+                <p className="mb-1 text-sm font-medium text-accent-light">Co-Founder</p>
+                <p className="mb-6 text-sm text-white/40">B.Tech CSE, Dayananda Sagar University</p>
+                <blockquote className="border-l-[3px] border-accent pl-5 text-left text-base italic leading-relaxed text-white/60">
+                  &ldquo;I experienced the frustration of college admissions firsthand —
+                  filling the same details on dozens of portals, missing deadlines, and
+                  not knowing where I stood. EDUING.in is the solution I wish I had.
+                  We&apos;re building it so that no student has to go through that chaos again.&rdquo;
+                </blockquote>
               </div>
-              <h3 className="text-[22px] font-bold text-white mb-1">Aaryan Sharma</h3>
-              <p className="text-[15px] font-medium mb-1" style={{ color: '#6366F1' }}>
-                Founder & CEO
-              </p>
-              <p className="text-[14px] mb-6" style={{ color: 'rgba(255,255,255,0.4)' }}>
-                B.Tech CSE, Dayananda Sagar University
-              </p>
-              <blockquote
-                className="text-[16px] leading-relaxed italic text-left pl-5"
-                style={{
-                  color: 'rgba(255,255,255,0.6)',
-                  borderLeft: '3px solid #4F46E5',
-                }}
-              >
-                &ldquo;I experienced the frustration of college admissions firsthand —
-                filling the same details on dozens of portals, missing deadlines, and
-                not knowing where I stood. EDUING.in is the solution I wish I had.
-                We&apos;re building it so that no student has to go through that chaos again.&rdquo;
-              </blockquote>
-            </div>
 
-            <div className="mob-card text-center">
-              <div
-                className="w-20 h-20 rounded-full flex items-center justify-center text-[32px] mx-auto mb-4"
-                style={{ background: 'rgba(79,70,229,0.15)' }}
-              >
-                👨‍💻
+              <div className="mob-card text-center">
+                <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-accent/[0.15] text-[32px]" aria-hidden="true">
+                  👨‍💻
+                </div>
+                <h3 className="mb-1 text-xl font-bold text-white">Lakshya Pandey</h3>
+                <p className="mb-1 text-sm font-medium text-accent-light">Co-Founder</p>
+                <p className="mb-6 text-sm text-white/40">B.Tech CSE - AI ML, Dayananda Sagar University</p>
+                <blockquote className="border-l-[3px] border-accent pl-5 text-left text-base italic leading-relaxed text-white/60">
+                  &ldquo;As someone passionate about building technology that solves real problems, I wanted to create a platform that simplifies one of the most important journeys in a student&apos;s life. EDUING.in is our commitment to making higher education more accessible through innovation.&rdquo;
+                </blockquote>
               </div>
-              <h3 className="text-[22px] font-bold text-white mb-1">Lakshya Pandey</h3>
-              <p className="text-[15px] font-medium mb-1" style={{ color: '#6366F1' }}>
-                Founder & CEO
-              </p>
-              <p className="text-[14px] mb-6" style={{ color: 'rgba(255,255,255,0.4)' }}>
-                B.Tech CSE - AI ML, Dayananda Sagar University
-              </p>
-              <blockquote
-                className="text-[16px] leading-relaxed italic text-left pl-5"
-                style={{
-                  color: 'rgba(255,255,255,0.6)',
-                  borderLeft: '3px solid #4F46E5',
-                }}
-              >
-                &ldquo;As someone passionate about building technology that solves real problems, I wanted to create a platform that simplifies one of the most important journeys in a student&apos;s life. EDUING.in is our commitment to making higher education more accessible through innovation.&rdquo;
-              </blockquote>
-            </div>
 
-          </div>
+              <div className="mob-card text-center">
+                <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-accent/[0.15] text-[32px]" aria-hidden="true">
+                  🛠️
+                </div>
+                <h3 className="mb-1 text-xl font-bold text-white">Prince Mittal</h3>
+                <p className="mb-1 text-sm font-medium text-accent-light">CTO &amp; Lead Developer</p>
+                <p className="mb-6 text-sm text-white/40">Built the platform&apos;s tech stack from the ground up</p>
+                <blockquote className="border-l-[3px] border-accent pl-5 text-left text-base italic leading-relaxed text-white/60">
+                  &ldquo;Every line of this platform — architecture, frontend, infrastructure — has been built to
+                  make the admissions journey feel effortless. Good engineering should be invisible to the
+                  people who need it most: the students.&rdquo;
+                </blockquote>
+              </div>
+            </div>
           </AnimatedSection>
         </div>
       </section>

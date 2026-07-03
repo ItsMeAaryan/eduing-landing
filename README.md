@@ -2,6 +2,16 @@
 
 Marketing/landing site for EDUING.in, a unified university admissions platform for India. Built with Next.js 14 (App Router), TypeScript, Tailwind CSS, and Framer Motion.
 
+## Team
+
+| Name | Role | GitHub |
+| --- | --- | --- |
+| Aaryan Sharma | Co-Founder | [@ItsMeAaryan](https://github.com/ItsMeAaryan) |
+| Lakshya Pandey | Co-Founder | [@pandeylakshya207-max](https://github.com/pandeylakshya207-max) |
+| Prince Mittal | CTO & Lead Developer | [@princemittalr](https://github.com/princemittalr) |
+
+EDUING.in was founded by Aaryan Sharma and Lakshya Pandey. Prince Mittal leads engineering as CTO, having built the platform's full technology stack from the ground up — architecture, frontend, and infrastructure.
+
 ## Getting started
 
 ```bash
