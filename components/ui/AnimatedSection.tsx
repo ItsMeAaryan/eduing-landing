@@ -15,8 +15,8 @@ export default function AnimatedSection({ children, delay = 0, className = '' }:
   return (
     <motion.div
       initial={reduceMotion ? false : { opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '0px' }}
+      animate={{ opacity: 1, y: 0 }}
+
       transition={{ duration: 0.5, ease: 'easeOut', delay }}
       className={className}
     >

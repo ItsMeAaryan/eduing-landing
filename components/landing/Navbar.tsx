@@ -1,9 +1,10 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
+import { Menu, X } from 'lucide-react'
 
 const NAV_LINKS = [
   { label: 'Features', href: '/features' },
@@ -15,71 +16,178 @@ const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.eduing.in'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
+  const [hidden, setHidden] = useState(false)
+  const [lastScrollY, setLastScrollY] = useState(0)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const pathname = usePathname()
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 80)
-    handleScroll()
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY
+      setScrolled(currentScrollY > 50)
+      
+      if (currentScrollY > lastScrollY && currentScrollY > 150) {
+        setHidden(true)
+      } else {
+        setHidden(false)
+      }
+      setLastScrollY(currentScrollY)
+    }
+    
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [lastScrollY])
+
+  // Prevent scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [mobileMenuOpen])
 
   return (
-    <div className="fixed top-5 left-0 w-full z-[100] flex justify-center px-6">
-      <motion.nav
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className={`w-full max-w-[1100px] flex items-center justify-between rounded-full border border-border pl-6 pr-2 py-2 shadow-[0_12px_40px_rgba(0,0,0,0.4)] backdrop-blur-2xl transition-colors duration-300 ${
-          scrolled ? 'bg-bg/85' : 'bg-bg/65'
-        }`}
-      >
-        {/* Logo */}
-        <Link href="/" className="flex flex-1 items-center gap-2.5 no-underline">
-          <Image src="/logo.png" alt="EDUING logo" width={30} height={30} className="object-contain invert" priority />
-          <span className="font-display text-lg font-extrabold tracking-tight text-white">
-            EDUING<span className="text-accent-lighter text-xs">.in</span>
-          </span>
-        </Link>
+    <>
+      <div className="fixed top-4 left-0 w-full z-[100] flex justify-center px-4 sm:px-6 pointer-events-none">
+        <motion.nav
+          initial={false}
+          animate={{ y: hidden ? -100 : 0, opacity: hidden ? 0 : 1 }}
+          transition={{ duration: 0.3, ease: 'easeInOut' }}
+          className={`pointer-events-auto w-full max-w-[1000px] flex items-center justify-between rounded-full border border-white/10 px-4 py-2 shadow-[0_8px_32px_rgba(0,0,0,0.2)] backdrop-blur-md transition-colors duration-300 ${
+            scrolled ? 'bg-[#06060A]/80' : 'bg-[#06060A]/40'
+          }`}
+        >
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2.5 no-underline outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-full p-1">
+            <Image src="/logo.png" alt="EDUING logo" width={28} height={28} className="object-contain invert w-auto h-auto" priority />
+            <span className="font-display text-lg font-extrabold tracking-tight text-white leading-none flex items-center">
+              EDUING<span className="text-[#818CF8] text-[10px] ml-0.5 mt-1">.in</span>
+            </span>
+          </Link>
 
-        {/* Nav links */}
-        <div className="hidden md:flex items-center gap-1">
-          {NAV_LINKS.map((l) => {
-            const isActive = pathname === l.href
-            return (
-              <Link
-                key={l.label}
-                href={l.href}
-                className={`rounded-full px-4.5 py-2 text-sm transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-lighter focus-visible:outline-offset-2 hover:text-white hover:bg-white/10 ${
-                  isActive ? 'text-white font-semibold bg-white/[0.08]' : 'text-text-secondary font-medium'
-                }`}
-              >
-                {l.label}
-              </Link>
-            )
-          })}
-        </div>
+          {/* Nav links (Desktop) */}
+          <div className="hidden md:flex items-center gap-8">
+            {NAV_LINKS.map((l) => {
+              const isActive = pathname === l.href
+              return (
+                <Link
+                  key={l.label}
+                  href={l.href}
+                  className="relative group py-2 text-[14px] font-medium transition-colors duration-300 outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-md"
+                >
+                  <span className={`${isActive ? 'text-white' : 'text-white/60 group-hover:text-white'} transition-colors`}>
+                    {l.label}
+                  </span>
+                  {isActive ? (
+                    <motion.div
+                      layoutId="navbar-indicator"
+                      className="absolute -bottom-1 left-0 right-0 h-[2px] bg-gradient-to-r from-[#5B5FEF] to-[#818CF8] rounded-full"
+                    />
+                  ) : (
+                    <div className="absolute -bottom-1 left-0 right-0 h-[2px] bg-white/30 scale-x-0 group-hover:scale-x-100 transition-transform origin-left rounded-full duration-300" />
+                  )}
+                </Link>
+              )
+            })}
+          </div>
 
-        {/* CTAs */}
-        <div className="flex flex-1 items-center justify-end gap-2">
-          <a
-            href={APP_URL}
-            rel="noopener noreferrer"
-            className="rounded-full px-4 py-2 text-sm font-medium text-white/60 transition-colors duration-200 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-lighter focus-visible:outline-offset-2"
-          >
-            Log in
-          </a>
-          <a href={`${APP_URL}/`} rel="noopener noreferrer" className="no-underline">
-            <motion.div
-              whileHover={{ scale: 1.05, y: -1 }}
-              whileTap={{ scale: 0.98 }}
-              className="rounded-full bg-gradient-to-br from-[#E0E0FF] to-white px-5.5 py-2.5 text-sm font-semibold text-bg shadow-[0_4px_15px_rgba(255,255,255,0.1)] transition-shadow duration-200 hover:shadow-[0_8px_25px_rgba(255,255,255,0.15)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-lighter focus-visible:outline-offset-2"
+          {/* CTAs (Desktop) */}
+          <div className="hidden md:flex items-center gap-3">
+            <a
+              href={APP_URL}
+              rel="noopener noreferrer"
+              className="px-4 py-2 text-[14px] font-medium text-white/60 transition-colors duration-200 hover:text-white outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-full"
             >
-              Get started
+              Log in
+            </a>
+            <a href={`${APP_URL}/`} rel="noopener noreferrer" className="no-underline outline-none">
+              <motion.div
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="rounded-full bg-gradient-to-r from-[#5B5FEF] to-[#818CF8] px-5 py-2.5 text-[14px] font-medium text-white shadow-[0_4px_20px_rgba(91,95,239,0.3)] transition-shadow hover:shadow-[0_4px_25px_rgba(91,95,239,0.5)] focus-visible:ring-2 focus-visible:ring-white"
+              >
+                Get started
+              </motion.div>
+            </a>
+          </div>
+
+          {/* Mobile Menu Toggle */}
+          <button
+            className="md:hidden p-2 text-white/70 hover:text-white outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-full"
+            onClick={() => setMobileMenuOpen(true)}
+            aria-label="Open menu"
+          >
+            <Menu className="w-5 h-5" />
+          </button>
+        </motion.nav>
+      </div>
+
+      {/* Mobile Menu Sidebar */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 z-[150] bg-black/60 backdrop-blur-sm"
+              onClick={() => setMobileMenuOpen(false)}
+            />
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="fixed inset-y-0 right-0 z-[200] w-full max-w-[280px] bg-[#06060A]/95 backdrop-blur-2xl border-l border-white/10 p-6 flex flex-col shadow-2xl"
+            >
+              <div className="flex justify-end mb-8">
+                <button
+                  className="p-2 text-white/70 hover:text-white bg-white/5 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                  onClick={() => setMobileMenuOpen(false)}
+                  aria-label="Close menu"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+              <div className="flex flex-col gap-6">
+                {NAV_LINKS.map((l) => {
+                  const isActive = pathname === l.href
+                  return (
+                    <Link
+                      key={l.label}
+                      href={l.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={`text-xl font-medium outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-md px-2 py-1 ${
+                        isActive ? 'text-white' : 'text-white/60 hover:text-white'
+                      }`}
+                    >
+                      {l.label}
+                    </Link>
+                  )
+                })}
+                <hr className="border-white/10 my-2 mx-2" />
+                <a
+                  href={APP_URL}
+                  className="px-2 py-1 text-lg font-medium text-white/60 hover:text-white outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-md"
+                >
+                  Log in
+                </a>
+                <a
+                  href={`${APP_URL}/`}
+                  className="mt-2 flex justify-center items-center rounded-full bg-gradient-to-r from-[#5B5FEF] to-[#818CF8] px-6 py-3 text-base font-medium text-white shadow-[0_4px_20px_rgba(91,95,239,0.3)] outline-none focus-visible:ring-2 focus-visible:ring-white"
+                >
+                  Get started
+                </a>
+              </div>
             </motion.div>
-          </a>
-        </div>
-      </motion.nav>
-    </div>
+          </>
+        )}
+      </AnimatePresence>
+    </>
   )
 }

@@ -110,8 +110,7 @@ export default function UniversitySection() {
                       <div key={bar.month} className="flex flex-1 flex-col items-center gap-2">
                         <motion.div
                           initial={{ height: 0 }}
-                          whileInView={{ height: `${bar.height}%` }}
-                          viewport={{ once: true }}
+                          animate={{ height: `${bar.height}%` }}
                           transition={{ duration: 1, delay: 0.3 + i * 0.1 }}
                           className={`w-full rounded-t-md ${
                             i === barData.length - 2
