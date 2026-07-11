@@ -37,29 +37,31 @@ export default function Hero() {
         {/* LEFT: Text and CTAs */}
         <div className="flex flex-[1_1_500px] flex-col text-left">
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="mb-6 font-display text-[clamp(48px,6vw,72px)] font-extrabold leading-[1.05] tracking-[-0.04em] text-white"
           >
-            Apply to Top Universities
+            Apply to India&apos;s
+            <br />
+            Top Universities
             <br />
             <span className="bg-gradient-to-br from-[#818CF8] via-accent to-[#A78BFA] bg-clip-text text-transparent">
-              in One Place
+              In One Place
             </span>
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="mb-10 max-w-[540px] text-[clamp(18px,2vw,20px)] leading-relaxed text-text-secondary"
           >
-            Complete your profile, apply seamlessly, and track your admission status — all in one platform.
+            Explore universities, compare programs, submit applications, and track every step of your admission journey—all from a single account.
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="relative flex flex-wrap gap-4"
@@ -93,7 +95,7 @@ export default function Hero() {
 
         {/* RIGHT: decorative mockup */}
         <motion.div
-          initial={{ opacity: 0, x: 40 }}
+          initial={false}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
           className="relative flex flex-[1_1_500px] justify-center [perspective:1000px]"

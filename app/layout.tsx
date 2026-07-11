@@ -71,14 +71,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${syne.variable} ${dmSans.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${syne.variable} ${dmSans.variable} relative`}>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body suppressHydrationWarning className="m-0 p-0 bg-bg font-sans">
+      <body suppressHydrationWarning className="m-0 p-0 bg-bg font-sans relative">
         <Navbar />
         <main>{children}</main>
         <Footer />

@@ -1,6 +1,5 @@
 'use client'
-import { motion, useInView } from 'framer-motion'
-import { useRef } from 'react'
+import { motion } from 'framer-motion'
 import { GraduationCap, BarChart3, FileText, ShieldCheck, type LucideIcon } from 'lucide-react'
 
 type Feature = {
@@ -43,15 +42,12 @@ const FEATURES: Feature[] = [
 ]
 
 function FeatureCard({ f, i }: { f: Feature; i: number }) {
-  const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-60px' })
   const Icon = f.icon
 
   return (
     <motion.div
-      ref={ref}
       initial={{ opacity: 0, y: 30 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
       whileHover={{ y: -5 }}
       className="group relative cursor-default overflow-hidden rounded-3xl border border-white/5 bg-white/[0.03] p-10 shadow-[0_10px_30px_rgba(0,0,0,0.2)] backdrop-blur-2xl transition-colors duration-300 hover:bg-white/[0.06]"
@@ -90,16 +86,13 @@ function FeatureCard({ f, i }: { f: Feature; i: number }) {
 }
 
 export default function Features() {
-  const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
     <section id="features" className="relative bg-bg px-6 py-[140px]">
       <div className="mx-auto max-w-[1100px]">
         <motion.div
-          ref={ref}
           initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="mb-20 text-center"
         >
