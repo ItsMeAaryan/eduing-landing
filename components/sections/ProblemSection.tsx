@@ -12,7 +12,7 @@ const problems = [
 
 export default function ProblemSection() {
   return (
-    <section className="section-padding bg-bg" id="problems">
+    <section className="section-padding bg-bg" id="problems" aria-label="The Problem We Solve">
       <div className="container-main">
         <AnimatedSection>
           <span className="section-label border-gold/20 bg-gold/10 text-gold">THE PROBLEM</span>

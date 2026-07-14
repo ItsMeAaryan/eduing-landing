@@ -10,7 +10,7 @@ const APK_URL = 'https://drive.google.com/file/d/1aYbvkL0WC7Tr_9aKOSmNfYk66YskWC
 
 export default function DownloadSection() {
   return (
-    <section id="download" className="section-padding relative overflow-hidden bg-[#08080A]">
+    <section id="download" className="section-padding relative overflow-hidden bg-[#08080A]" aria-labelledby="download-heading">
       <div
         className="pointer-events-none absolute left-1/2 top-1/2 h-[400px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[100px]"
         style={{ background: 'radial-gradient(circle, rgba(91,95,239,0.15) 0%, transparent 70%)' }}
@@ -20,7 +20,7 @@ export default function DownloadSection() {
       <div className="container-main text-center">
         <AnimatedSection>
           <div className="section-label">Mobile App</div>
-          <h2 className="section-title mb-8 text-[clamp(32px,6vw,56px)]">
+          <h2 id="download-heading" className="section-title mb-8 text-[clamp(32px,6vw,56px)]">
             Get the <span className="text-accent">EDUING App</span>
           </h2>
           <p className="mx-auto mb-12 max-w-[600px] text-lg leading-relaxed text-white/50">

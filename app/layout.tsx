@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Syne, DM_Sans } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/landing/Navbar";
-import Footer from "@/components/Footer";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 
 const syne = Syne({
   subsets: ["latin"],
@@ -22,6 +22,9 @@ const siteUrl = "https://eduing.in";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+  alternates: {
+    canonical: siteUrl,
+  },
   title: {
     default: "EDUING.in — Unified University Admissions Platform",
     template: "%s | EDUING.in",
@@ -46,6 +49,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
+    site: "@eduing_in",
+    creator: "@eduing_in",
     title: "EDUING.in — Unified University Admissions Platform",
     description: "One profile. Hundreds of universities. Zero repeated forms.",
     images: ["/og-image.png"],
@@ -56,14 +61,33 @@ export const metadata: Metadata = {
   },
 };
 
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: 'EDUING.in',
-  url: siteUrl,
-  description:
-    'Unified university admissions platform for India. One profile, hundreds of universities, zero repeated forms.',
-};
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'EDUING.in',
+    url: siteUrl,
+    logo: `${siteUrl}/logo.png`,
+    sameAs: [
+      'https://twitter.com/eduing_in',
+      'https://www.linkedin.com/company/eduing-in'
+    ],
+    description: 'Unified university admissions platform for India. One profile, hundreds of universities, zero repeated forms.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'EDUING.in',
+    url: siteUrl,
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: `${siteUrl}/search?q={search_term_string}`,
+      'query-input': 'required name=search_term_string'
+    }
+  }
+];
+
+import { MotionProvider } from "@/components/providers/MotionProvider";
 
 export default function RootLayout({
   children,
@@ -79,9 +103,11 @@ export default function RootLayout({
         />
       </head>
       <body suppressHydrationWarning className="m-0 p-0 bg-bg font-sans relative">
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+        <MotionProvider>
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+        </MotionProvider>
       </body>
     </html>
   );

@@ -11,6 +11,7 @@ export default function StatsBar() {
   return (
     <section
       id="stats-bar"
+      aria-label="Partner Universities"
       className="relative overflow-hidden border-y border-white/[0.04] bg-bg/40 py-8"
     >
       {/* Fade masks */}

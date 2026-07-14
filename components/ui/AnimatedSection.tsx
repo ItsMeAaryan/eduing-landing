@@ -14,10 +14,10 @@ export default function AnimatedSection({ children, delay = 0, className = '' }:
 
   return (
     <motion.div
-      initial={reduceMotion ? false : { opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-
-      transition={{ duration: 0.5, ease: 'easeOut', delay }}
+      initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1], delay }}
       className={className}
     >
       {children}

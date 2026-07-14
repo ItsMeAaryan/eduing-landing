@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
@@ -17,26 +17,20 @@ const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.eduing.in'
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [hidden, setHidden] = useState(false)
-  const [lastScrollY, setLastScrollY] = useState(0)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const pathname = usePathname()
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY
-      setScrolled(currentScrollY > 50)
-      
-      if (currentScrollY > lastScrollY && currentScrollY > 150) {
-        setHidden(true)
-      } else {
-        setHidden(false)
-      }
-      setLastScrollY(currentScrollY)
+  const { scrollY } = useScroll()
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setScrolled(latest > 50)
+    const previous = scrollY.getPrevious() || 0
+    if (latest > previous && latest > 150) {
+      setHidden(true)
+    } else {
+      setHidden(false)
     }
-    
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [lastScrollY])
+  })
 
   // Prevent scroll when mobile menu is open
   useEffect(() => {
@@ -56,14 +50,14 @@ export default function Navbar() {
         <motion.nav
           initial={false}
           animate={{ y: hidden ? -100 : 0, opacity: hidden ? 0 : 1 }}
-          transition={{ duration: 0.3, ease: 'easeInOut' }}
+          transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
           className={`pointer-events-auto w-full max-w-[1000px] flex items-center justify-between rounded-full border border-white/10 px-4 py-2 shadow-[0_8px_32px_rgba(0,0,0,0.2)] backdrop-blur-md transition-colors duration-300 ${
             scrolled ? 'bg-[#06060A]/80' : 'bg-[#06060A]/40'
           }`}
         >
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 no-underline outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-full p-1">
-            <Image src="/logo.png" alt="EDUING logo" width={28} height={28} className="object-contain invert w-auto h-auto" priority />
+          <Link href="/" aria-label="EDUING Home" className="flex items-center gap-2.5 no-underline outline-none focus-visible:ring-2 focus-visible:ring-[#5B5FEF] rounded-full p-1">
+            <Image src="/logo.png" alt="EDUING Logo" width={28} height={28} className="object-contain invert w-auto h-auto" priority />
             <span className="font-display text-lg font-extrabold tracking-tight text-white leading-none flex items-center">
               EDUING<span className="text-[#818CF8] text-[10px] ml-0.5 mt-1">.in</span>
             </span>
@@ -77,7 +71,7 @@ export default function Navbar() {
                 <Link
                   key={l.label}
                   href={l.href}
-                  className="relative group py-2 text-[14px] font-medium transition-colors duration-300 outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-md"
+                  className="relative group py-2 text-[14px] font-medium transition-colors duration-300 outline-none focus-visible:ring-2 focus-visible:ring-[#5B5FEF] rounded-md"
                 >
                   <span className={`${isActive ? 'text-white' : 'text-white/60 group-hover:text-white'} transition-colors`}>
                     {l.label}
@@ -100,14 +94,14 @@ export default function Navbar() {
             <a
               href={APP_URL}
               rel="noopener noreferrer"
-              className="px-4 py-2 text-[14px] font-medium text-white/60 transition-colors duration-200 hover:text-white outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-full"
+              className="px-4 py-2 text-[14px] font-medium text-white/60 transition-colors duration-200 hover:text-white outline-none focus-visible:ring-2 focus-visible:ring-[#5B5FEF] rounded-full"
             >
               Log in
             </a>
             <a href={`${APP_URL}/`} rel="noopener noreferrer" className="no-underline outline-none">
               <motion.div
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 className="rounded-full bg-gradient-to-r from-[#5B5FEF] to-[#818CF8] px-5 py-2.5 text-[14px] font-medium text-white shadow-[0_4px_20px_rgba(91,95,239,0.3)] transition-shadow hover:shadow-[0_4px_25px_rgba(91,95,239,0.5)] focus-visible:ring-2 focus-visible:ring-white"
               >
                 Get started
@@ -115,11 +109,12 @@ export default function Navbar() {
             </a>
           </div>
 
-          {/* Mobile Menu Toggle */}
           <button
-            className="md:hidden p-2 text-white/70 hover:text-white outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-full"
+            className="md:hidden p-2 text-white/70 hover:text-white outline-none focus-visible:ring-2 focus-visible:ring-[#5B5FEF] rounded-full"
             onClick={() => setMobileMenuOpen(true)}
             aria-label="Open menu"
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-menu"
           >
             <Menu className="w-5 h-5" />
           </button>
@@ -139,6 +134,7 @@ export default function Navbar() {
               onClick={() => setMobileMenuOpen(false)}
             />
             <motion.div
+              id="mobile-menu"
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
@@ -147,7 +143,7 @@ export default function Navbar() {
             >
               <div className="flex justify-end mb-8">
                 <button
-                  className="p-2 text-white/70 hover:text-white bg-white/5 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                  className="p-2 text-white/70 hover:text-white bg-white/5 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-[#5B5FEF]"
                   onClick={() => setMobileMenuOpen(false)}
                   aria-label="Close menu"
                 >
@@ -162,7 +158,7 @@ export default function Navbar() {
                       key={l.label}
                       href={l.href}
                       onClick={() => setMobileMenuOpen(false)}
-                      className={`text-xl font-medium outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-md px-2 py-1 ${
+                      className={`text-xl font-medium outline-none focus-visible:ring-2 focus-visible:ring-[#5B5FEF] rounded-md px-2 py-1 ${
                         isActive ? 'text-white' : 'text-white/60 hover:text-white'
                       }`}
                     >
@@ -173,7 +169,7 @@ export default function Navbar() {
                 <hr className="border-white/10 my-2 mx-2" />
                 <a
                   href={APP_URL}
-                  className="px-2 py-1 text-lg font-medium text-white/60 hover:text-white outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-md"
+                  className="px-2 py-1 text-lg font-medium text-white/60 hover:text-white outline-none focus-visible:ring-2 focus-visible:ring-[#5B5FEF] rounded-md"
                 >
                   Log in
                 </a>

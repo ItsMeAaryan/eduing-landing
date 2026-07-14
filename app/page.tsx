@@ -1,13 +1,15 @@
+import dynamic from 'next/dynamic';
 import Hero from '@/components/landing/Hero';
-import Features from '@/components/landing/Features';
-import HowItWorks from '@/components/landing/HowItWorks';
 import StatsBar from '@/components/sections/StatsBar';
-import UniversitySection from '@/components/sections/UniversitySection';
-import TestimonialsSection from '@/components/sections/TestimonialsSection';
-import FAQSection from '@/components/sections/FAQSection';
-import CTASection from '@/components/sections/CTASection';
-import ProblemSection from '@/components/sections/ProblemSection';
-import DownloadSection from '@/components/sections/DownloadSection';
+
+const UniversitySection = dynamic(() => import('@/components/sections/UniversitySection'), { ssr: true });
+const Features = dynamic(() => import('@/components/landing/Features'), { ssr: true });
+const HowItWorks = dynamic(() => import('@/components/landing/HowItWorks'), { ssr: true });
+const ProblemSection = dynamic(() => import('@/components/sections/ProblemSection'), { ssr: true });
+const TestimonialsSection = dynamic(() => import('@/components/sections/TestimonialsSection'), { ssr: true });
+const FAQSection = dynamic(() => import('@/components/sections/FAQSection'), { ssr: true });
+const CTASection = dynamic(() => import('@/components/sections/CTASection'), { ssr: true });
+const DownloadSection = dynamic(() => import('@/components/sections/DownloadSection'), { ssr: true });
 
 export default function Home() {
   return (
