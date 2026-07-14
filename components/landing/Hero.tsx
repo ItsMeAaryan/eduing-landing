@@ -86,15 +86,6 @@ export default function Hero() {
               >
                 Start Application
               </motion.a>
-
-              <motion.a
-                href="#universities"
-                whileHover={{ scale: 1.02, backgroundColor: 'rgba(255,255,255,0.08)' }}
-                whileTap={{ scale: 0.98 }}
-                className="relative z-10 inline-flex items-center justify-center rounded-full border border-white/15 bg-white/[0.03] px-8 py-4 text-[15px] font-medium text-white no-underline backdrop-blur-md transition-all duration-300 hover:border-white/25 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#5B5FEF] focus-visible:outline-offset-2"
-              >
-                Explore Universities
-              </motion.a>
             </div>
 
             <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-[13px] font-medium text-white/50">

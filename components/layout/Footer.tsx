@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { Github } from 'lucide-react'
 
 export default function Footer() {
   return (
@@ -32,13 +31,6 @@ export default function Footer() {
             <p className="max-w-[280px] text-[14px] leading-relaxed text-white/50">
               Simplifying university admissions through one intelligent platform powered by AI.
             </p>
-
-            {/* Social Icons */}
-            <div className="mt-2 flex items-center gap-4">
-              <a href="https://github.com/princemittalr" aria-label="GitHub" target="_blank" rel="noopener noreferrer" className="group flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/50 transition-all duration-200 hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/10 hover:text-white hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/50">
-                <Github size={18} className="transition-transform duration-200 group-hover:scale-110" />
-              </a>
-            </div>
           </div>
 
           {/* Links Columns */}

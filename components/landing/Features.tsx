@@ -1,6 +1,6 @@
 'use client'
 import { motion } from 'framer-motion'
-import { User, Activity, Sparkles, ShieldCheck, CheckCircle2, FileText, Check, Lock, ArrowRight } from 'lucide-react'
+import { User, Activity, Sparkles, ShieldCheck, CheckCircle2, FileText, Check, Lock } from 'lucide-react'
 
 export default function Features() {
   return (
@@ -25,17 +25,12 @@ export default function Features() {
           <h2 id="features-heading" className="mb-6 font-display text-4xl font-extrabold leading-[1.15] tracking-[-0.02em] text-white lg:text-5xl">
             One Profile.<br />
             Every University.<br />
-            <span className="text-white/40">Zero Repetition.</span>
+            <span className="bg-gradient-to-br from-[#818CF8] via-[#5B5FEF] to-[#A78BFA] bg-clip-text text-transparent">Zero Repetition.</span>
           </h2>
 
-          <p className="mb-8 max-w-md text-base leading-relaxed text-white/50">
+          <p className="max-w-md text-base leading-relaxed text-white/50">
             Build your comprehensive academic profile once, and use it to seamlessly apply to hundreds of top universities worldwide without ever filling out repetitive forms.
           </p>
-
-          <button className="group flex items-center gap-2 rounded-full bg-white/5 px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-white/10 hover:shadow-[0_4px_16px_rgba(255,255,255,0.05)]">
-            Learn how it works 
-            <ArrowRight size={16} className="transition-transform duration-200 group-hover:translate-x-1" />
-          </button>
         </motion.div>
 
         {/* Right Column (60%) */}

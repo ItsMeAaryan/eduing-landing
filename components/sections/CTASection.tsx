@@ -60,19 +60,13 @@ export default function CTASection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.3 }}
           viewport={{ once: true }}
-          className="mb-14 flex flex-col items-center gap-4 sm:flex-row"
+          className="mb-14 flex flex-col items-center justify-center gap-4 sm:flex-row"
         >
           <a
             href={APP_URL}
             className="flex items-center justify-center rounded-full bg-white px-8 py-3.5 text-[15px] font-bold text-black transition-all duration-200 hover:-translate-y-[2px] hover:shadow-[0_8px_20px_rgba(255,255,255,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           >
             Start Your Journey
-          </a>
-          <a
-            href="/explore"
-            className="flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-8 py-3.5 text-[15px] font-medium text-white transition-all duration-200 hover:-translate-y-[2px] hover:border-white/30 hover:bg-white/10 hover:shadow-[0_8px_20px_rgba(255,255,255,0.05)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/50"
-          >
-            Explore Programs
           </a>
         </motion.div>
 

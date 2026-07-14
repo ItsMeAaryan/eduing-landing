@@ -19,8 +19,8 @@ export default function AboutPage() {
             transition={{ duration: 0.5 }}
             className="font-display text-5xl font-extrabold leading-[1.1] tracking-tight text-white md:text-6xl lg:text-7xl mb-6"
           >
-            We&apos;re Building The Future Of<br />
-            <span className="text-white/40">University Admissions In India.</span>
+            We&apos;re Building The <span className="bg-gradient-to-br from-[#818CF8] via-[#5B5FEF] to-[#A78BFA] bg-clip-text text-transparent">Future</span> Of<br />
+            University Admissions In India.
           </motion.h1>
           
           <motion.p 
