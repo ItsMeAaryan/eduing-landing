@@ -1,6 +1,11 @@
 import type { Metadata } from 'next';
 import Features from '@/components/landing/Features';
 import CTASection from '@/components/sections/CTASection';
+import ApplicationTrackingSection from '@/components/sections/ApplicationTrackingSection';
+import UniversityComparisonSection from '@/components/sections/UniversityComparisonSection';
+import SmartDocumentVaultSection from '@/components/sections/SmartDocumentVaultSection';
+import UniversitiesFeatureSection from '@/components/sections/UniversitiesFeatureSection';
+import PlatformInActionSection from '@/components/sections/PlatformInActionSection';
 
 export const metadata: Metadata = {
   title: 'Features',
@@ -25,6 +30,11 @@ export default function FeaturesPage() {
         </p>
       </div>
       <Features />
+      <ApplicationTrackingSection />
+      <UniversityComparisonSection />
+      <SmartDocumentVaultSection />
+      <UniversitiesFeatureSection />
+      <PlatformInActionSection />
       <CTASection />
     </main>
   );
