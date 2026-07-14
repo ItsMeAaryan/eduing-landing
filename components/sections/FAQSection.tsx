@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, ArrowRight } from 'lucide-react'
+import Link from 'next/link'
 
 const faqs = [
   {
@@ -118,9 +119,9 @@ export default function FAQSection() {
           className="flex items-center justify-center gap-2 text-sm"
         >
           <span className="text-white/50">Still have questions?</span>
-          <button className="group flex items-center gap-1 font-medium text-white transition-colors hover:text-white/80">
+          <Link href="/contact" className="group flex items-center gap-1 font-medium text-white transition-colors hover:text-white/80">
             Contact our team <ArrowRight size={14} className="transition-transform duration-200 group-hover:translate-x-0.5" />
-          </button>
+          </Link>
         </motion.div>
       </div>
     </section>
