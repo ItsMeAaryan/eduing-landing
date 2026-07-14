@@ -21,35 +21,4 @@ export const HOW_IT_WORKS_STEPS = [
   },
 ] as const
 
-export type FooterColumn = {
-  title: string
-  links: { label: string; href: string }[]
-}
 
-// NOTE: links pointing to "#" are placeholders for pages not yet built.
-// Track build status here so the footer can filter/flag them instead of
-// shipping dead links silently.
-export const FOOTER_COLUMNS: FooterColumn[] = [
-  {
-    title: 'Platform',
-    links: [
-      { label: 'Features', href: '/#features' },
-      { label: 'Universities', href: '/#universities' },
-    ],
-  },
-  {
-    title: 'Company',
-    links: [
-      { label: 'About', href: '/about' },
-      { label: 'Contact', href: '/contact' },
-    ],
-  },
-  {
-    title: 'Legal',
-    links: [
-      { label: 'Privacy', href: '/privacy' },
-      { label: 'Terms', href: '/terms' },
-      { label: 'Trademark', href: '/trademark' },
-    ],
-  },
-]
