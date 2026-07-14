@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import Navbar from '@/components/landing/Navbar';
+import Navbar from '@/components/layout/Navbar';
 
 describe('Navbar', () => {
   it('renders the "Get started" CTA unconditionally, not gated behind scroll state (regression: was opacity:0 until scroll>80px)', () => {

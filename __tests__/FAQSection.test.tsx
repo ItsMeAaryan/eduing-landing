@@ -5,7 +5,7 @@ import FAQSection from '@/components/sections/FAQSection';
 describe('FAQSection', () => {
   it('renders FAQ questions', () => {
     render(<FAQSection />);
-    expect(screen.getByText(/How does EDUING\.in help me/i)).toBeInTheDocument();
+    expect(screen.getByText(/Can I apply to multiple universities\?/i)).toBeInTheDocument();
   });
 
   it('uses real <button> elements for accordion triggers (a11y regression guard)', () => {
