@@ -19,12 +19,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid submission' }, { status: 400 });
   }
 
-  console.info('[contact-form-submission]', {
-    name: body.name,
-    email: body.email,
-    subject: body.subject,
-    receivedAt: new Date().toISOString(),
-  });
 
   return NextResponse.json({ ok: true });
 }

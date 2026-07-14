@@ -40,7 +40,7 @@ export default function SmartDocumentVaultSection() {
             className="mb-6 font-display text-4xl font-extrabold leading-[1.15] tracking-[-0.02em] text-white lg:text-5xl"
           >
             Upload Once.<br />
-            <span className="text-white/40">Use Everywhere.</span>
+            <span className="bg-gradient-to-br from-[#818CF8] via-[#5B5FEF] to-[#A78BFA] bg-clip-text text-transparent">Use Everywhere.</span>
           </motion.h2>
 
           <motion.p 

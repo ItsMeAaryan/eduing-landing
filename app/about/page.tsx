@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowRight, Github, Linkedin, CheckCircle2, Sparkles, ShieldCheck, Eye, Users, Lightbulb, Search, Send, Activity, BookOpen, User, Building2, Check, AlertCircle } from 'lucide-react'
+import { Github, Linkedin, CheckCircle2, Sparkles, ShieldCheck, Eye, Users, Lightbulb, Search, Send, Activity, BookOpen, User, Building2, Check, AlertCircle } from 'lucide-react'
 
 export default function AboutPage() {
   return (
@@ -69,7 +69,7 @@ export default function AboutPage() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.1 }}
               viewport={{ once: true }}
-              className="font-display text-4xl font-extrabold mb-12 text-white"
+              className="font-display text-4xl lg:text-5xl font-extrabold mb-12 text-white"
             >
               The Broken System
             </motion.h2>
@@ -137,38 +137,39 @@ export default function AboutPage() {
       </section>
 
       {/* 3. OUR MISSION */}
-      <section className="px-6 py-24">
-        <div className="mx-auto max-w-[800px] text-center flex flex-col items-center">
-          <motion.div 
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="w-24 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent mb-12"
-          />
+      <section className="px-6 py-32 relative overflow-hidden">
+        <div className="mx-auto max-w-[900px] flex flex-col items-center">
           
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             viewport={{ once: true }}
-            className="relative p-1 rounded-2xl bg-gradient-to-b from-white/10 to-transparent"
+            className="relative w-full rounded-[32px] border border-white/10 bg-[#050505] overflow-hidden shadow-[0_20px_80px_-20px_rgba(0,0,0,0.5)]"
           >
-            <div className="bg-[#0A0A0A] rounded-xl p-10 border border-white/5 shadow-[0_0_40px_rgba(255,255,255,0.02)]">
-              <span className="text-[11px] font-bold tracking-[0.2em] text-[#818CF8] uppercase block mb-6">OUR MISSION</span>
-              <h3 className="font-display text-2xl md:text-4xl font-bold leading-tight text-white">
-                To build India&apos;s default university admissions infrastructure, where technology removes friction and amplifies opportunity for every student.
+            {/* Soft radial background glow */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-[#818CF8]/10 rounded-full blur-[100px] pointer-events-none" />
+            
+            {/* Glassmorphism overlay */}
+            <div className="relative z-10 flex flex-col items-center text-center p-12 md:p-20 backdrop-blur-xl bg-white/[0.02]">
+              <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-[#818CF8]/20 bg-[#818CF8]/10 px-3 py-1">
+                <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-[#818CF8]">
+                  OUR MISSION
+                </span>
+              </div>
+              
+              <h3 className="font-display text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.15] tracking-[-0.02em] text-white mb-8">
+                Building India&apos;s<br />
+                University Admissions<br />
+                <span className="bg-gradient-to-br from-[#818CF8] via-[#5B5FEF] to-[#A78BFA] bg-clip-text text-transparent">Infrastructure.</span>
               </h3>
+              
+              <p className="text-[16px] md:text-[18px] leading-relaxed text-white/50 max-w-[600px]">
+                We&apos;re building one intelligent platform where technology removes friction, eliminates repetitive work, and creates equal opportunities for every student.
+              </p>
             </div>
           </motion.div>
 
-          <motion.div 
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="w-24 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent mt-12"
-          />
         </div>
       </section>
 
@@ -180,12 +181,12 @@ export default function AboutPage() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
             viewport={{ once: true }}
-            className="font-display text-3xl font-bold text-white mb-16"
+            className="font-display text-4xl font-extrabold text-white mb-16"
           >
-            Core Principles
+            Core <span className="bg-gradient-to-br from-[#818CF8] via-[#5B5FEF] to-[#A78BFA] bg-clip-text text-transparent">Principles</span>
           </motion.h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
             {[
               { icon: User, title: 'Student First', desc: 'Every feature begins with improving the student\'s experience.' },
               { icon: Eye, title: 'Transparency', desc: 'Admissions should be clear and easy.' },
@@ -200,10 +201,10 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: i * 0.1 }}
                 viewport={{ once: true }}
-                className="group flex flex-col gap-4 rounded-2xl border border-white/5 bg-white/[0.02] p-8 transition-all duration-300 hover:-translate-y-1 hover:border-white/10 hover:bg-white/[0.04] hover:shadow-[0_10px_30px_-10px_rgba(255,255,255,0.05)]"
+                className="group flex flex-col gap-4 rounded-3xl border border-white/5 bg-white/[0.02] p-8 transition-all duration-300 hover:-translate-y-2 hover:border-[#818CF8]/30 hover:bg-white/[0.04] hover:shadow-[0_12px_40px_-10px_rgba(129,140,248,0.15)]"
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-white/60 group-hover:bg-[#818CF8]/10 group-hover:text-[#818CF8] transition-colors">
-                  <principle.icon size={18} />
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/5 text-white/60 group-hover:bg-[#818CF8]/20 group-hover:text-[#818CF8] group-hover:shadow-[0_0_20px_rgba(129,140,248,0.3)] transition-all duration-300">
+                  <principle.icon size={20} />
                 </div>
                 <h3 className="text-[18px] font-bold text-white">{principle.title}</h3>
                 <p className="text-[14px] text-white/50 leading-relaxed">{principle.desc}</p>
@@ -221,14 +222,14 @@ export default function AboutPage() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
             viewport={{ once: true }}
-            className="font-display text-3xl md:text-5xl font-bold text-white mb-20"
+            className="font-display text-4xl md:text-5xl font-extrabold text-white mb-20"
           >
-            The New Standard.
+            The New <span className="bg-gradient-to-br from-[#818CF8] via-[#5B5FEF] to-[#A78BFA] bg-clip-text text-transparent">Standard.</span>
           </motion.h2>
 
           <div className="flex flex-col lg:flex-row items-center justify-center w-full gap-4 lg:gap-0 relative">
             {/* Desktop Connector Line */}
-            <div className="hidden lg:block absolute top-1/2 left-[10%] right-[10%] h-[1px] bg-white/10 -z-10" />
+            <div className="hidden lg:block absolute top-1/2 left-[10%] right-[10%] h-[2px] bg-gradient-to-r from-transparent via-white/10 to-transparent -z-10" />
 
             {[
               { icon: User, label: 'Create Profile' },
@@ -244,12 +245,12 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4, delay: i * 0.1 }}
                 viewport={{ once: true }}
-                className="flex flex-col items-center gap-4 flex-1"
+                className="group flex flex-col items-center gap-4 flex-1"
               >
-                <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-[#5B5FEF]/30 bg-[#0A0A0A] shadow-[0_0_20px_rgba(91,95,239,0.15)] relative z-10">
-                  <step.icon size={20} className="text-[#818CF8]" />
+                <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-[#0A0A0A] shadow-lg transition-all duration-300 group-hover:-translate-y-1 group-hover:border-[#5B5FEF]/50 group-hover:shadow-[0_0_25px_rgba(91,95,239,0.3)] relative z-10">
+                  <step.icon size={20} className="text-white/60 group-hover:text-[#818CF8] transition-colors duration-300" />
                 </div>
-                <span className="text-[13px] font-bold text-white/80">{step.label}</span>
+                <span className="text-[13px] font-bold text-white/60 group-hover:text-white transition-colors duration-300">{step.label}</span>
               </motion.div>
             ))}
           </div>
@@ -264,12 +265,13 @@ export default function AboutPage() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
             viewport={{ once: true }}
-            className="font-display text-3xl font-bold text-white mb-16 text-center"
+            className="font-display text-4xl font-extrabold text-white mb-16 text-center"
           >
-            One Ecosystem. Two Powerful Experiences.
+            One Ecosystem.<br />
+            <span className="bg-gradient-to-br from-[#818CF8] via-[#5B5FEF] to-[#A78BFA] bg-clip-text text-transparent">Two Powerful Experiences.</span>
           </motion.h2>
 
-          <div className="flex flex-col lg:flex-row gap-6 w-full">
+          <div className="flex flex-col lg:flex-row gap-8 w-full">
             
             {/* Student Workspace */}
             <motion.div 
@@ -277,23 +279,23 @@ export default function AboutPage() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
               viewport={{ once: true }}
-              className="flex-1 flex flex-col rounded-3xl border border-white/5 bg-[#0A0A0A] overflow-hidden"
+              className="group flex-1 flex flex-col rounded-3xl border border-white/5 bg-[#0A0A0A] overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:border-white/10 hover:shadow-[0_15px_40px_-10px_rgba(0,0,0,0.5)]"
             >
-              <div className="p-8 border-b border-white/5">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-500/10 text-blue-400">
-                    <User size={14} />
+              <div className="p-10 border-b border-white/5">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-500/10 text-blue-400 group-hover:scale-110 group-hover:bg-blue-500/20 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-300">
+                    <User size={18} />
                   </div>
-                  <h3 className="text-xl font-bold text-white">Student Workspace</h3>
+                  <h3 className="text-2xl font-bold text-white">Student Workspace</h3>
                 </div>
-                <p className="text-sm text-white/50">Everything a student needs to get accepted.</p>
+                <p className="text-base text-white/50">Everything a student needs to get accepted.</p>
               </div>
-              <div className="p-8 bg-black/20 flex-1">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="p-10 bg-black/40 flex-1">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {['AI Discovery', 'One Profile', 'Applications Tracking', 'Document Vault', 'Offer Management'].map((item, i) => (
-                    <div key={i} className="flex items-center gap-3 rounded-xl bg-white/5 p-3 border border-white/5">
-                      <Check size={14} className="text-blue-400" />
-                      <span className="text-[13px] font-medium text-white/80">{item}</span>
+                    <div key={i} className="flex items-center gap-3 rounded-xl bg-white/[0.02] p-4 border border-white/5 transition-colors group-hover:border-white/10">
+                      <Check size={16} className="text-blue-400" />
+                      <span className="text-[14px] font-medium text-white/80">{item}</span>
                     </div>
                   ))}
                 </div>
@@ -306,23 +308,23 @@ export default function AboutPage() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.2 }}
               viewport={{ once: true }}
-              className="flex-1 flex flex-col rounded-3xl border border-white/5 bg-[#0A0A0A] overflow-hidden"
+              className="group flex-1 flex flex-col rounded-3xl border border-white/5 bg-[#0A0A0A] overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:border-white/10 hover:shadow-[0_15px_40px_-10px_rgba(0,0,0,0.5)]"
             >
-              <div className="p-8 border-b border-white/5">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-400">
-                    <Building2 size={14} />
+              <div className="p-10 border-b border-white/5">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-400 group-hover:scale-110 group-hover:bg-emerald-500/20 group-hover:shadow-[0_0_20px_rgba(16,185,129,0.3)] transition-all duration-300">
+                    <Building2 size={18} />
                   </div>
-                  <h3 className="text-xl font-bold text-white">University Workspace</h3>
+                  <h3 className="text-2xl font-bold text-white">University Workspace</h3>
                 </div>
-                <p className="text-sm text-white/50">Enterprise tools for modern admission teams.</p>
+                <p className="text-base text-white/50">Enterprise tools for modern admission teams.</p>
               </div>
-              <div className="p-8 bg-black/20 flex-1">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="p-10 bg-black/40 flex-1">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {['Admissions Dashboard', 'Automated Verification', 'AI Analytics', 'Seat Management', 'Student Pipeline'].map((item, i) => (
-                    <div key={i} className="flex items-center gap-3 rounded-xl bg-white/5 p-3 border border-white/5">
-                      <Check size={14} className="text-emerald-400" />
-                      <span className="text-[13px] font-medium text-white/80">{item}</span>
+                    <div key={i} className="flex items-center gap-3 rounded-xl bg-white/[0.02] p-4 border border-white/5 transition-colors group-hover:border-white/10">
+                      <Check size={16} className="text-emerald-400" />
+                      <span className="text-[14px] font-medium text-white/80">{item}</span>
                     </div>
                   ))}
                 </div>
@@ -341,16 +343,16 @@ export default function AboutPage() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
             viewport={{ once: true }}
-            className="font-display text-3xl font-bold text-white mb-16"
+            className="font-display text-4xl font-extrabold text-white mb-16"
           >
-            Meet The Founders
+            Meet The <span className="bg-gradient-to-br from-[#818CF8] via-[#5B5FEF] to-[#A78BFA] bg-clip-text text-transparent">Founders</span>
           </motion.h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
             {[
-              { name: 'Aaryan Sharma', role: 'Co-Founder', mission: 'Building the solution I wish I had during my own admissions.', github: '#', linkedin: '#' },
-              { name: 'Lakshya Pandey', role: 'Co-Founder', mission: 'Committed to making higher education more accessible through innovation.', github: '#', linkedin: '#' },
-              { name: 'Prince Mittal', role: 'CTO & Lead Developer', mission: 'Engineering invisible, effortless technology for students.', github: '#', linkedin: '#' }
+              { name: 'Aaryan Sharma', role: 'Co-Founder', mission: 'Building the solution I wish I had during my own admissions.', github: 'https://github.com/ItsMeAaryan', linkedin: 'https://www.linkedin.com/in/aaryan-sharma-576538384/' },
+              { name: 'Lakshaya Pandey', role: 'Co-Founder', mission: 'Committed to making higher education more accessible through innovation.', github: 'https://github.com/pandeylakshya207-max', linkedin: 'https://www.linkedin.com/in/lakshyapandeybn/' },
+              { name: 'Prince Mittal', role: 'CTO & Lead Developer', mission: 'Engineering invisible, effortless technology for students.', github: 'https://github.com/princemittalr', linkedin: 'https://www.linkedin.com/in/princemittalr/' }
             ].map((founder, i) => (
               <motion.div 
                 key={i}
@@ -358,20 +360,23 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: i * 0.1 }}
                 viewport={{ once: true }}
-                className="group flex flex-col items-center rounded-2xl border border-white/5 bg-[#0A0A0A] p-8 transition-all duration-300 hover:-translate-y-2 hover:border-white/10 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] text-center"
+                className="group relative flex flex-col items-center rounded-3xl border border-white/5 bg-[#0A0A0A] p-10 transition-all duration-300 hover:-translate-y-2 hover:border-[#818CF8]/30 hover:shadow-[0_20px_50px_-15px_rgba(129,140,248,0.15)] text-center overflow-hidden"
               >
-                <div className="h-20 w-20 rounded-full bg-white/5 mb-6 flex items-center justify-center border border-white/10 group-hover:border-white/20 transition-colors">
-                  <User size={24} className="text-white/40" />
+                {/* Border accent on hover */}
+                <div className="absolute inset-0 border-2 border-transparent group-hover:border-[#818CF8]/10 rounded-3xl transition-colors duration-300 pointer-events-none" />
+
+                <div className="relative h-24 w-24 rounded-full bg-white/5 mb-6 flex items-center justify-center border border-white/10 group-hover:border-[#818CF8]/30 group-hover:shadow-[0_0_30px_rgba(129,140,248,0.3)] transition-all duration-300">
+                  <User size={32} className="text-white/40 group-hover:text-[#818CF8] transition-colors duration-300" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-1">{founder.name}</h3>
-                <span className="text-sm font-medium text-[#818CF8] mb-4">{founder.role}</span>
-                <p className="text-sm text-white/50 mb-8 italic">&quot;{founder.mission}&quot;</p>
-                <div className="flex items-center gap-3 mt-auto">
-                  <a href={founder.github} className="flex h-8 w-8 items-center justify-center rounded-full bg-white/5 text-white/60 hover:bg-white/10 hover:text-white transition-colors">
-                    <Github size={14} />
+                <h3 className="text-2xl font-bold text-white mb-2">{founder.name}</h3>
+                <span className="inline-block rounded-full bg-[#818CF8]/10 px-3 py-1 text-[12px] font-bold tracking-wide text-[#818CF8] mb-6">{founder.role}</span>
+                <p className="text-[15px] leading-relaxed text-white/60 mb-8 italic">&quot;{founder.mission}&quot;</p>
+                <div className="flex items-center gap-4 mt-auto relative z-10">
+                  <a href={founder.github} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${founder.name}'s GitHub`} className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-white/50 hover:bg-[#818CF8]/20 hover:text-[#818CF8] transition-all duration-300">
+                    <Github size={18} />
                   </a>
-                  <a href={founder.linkedin} className="flex h-8 w-8 items-center justify-center rounded-full bg-white/5 text-white/60 hover:bg-white/10 hover:text-white transition-colors">
-                    <Linkedin size={14} />
+                  <a href={founder.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${founder.name}'s LinkedIn`} className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-white/50 hover:bg-[#818CF8]/20 hover:text-[#818CF8] transition-all duration-300">
+                    <Linkedin size={18} />
                   </a>
                 </div>
               </motion.div>
@@ -389,16 +394,17 @@ export default function AboutPage() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="font-display text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 leading-tight"
+            className="font-display text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 leading-[1.1]"
           >
-            The Future Of University Admissions Starts Here.
+            The Future Of University Admissions<br />
+            <span className="bg-gradient-to-br from-[#818CF8] via-[#5B5FEF] to-[#A78BFA] bg-clip-text text-transparent">Starts Here.</span>
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
             viewport={{ once: true }}
-            className="text-lg text-white/50 mb-10 max-w-[500px]"
+            className="text-lg text-white/50 mb-12 max-w-[500px]"
           >
             Join thousands of students and universities building a faster, smarter, and fairer admissions ecosystem.
           </motion.p>
@@ -407,13 +413,10 @@ export default function AboutPage() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
-            className="flex flex-wrap items-center justify-center gap-4"
+            className="flex flex-wrap items-center justify-center gap-4 mt-4"
           >
-            <a href="/register" className="group inline-flex items-center gap-2 rounded-lg bg-white px-6 py-3.5 text-[15px] font-bold text-black transition-transform hover:scale-[1.02]">
-              Start Your Journey <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-            </a>
-            <a href="/features" className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-6 py-3.5 text-[15px] font-medium text-white transition-colors hover:bg-white/10 hover:border-white/20">
-              Explore Features
+            <a href="/register" className="group inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-[15px] font-bold text-black transition-all duration-300 hover:scale-[1.02] hover:bg-white/90 hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]">
+              Start Your Journey
             </a>
           </motion.div>
         </div>

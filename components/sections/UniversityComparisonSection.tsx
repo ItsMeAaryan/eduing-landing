@@ -52,7 +52,8 @@ export default function UniversityComparisonSection() {
             viewport={{ once: true }}
             className="mb-6 font-display text-4xl font-extrabold leading-[1.15] tracking-[-0.02em] text-white lg:text-5xl"
           >
-            Compare Universities Like Never Before.
+            Compare Universities<br />
+            <span className="bg-gradient-to-br from-[#818CF8] via-[#5B5FEF] to-[#A78BFA] bg-clip-text text-transparent">Like Never Before.</span>
           </motion.h2>
 
           <motion.p 

@@ -40,7 +40,7 @@ export default function UniversitySection() {
 
             <h2 id="discovery-heading" className="mb-5 font-display text-4xl font-extrabold leading-[1.15] tracking-[-0.02em] text-white lg:text-[42px]">
               Discover Your Perfect Program,<br />
-              <span className="text-white/40">Powered by AI.</span>
+              <span className="bg-gradient-to-br from-[#818CF8] via-[#5B5FEF] to-[#A78BFA] bg-clip-text text-transparent">Powered by AI.</span>
             </h2>
 
             <p className="text-base leading-relaxed text-white/50">

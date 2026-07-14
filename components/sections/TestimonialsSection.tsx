@@ -17,7 +17,7 @@ export default function TestimonialsSection() {
           </div>
           <h2 id="comparison-heading" className="mb-6 font-display text-4xl font-extrabold leading-[1.15] tracking-[-0.02em] text-white lg:text-5xl">
             Stop Repeating Applications.<br />
-            <span className="text-white/40">Start Applying Smarter.</span>
+            <span className="bg-gradient-to-br from-[#818CF8] via-[#5B5FEF] to-[#A78BFA] bg-clip-text text-transparent">Start Applying Smarter.</span>
           </h2>
           <p className="max-w-xl text-base leading-relaxed text-white/50">
             Traditional admissions require repeating the same process across every university. EDUING lets you create one profile and manage everything from a single workspace.
