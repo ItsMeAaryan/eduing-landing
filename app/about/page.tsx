@@ -380,44 +380,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 8. VISION ROADMAP */}
-      <section className="px-6 py-24 bg-[#050505]">
-        <div className="mx-auto max-w-[800px] flex flex-col items-center text-center">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            viewport={{ once: true }}
-            className="font-display text-3xl font-bold text-white mb-16"
-          >
-            Vision Roadmap
-          </motion.h2>
-
-          <div className="relative flex flex-col gap-12 border-l border-[#818CF8]/30 pl-8 ml-4 items-start text-left w-full max-w-[400px]">
-            {[
-              { year: '2026', title: 'Platform Launch', desc: 'The unified ecosystem goes live.' },
-              { year: '2027', title: '100 Universities', desc: 'Expanding our partner network across India.' },
-              { year: '2028', title: '500 Universities', desc: 'The majority of premier institutions integrated.' },
-              { year: '2030', title: 'India\'s Largest', desc: 'The default admission infrastructure for the nation.' }
-            ].map((node, i) => (
-              <motion.div 
-                key={i}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.4, delay: i * 0.1 }}
-                viewport={{ once: true }}
-                className="relative flex flex-col"
-              >
-                <div className="absolute -left-[41px] top-1.5 h-4 w-4 rounded-full bg-[#0A0A0A] border-2 border-[#818CF8] shadow-[0_0_15px_rgba(129,140,248,0.5)]" />
-                <span className="text-[12px] font-bold tracking-wider text-[#818CF8] mb-1">{node.year}</span>
-                <h3 className="text-lg font-bold text-white mb-1">{node.title}</h3>
-                <p className="text-sm text-white/50">{node.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* 9. FINAL CTA */}
       <section className="px-6 py-32 text-center relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[#5B5FEF]/5 rounded-full blur-[100px] pointer-events-none" />
