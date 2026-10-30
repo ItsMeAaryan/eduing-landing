@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Search, Bell, LayoutDashboard, Folder, Sparkles, Building2, FileText, Calendar, Settings, CheckCircle2, Clock, Check, ShieldCheck } from 'lucide-react'
 
@@ -56,7 +57,7 @@ export default function PlatformInActionSection() {
           {/* LEFT SIDEBAR (Hidden on mobile) */}
           <div className="hidden w-[220px] flex-col border-r border-white/5 bg-[#050505] p-4 md:flex shrink-0">
             <div className="flex items-center gap-2 mb-8 px-2 mt-2">
-              <div className="flex h-6 w-6 items-center justify-center rounded bg-gradient-to-br from-[#818CF8] to-[#5B5FEF] text-[10px] font-extrabold text-white">E</div>
+              <Image src="/eduing-logo.png" alt="" width={24} height={25} className="h-6 w-auto object-contain" />
               <span className="text-[13px] font-bold text-white tracking-wide">EDUING<span className="text-[#818CF8]">.in</span></span>
             </div>
             

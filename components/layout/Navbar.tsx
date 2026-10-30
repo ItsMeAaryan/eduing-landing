@@ -57,7 +57,7 @@ export default function Navbar() {
         >
           {/* Logo */}
           <Link href="/" aria-label="EDUING Home" className="flex items-center gap-2.5 no-underline outline-none focus-visible:ring-2 focus-visible:ring-[#5B5FEF] rounded-full p-1">
-            <Image src="/logo.png" alt="EDUING Logo" width={28} height={28} className="object-contain invert w-auto h-auto" priority />
+            <Image src="/eduing-logo.png" alt="EDUING Logo" width={28} height={29} className="object-contain h-7 w-auto" priority />
             <span className="font-display text-lg font-extrabold tracking-tight text-white leading-none flex items-center">
               EDUING<span className="text-[#818CF8] text-[10px] ml-0.5 mt-1">.in</span>
             </span>

@@ -61,7 +61,6 @@ Styling is Tailwind-first with theme tokens defined in `tailwind.config.ts`. Avo
 ## Known TODOs
 
 - **Contact form** (`app/api/contact/route.ts`) currently only validates and logs submissions server-side. Wire it up to a real email/CRM provider (e.g. Resend, SendGrid) before relying on it in production.
-- **OG image**: `app/layout.tsx` references `/og-image.png` for social previews, but no image has been generated yet — add one at `public/og-image.png` (1200×630).
 - Legal pages (`/privacy`, `/terms`, `/trademark`) have real, specific content (not placeholder), but should still be reviewed by someone with legal context before launch.
 - `/about` page still has some inline styles not yet migrated to Tailwind — cosmetic, not functional.
 - Testimonials on the homepage are illustrative/unattributed placeholder quotes — swap for real, attributable student/university quotes before launch (see comment in `components/sections/TestimonialsSection.tsx`).
