@@ -1,4 +1,5 @@
-import AnimatedSection from '@/components/ui/AnimatedSection';
+import Reveal from '@/components/ui/Reveal';
+import PageHero from '@/components/ui/PageHero';
 
 export type LegalSection = {
   title: string;
@@ -8,13 +9,13 @@ export type LegalSection = {
 
 export function LegalSectionBlock({ section }: { section: LegalSection }) {
   return (
-    <div>
-      <h2 className="mb-3 text-xl font-bold text-white">{section.title}</h2>
-      {section.content && <p className="text-[15px] leading-relaxed text-white/55">{section.content}</p>}
+    <div className="scroll-mt-28">
+      <h2 className="mb-3 font-sans text-[20px] font-bold tracking-tight text-ink">{section.title}</h2>
+      {section.content && <p className="text-[15.5px] leading-relaxed text-ink/65">{section.content}</p>}
       {section.list && (
-        <ul className="ml-2 mt-2 flex list-inside list-disc flex-col gap-2 text-[15px] leading-relaxed text-white/55">
+        <ul className="mt-3 flex flex-col gap-2.5 text-[15.5px] leading-relaxed text-ink/65">
           {section.list.map((item, j) => (
-            <li key={j}>{item}</li>
+            <li key={j} className="flex gap-3"><span className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-gold" />{item}</li>
           ))}
         </ul>
       )}
@@ -34,20 +35,17 @@ export default function LegalPageLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className="section-padding bg-[#08080A] pt-40" id={id}>
-      <div className="mx-auto max-w-[900px]">
-        <AnimatedSection>
-          <span className="section-label">LEGAL</span>
-          <h1 className="section-title mb-2 text-[40px]">{title}</h1>
-          <p className="mb-12 text-[15px] text-white/40">Effective Date: {effectiveDate}</p>
-        </AnimatedSection>
-
-        <AnimatedSection delay={0.1}>
-          <div className="mob-card">
+    <main id={id}>
+      <PageHero eyebrow="Legal" title={[title]}>
+        <Reveal delay={0.25}><span className="chip mt-6">Effective date: {effectiveDate}</span></Reveal>
+      </PageHero>
+      <section className="pb-24">
+        <div className="container-x max-w-[900px]">
+          <Reveal className="card p-7 sm:p-12">
             <div className="flex flex-col gap-10">{children}</div>
-          </div>
-        </AnimatedSection>
-      </div>
-    </section>
+          </Reveal>
+        </div>
+      </section>
+    </main>
   );
 }

@@ -1,6 +1,15 @@
 import type { Config } from "tailwindcss";
 
+/**
+ * EDUING design tokens.
+ * Every colour is an RGB channel triplet defined in app/globals.css so it
+ * flips between light (default) and dark (`.dark` on <html>) and still
+ * supports Tailwind opacity modifiers, e.g. `text-ink/60`, `bg-brand/10`.
+ */
+const token = (name: string) => `rgb(var(--${name}) / <alpha-value>)`;
+
 const config: Config = {
+  darkMode: "class",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -9,63 +18,51 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        bg: "#06060A",
-        "bg-2": "#0D0D14",
-        surface: "#111114",
-        "surface-2": "#18181C",
-        "surface-alt": "#0C0C10",
-        "surface-feature": "#13131A",
-        card: "rgba(255,255,255,0.04)",
-        "card-hover": "rgba(255,255,255,0.07)",
-        border: "rgba(255,255,255,0.08)",
-        "border-hover": "rgba(99,102,241,0.5)",
-        "border-subtle": "rgba(255,255,255,0.06)",
-        "text-primary": "#FFFFFF",
-        "text-secondary": "rgba(255,255,255,0.55)",
-        "text-muted": "rgba(255,255,255,0.25)",
-        "text-body": "rgba(255,255,255,0.55)",
-        accent: "#5B5FEF",
-        "accent-light": "#6366F1",
-        "accent-lighter": "#818CF8",
-        "accent-glow": "rgba(91,95,239,0.2)",
-        violet: "#7C3AED",
-        gold: "#F59E0B",
-        success: "#10B981",
+        canvas: token("canvas"),
+        surface: token("surface"),
+        "surface-2": token("surface-2"),
+        ink: token("ink"),
+        line: token("line"),
+        brand: {
+          DEFAULT: token("brand"),
+          2: token("brand-2"),
+          soft: token("brand-soft"),
+        },
+        gold: {
+          DEFAULT: token("gold"),
+          soft: token("gold-soft"),
+        },
+        night: token("night"),
+        mint: token("mint"),
+        coral: token("coral"),
       },
       borderRadius: {
-        card: "16px",
-        btn: "8px",
-        tag: "6px",
+        card: "28px",
+        tile: "20px",
+        chip: "999px",
       },
       fontFamily: {
-        sans: ["var(--font-dm-sans)", "system-ui", "sans-serif"],
-        display: ["var(--font-syne)", "system-ui", "sans-serif"],
+        sans: ["var(--font-jakarta)", "system-ui", "sans-serif"],
+        display: ["var(--font-bricolage)", "var(--font-jakarta)", "system-ui", "sans-serif"],
       },
       fontSize: {
-        hero: [
-          "clamp(48px, 7vw, 80px)",
-          { lineHeight: "1.0", fontWeight: "800", letterSpacing: "-0.04em" },
-        ],
-        "section-title": [
-          "48px",
-          { lineHeight: "1.1", fontWeight: "700", letterSpacing: "-0.03em" },
-        ],
-        "sub-heading": ["24px", { lineHeight: "1.3", fontWeight: "600" }],
-        body: [
-          "16px",
-          { lineHeight: "1.7", fontWeight: "400" },
-        ],
-        "label": [
-          "13px",
-          { fontWeight: "500", letterSpacing: "0.05em" },
-        ],
+        hero: ["clamp(42px, 4.9vw, 82px)", { lineHeight: "1.0", letterSpacing: "-0.045em" }],
+        display: ["clamp(34px, 4.6vw, 64px)", { lineHeight: "1.02", letterSpacing: "-0.04em" }],
       },
       maxWidth: {
-        container: "1100px",
+        container: "1240px",
+      },
+      boxShadow: {
+        card: "0 1px 0 rgb(var(--ink) / 0.04), 0 12px 32px -12px rgb(var(--ink) / 0.12)",
+        lift: "0 2px 0 rgb(var(--ink) / 0.04), 0 30px 60px -20px rgb(var(--ink) / 0.25)",
+        glow: "0 18px 50px -12px rgb(var(--brand) / 0.55)",
       },
       animation: {
-        marquee: "marquee 30s linear infinite",
-        "marquee-reverse": "marquee-reverse 30s linear infinite",
+        marquee: "marquee 40s linear infinite",
+        "marquee-reverse": "marquee-reverse 40s linear infinite",
+        "spin-slow": "spin 18s linear infinite",
+        float: "float 6s ease-in-out infinite",
+        shine: "shine 3.5s ease-in-out infinite",
       },
       keyframes: {
         marquee: {
@@ -75,6 +72,14 @@ const config: Config = {
         "marquee-reverse": {
           "0%": { transform: "translateX(-50%)" },
           "100%": { transform: "translateX(0)" },
+        },
+        float: {
+          "0%,100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
+        shine: {
+          "0%": { transform: "translateX(-120%) skewX(-20deg)" },
+          "60%,100%": { transform: "translateX(220%) skewX(-20deg)" },
         },
       },
     },

@@ -1,96 +1,52 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Check } from 'lucide-react'
-
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.eduing.in'
+import { ArrowRight, Check } from 'lucide-react'
+import Image from 'next/image'
+import WordReveal from '@/components/ui/WordReveal'
+import Reveal from '@/components/ui/Reveal'
+import { APP_URL } from '@/lib/links'
 
 export default function CTASection() {
   return (
-    <section className="relative overflow-hidden bg-bg px-6 py-32 lg:py-40" aria-labelledby="cta-heading">
-      {/* Subtle radial glow background */}
-      <div
-        className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-20 blur-[120px]"
-        style={{ background: 'radial-gradient(circle, #5B5FEF 0%, transparent 70%)' }}
-        aria-hidden="true"
-      />
+    <section className="section" aria-labelledby="cta-heading">
+      <div className="container-x">
+        <div className="card-night grain relative isolate overflow-hidden px-6 py-20 text-center sm:px-12 sm:py-28">
+          <motion.div aria-hidden className="absolute -left-32 -top-32 -z-10 h-[460px] w-[460px] rounded-full bg-brand/70 blur-[110px]"
+            animate={{ x: [0, 80, 0], y: [0, 40, 0] }} transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }} />
+          <motion.div aria-hidden className="absolute -bottom-40 -right-24 -z-10 h-[420px] w-[420px] rounded-full bg-gold/40 blur-[110px]"
+            animate={{ x: [0, -70, 0], y: [0, -50, 0] }} transition={{ duration: 16, repeat: Infinity, ease: 'easeInOut' }} />
+          <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(rgba(255,255,255,0.09)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)]" />
 
-      <div className="mx-auto flex max-w-[900px] flex-col items-center text-center relative z-10">
-        
-        {/* Badge */}
-        <motion.div 
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          viewport={{ once: true }}
-          className="mb-8 inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1.5"
-        >
-          <span className="text-[11px] font-bold uppercase tracking-[0.1em] text-white/70">
-            READY TO GET STARTED
-          </span>
-        </motion.div>
-
-        {/* Headline */}
-        <motion.h2 
-          id="cta-heading"
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.1 }}
-          viewport={{ once: true }}
-          className="mb-6 font-display text-4xl font-extrabold leading-[1.15] tracking-[-0.02em] text-white md:text-5xl lg:text-6xl"
-        >
-          Stop Managing Applications.<br />
-          Start Managing <span className="text-[#5B5FEF]">Your Future.</span>
-        </motion.h2>
-
-        {/* Supporting text */}
-        <motion.p 
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="mb-10 max-w-[600px] text-base leading-relaxed text-white/50"
-        >
-          Create one profile, discover the right programs, and manage every application from one modern workspace.
-        </motion.p>
-
-        {/* Buttons */}
-        <motion.div 
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.3 }}
-          viewport={{ once: true }}
-          className="mb-14 flex flex-col items-center justify-center gap-4 sm:flex-row"
-        >
-          <a
-            href={APP_URL}
-            className="flex items-center justify-center rounded-full bg-white px-8 py-3.5 text-[15px] font-bold text-black transition-all duration-200 hover:-translate-y-[2px] hover:shadow-[0_8px_20px_rgba(255,255,255,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          <motion.div
+            initial={{ y: 20, opacity: 0, rotate: -10 }} whileInView={{ y: 0, opacity: 1, rotate: 0 }} viewport={{ once: true }}
+            transition={{ type: 'spring', stiffness: 120, damping: 12 }}
+            className="mx-auto mb-8 flex h-20 w-20 items-center justify-center rounded-[26px] bg-white shadow-glow"
           >
-            Start Your Journey
-          </a>
-        </motion.div>
+            <Image src="/eduing-logo.png" alt="" width={52} height={54} className="animate-float" />
+          </motion.div>
 
-        {/* Trust Row */}
-        <motion.div 
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.4 }}
-          viewport={{ once: true }}
-          className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-[13px] font-medium text-white/40"
-        >
-          {[
-            'One Profile',
-            'AI Discovery',
-            'Secure Documents',
-            'Real-Time Tracking'
-          ].map((item, index) => (
-            <div key={index} className="flex items-center gap-2 transition-colors duration-200 hover:text-white/70">
-              <Check size={14} className="text-[#5B5FEF]/70" />
-              <span>{item}</span>
-            </div>
-          ))}
-        </motion.div>
+          <Reveal><span className="inline-flex items-center gap-2 rounded-chip bg-white/10 px-3.5 py-1.5 text-[12px] font-semibold text-white/80"><span className="h-1.5 w-1.5 rounded-full bg-gold" />Ready to get started</span></Reveal>
+          <WordReveal
+            id="cta-heading"
+            className="mx-auto mt-6 max-w-[18ch] text-display font-bold text-white"
+            parts={['Stop managing applications.\nStart managing ', { text: 'your future.', className: 'text-gold' }]}
+          />
+          <Reveal delay={0.15}><p className="mx-auto mt-6 max-w-[52ch] text-[17px] leading-relaxed text-white/60">Create one profile, discover the right programs, and manage every application from one modern workspace.</p></Reveal>
 
+          <Reveal delay={0.2} className="mt-10 flex justify-center">
+            <a href={APP_URL} className="btn group bg-white !px-8 !py-4 text-[#17142B] hover:-translate-y-1 hover:shadow-[0_20px_50px_-12px_rgba(245,184,41,0.6)]">
+              Start Your Journey
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-white transition-transform duration-300 group-hover:translate-x-1"><ArrowRight size={15} /></span>
+            </a>
+          </Reveal>
+
+          <Reveal delay={0.25} className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-[13.5px] font-medium text-white/55">
+            {['One Profile', 'AI Discovery', 'Secure Documents', 'Real-Time Tracking'].map((t) => (
+              <span key={t} className="flex items-center gap-1.5"><Check size={15} className="text-gold" />{t}</span>
+            ))}
+          </Reveal>
+        </div>
       </div>
     </section>
   )

@@ -1,22 +1,29 @@
-import type { Metadata } from "next";
-import { Syne, DM_Sans } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Bricolage_Grotesque, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
-const syne = Syne({
+const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
-  weight: ["700", "800"],
-  variable: "--font-syne",
+  weight: ["500", "600", "700", "800"],
+  variable: "--font-bricolage",
   display: "swap",
 });
 
-const dmSans = DM_Sans({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-dm-sans",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-jakarta",
   display: "swap",
 });
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#F5F3EE" },
+    { media: "(prefers-color-scheme: dark)", color: "#0C0A15" },
+  ],
+};
 
 const siteUrl = "https://eduing.in";
 
@@ -99,17 +106,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${syne.variable} ${dmSans.variable} relative`}>
+    <html lang="en" suppressHydrationWarning className={`${bricolage.variable} ${jakarta.variable}`}>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body suppressHydrationWarning className="m-0 p-0 bg-bg font-sans relative">
+      <body suppressHydrationWarning>
         <MotionProvider>
+          <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[300] focus:rounded-chip focus:bg-brand focus:px-4 focus:py-2 focus:text-white">Skip to content</a>
           <Navbar />
-          <main>{children}</main>
+          <div id="main">{children}</div>
           <Footer />
         </MotionProvider>
       </body>

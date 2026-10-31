@@ -1,10 +1,13 @@
 'use client'
+
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion'
+import { motion, AnimatePresence, useScroll, useMotionValueEvent, useSpring } from 'framer-motion'
 import Link from 'next/link'
-import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { Menu, X } from 'lucide-react'
+import { ArrowUpRight, Menu, X } from 'lucide-react'
+import Logo from '@/components/ui/Logo'
+import ThemeToggle from '@/components/ui/ThemeToggle'
+import { APP_URL } from '@/lib/links'
 
 const NAV_LINKS = [
   { label: 'Features', href: '/features' },
@@ -12,176 +15,146 @@ const NAV_LINKS = [
   { label: 'Contact', href: '/contact' },
 ]
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.eduing.in'
-
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [hidden, setHidden] = useState(false)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [open, setOpen] = useState(false)
+  const [hovered, setHovered] = useState<string | null>(null)
   const pathname = usePathname()
+  const { scrollY, scrollYProgress } = useScroll()
+  const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 30 })
 
-  const { scrollY } = useScroll()
-
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    setScrolled(latest > 50)
-    const previous = scrollY.getPrevious() || 0
-    if (latest > previous && latest > 150) {
-      setHidden(true)
-    } else {
-      setHidden(false)
-    }
+  useMotionValueEvent(scrollY, 'change', (latest) => {
+    setScrolled(latest > 24)
+    const previous = scrollY.getPrevious() ?? 0
+    setHidden(latest > previous && latest > 220)
   })
 
-  // Prevent scroll when mobile menu is open
+  useEffect(() => setOpen(false), [pathname])
   useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = 'unset'
-    }
-    return () => {
-      document.body.style.overflow = 'unset'
-    }
-  }, [mobileMenuOpen])
+    document.body.style.overflow = open ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [open])
 
   return (
     <>
-      <div className="fixed top-4 left-0 w-full z-[100] flex justify-center px-4 sm:px-6 pointer-events-none">
+      {/* scroll progress */}
+      <motion.div
+        aria-hidden
+        className="fixed inset-x-0 top-0 z-[120] h-[3px] origin-left bg-gradient-to-r from-brand via-brand-2 to-gold"
+        style={{ scaleX: progress }}
+      />
+
+      <div className="pointer-events-none fixed inset-x-0 top-3 z-[100] flex justify-center px-3 sm:top-4 sm:px-6">
         <motion.nav
+          aria-label="Primary"
           initial={false}
-          animate={{ y: hidden ? -100 : 0, opacity: hidden ? 0 : 1 }}
-          transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
-          className={`pointer-events-auto w-full max-w-[1000px] flex items-center justify-between rounded-full border border-white/10 px-4 py-2 shadow-[0_8px_32px_rgba(0,0,0,0.2)] backdrop-blur-md transition-colors duration-300 ${
-            scrolled ? 'bg-[#06060A]/80' : 'bg-[#06060A]/40'
+          animate={{ y: hidden && !open ? -110 : 0 }}
+          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+          className={`pointer-events-auto flex w-full max-w-[1120px] items-center justify-between rounded-chip border py-2 pl-3 pr-2 transition-all duration-500 sm:pl-4 ${
+            scrolled
+              ? 'border-line/10 bg-surface/80 shadow-lift backdrop-blur-xl'
+              : 'border-transparent bg-transparent'
           }`}
         >
-          {/* Logo */}
-          <Link href="/" aria-label="EDUING Home" className="flex items-center gap-2.5 no-underline outline-none focus-visible:ring-2 focus-visible:ring-[#5B5FEF] rounded-full p-1">
-            <Image src="/eduing-logo.png" alt="EDUING Logo" width={28} height={29} className="object-contain h-7 w-auto" priority />
-            <span className="font-display text-lg font-extrabold tracking-tight text-white leading-none flex items-center">
-              EDUING<span className="text-[#818CF8] text-[10px] ml-0.5 mt-1">.in</span>
-            </span>
+          <Link href="/" aria-label="EDUING Home" className="rounded-chip p-1">
+            <Logo size={30} />
           </Link>
 
-          {/* Nav links (Desktop) */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden items-center gap-1 md:flex" onMouseLeave={() => setHovered(null)}>
             {NAV_LINKS.map((l) => {
-              const isActive = pathname === l.href
+              const active = pathname === l.href
               return (
                 <Link
                   key={l.label}
                   href={l.href}
-                  className="relative group py-2 text-[14px] font-medium transition-colors duration-300 outline-none focus-visible:ring-2 focus-visible:ring-[#5B5FEF] rounded-md"
+                  onMouseEnter={() => setHovered(l.href)}
+                  className={`relative rounded-chip px-4 py-2 text-[14.5px] font-medium transition-colors ${active ? 'text-ink' : 'text-ink/60 hover:text-ink'}`}
                 >
-                  <span className={`${isActive ? 'text-white' : 'text-white/60 group-hover:text-white'} transition-colors`}>
-                    {l.label}
-                  </span>
-                  {isActive ? (
-                    <motion.div
-                      layoutId="navbar-indicator"
-                      className="absolute -bottom-1 left-0 right-0 h-[2px] bg-gradient-to-r from-[#5B5FEF] to-[#818CF8] rounded-full"
+                  {(hovered ?? (active ? l.href : null)) === l.href && (
+                    <motion.span
+                      layoutId="nav-pill"
+                      className="absolute inset-0 -z-10 rounded-chip bg-ink/[0.06]"
+                      transition={{ type: 'spring', stiffness: 400, damping: 32 }}
                     />
-                  ) : (
-                    <div className="absolute -bottom-1 left-0 right-0 h-[2px] bg-white/30 scale-x-0 group-hover:scale-x-100 transition-transform origin-left rounded-full duration-300" />
                   )}
+                  {active && <span className="absolute bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-gold" />}
+                  {l.label}
                 </Link>
               )
             })}
           </div>
 
-          {/* CTAs (Desktop) */}
-          <div className="hidden md:flex items-center gap-3">
-            <a
-              href={APP_URL}
-              rel="noopener noreferrer"
-              className="px-4 py-2 text-[14px] font-medium text-white/60 transition-colors duration-200 hover:text-white outline-none focus-visible:ring-2 focus-visible:ring-[#5B5FEF] rounded-full"
-            >
+          <div className="hidden items-center gap-2 md:flex">
+            <ThemeToggle />
+            <a href={APP_URL} rel="noopener noreferrer" className="rounded-chip px-4 py-2 text-[14.5px] font-medium text-ink/70 transition-colors hover:text-ink">
               Log in
             </a>
-            <a href={`${APP_URL}/`} rel="noopener noreferrer" className="no-underline outline-none">
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="rounded-full bg-gradient-to-r from-[#5B5FEF] to-[#818CF8] px-5 py-2.5 text-[14px] font-medium text-white shadow-[0_4px_20px_rgba(91,95,239,0.3)] transition-shadow hover:shadow-[0_4px_25px_rgba(91,95,239,0.5)] focus-visible:ring-2 focus-visible:ring-white"
-              >
-                Get started
-              </motion.div>
+            <a href={`${APP_URL}/`} rel="noopener noreferrer" className="btn-primary group !py-2.5 !text-[14.5px]">
+              <span className="pointer-events-none absolute inset-y-0 left-0 w-1/3 animate-shine bg-white/25" aria-hidden />
+              Get started
+              <ArrowUpRight size={16} className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </a>
           </div>
 
-          <button
-            className="md:hidden p-2 text-white/70 hover:text-white outline-none focus-visible:ring-2 focus-visible:ring-[#5B5FEF] rounded-full"
-            onClick={() => setMobileMenuOpen(true)}
-            aria-label="Open menu"
-            aria-expanded={mobileMenuOpen}
-            aria-controls="mobile-menu"
-          >
-            <Menu className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-2 md:hidden">
+            <ThemeToggle />
+            <button
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-ink text-canvas"
+              onClick={() => setOpen(true)}
+              aria-label="Open menu"
+              aria-expanded={open}
+              aria-controls="mobile-menu"
+            >
+              <Menu size={18} />
+            </button>
+          </div>
         </motion.nav>
       </div>
 
-      {/* Mobile Menu Sidebar */}
       <AnimatePresence>
-        {mobileMenuOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="fixed inset-0 z-[150] bg-black/60 backdrop-blur-sm"
-              onClick={() => setMobileMenuOpen(false)}
-            />
-            <motion.div
-              id="mobile-menu"
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed inset-y-0 right-0 z-[200] w-full max-w-[280px] bg-[#06060A]/95 backdrop-blur-2xl border-l border-white/10 p-6 flex flex-col shadow-2xl"
+        {open && (
+          <motion.div
+            id="mobile-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menu"
+            initial={{ clipPath: 'circle(0% at 92% 4%)' }}
+            animate={{ clipPath: 'circle(150% at 92% 4%)' }}
+            exit={{ clipPath: 'circle(0% at 92% 4%)' }}
+            transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
+            className="fixed inset-0 z-[200] flex flex-col bg-night p-6 text-white"
+          >
+            <div className="flex items-center justify-between">
+              <span className="font-display text-xl font-bold">EDUING<span className="text-gold">.in</span></span>
+              <button
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10"
+                onClick={() => setOpen(false)}
+                aria-label="Close menu"
+              >
+                <X size={18} />
+              </button>
+            </div>
+            <motion.ul
+              className="mt-16 flex flex-col gap-2"
+              initial="hidden"
+              animate="show"
+              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.07, delayChildren: 0.25 } } }}
             >
-              <div className="flex justify-end mb-8">
-                <button
-                  className="p-2 text-white/70 hover:text-white bg-white/5 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-[#5B5FEF]"
-                  onClick={() => setMobileMenuOpen(false)}
-                  aria-label="Close menu"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-              <div className="flex flex-col gap-6">
-                {NAV_LINKS.map((l) => {
-                  const isActive = pathname === l.href
-                  return (
-                    <Link
-                      key={l.label}
-                      href={l.href}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className={`text-xl font-medium outline-none focus-visible:ring-2 focus-visible:ring-[#5B5FEF] rounded-md px-2 py-1 ${
-                        isActive ? 'text-white' : 'text-white/60 hover:text-white'
-                      }`}
-                    >
-                      {l.label}
-                    </Link>
-                  )
-                })}
-                <hr className="border-white/10 my-2 mx-2" />
-                <a
-                  href={APP_URL}
-                  className="px-2 py-1 text-lg font-medium text-white/60 hover:text-white outline-none focus-visible:ring-2 focus-visible:ring-[#5B5FEF] rounded-md"
-                >
-                  Log in
-                </a>
-                <a
-                  href={`${APP_URL}/`}
-                  className="mt-2 flex justify-center items-center rounded-full bg-gradient-to-r from-[#5B5FEF] to-[#818CF8] px-6 py-3 text-base font-medium text-white shadow-[0_4px_20px_rgba(91,95,239,0.3)] outline-none focus-visible:ring-2 focus-visible:ring-white"
-                >
-                  Get started
-                </a>
-              </div>
-            </motion.div>
-          </>
+              {[{ label: 'Home', href: '/' }, ...NAV_LINKS].map((l) => (
+                <motion.li key={l.href} variants={{ hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0 } }}>
+                  <Link href={l.href} onClick={() => setOpen(false)} className="flex items-center justify-between border-b border-white/10 py-4 font-display text-4xl font-semibold tracking-tight">
+                    {l.label}
+                    <ArrowUpRight className="text-gold" />
+                  </Link>
+                </motion.li>
+              ))}
+            </motion.ul>
+            <div className="mt-auto flex flex-col gap-3">
+              <a href={APP_URL} className="btn border border-white/20 text-white">Log in</a>
+              <a href={`${APP_URL}/`} className="btn-gold">Get started</a>
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </>

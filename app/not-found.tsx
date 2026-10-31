@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import Image from 'next/image';
+import { ArrowLeft } from 'lucide-react';
 
 export const metadata = {
   title: 'Page Not Found | EDUING.in',
@@ -7,37 +9,24 @@ export const metadata = {
 
 export default function NotFound() {
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-[#06060A] px-6 text-center" style={{
-      background: 'radial-gradient(circle at center, rgba(91,95,239,0.1) 0%, #06060A 100%)',
-    }}>
-      <h1 style={{
-        fontFamily: 'Syne, sans-serif', fontSize: 'clamp(80px, 12vw, 120px)',
-        fontWeight: '800', color: '#FFFFFF', letterSpacing: '-0.05em', margin: '0',
-        lineHeight: '1',
-      }}>404</h1>
-      <h2 style={{
-        fontFamily: 'Syne, sans-serif', fontSize: 'clamp(24px, 4vw, 32px)',
-        fontWeight: '700', color: '#FFFFFF', margin: '24px 0 16px',
-      }}>Page not found</h2>
-      <p style={{
-        fontFamily: 'DM Sans, sans-serif', fontSize: '16px', color: 'rgba(255,255,255,0.6)',
-        maxWidth: '400px', margin: '0 auto 40px', lineHeight: '1.6',
-      }}>
+    <main className="relative isolate flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 pt-24 text-center">
+      <div aria-hidden className="bg-dots absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_70%)]" />
+      <div aria-hidden className="absolute left-1/2 top-1/2 -z-10 h-[460px] w-[460px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand/15 blur-[110px]" />
+      <div className="relative flex items-center font-display text-[clamp(110px,22vw,220px)] font-bold leading-none tracking-[-0.06em] text-ink">
+        4
+        <span className="mx-2 flex h-[0.78em] w-[0.78em] animate-float items-center justify-center rounded-full bg-surface shadow-lift">
+          <Image src="/eduing-logo.png" alt="" width={120} height={124} className="h-[62%] w-auto" />
+        </span>
+        4
+      </div>
+      <h1 className="mt-4 text-[clamp(26px,4vw,40px)] font-bold tracking-tight text-ink">This page skipped class.</h1>
+      <p className="mx-auto mt-3 max-w-[42ch] text-[16px] leading-relaxed text-ink/60">
         Sorry, we couldn&apos;t find the page you&apos;re looking for. It might have been moved or doesn&apos;t exist.
       </p>
-      <Link href="/">
-        <button
-          className="hover:scale-105 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(255,255,255,0.1)]"
-          style={{
-            padding: '16px 36px', fontSize: '16px', fontWeight: '600',
-            fontFamily: 'DM Sans, sans-serif', cursor: 'pointer',
-            transition: 'all 0.2s ease', borderRadius: '100px',
-            background: '#FFFFFF', color: '#08080A', border: 'none',
-          }}
-        >
-          Return Home
-        </button>
-      </Link>
+      <div className="mt-9 flex flex-wrap justify-center gap-3">
+        <Link href="/" className="btn-primary"><ArrowLeft size={16} />Return Home</Link>
+        <Link href="/contact" className="btn-ghost">Contact support</Link>
+      </div>
     </main>
   );
 }
