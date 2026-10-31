@@ -1,111 +1,176 @@
 'use client'
-import { motion, useReducedMotion } from 'framer-motion'
-import HeroDashboardMockup from './HeroDashboardMockup'
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.eduing.in'
+import dynamic from 'next/dynamic'
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
+import { ArrowRight, BadgeCheck, CheckCircle2, PartyPopper, Sparkles } from 'lucide-react'
+import { useRef } from 'react'
+import WordReveal from '@/components/ui/WordReveal'
+import { APP_URL } from '@/lib/links'
 
-// Realistic mock data rendered directly in the component
+const Hero3D = dynamic(() => import('./Hero3D'), {
+  ssr: false,
+  loading: () => (
+    <div className="absolute inset-0 flex items-center justify-center">
+      <div className="h-40 w-40 animate-pulse rounded-full bg-brand/15 blur-2xl" />
+    </div>
+  ),
+})
+
+const EASE = [0.16, 1, 0.3, 1] as const
+
+function FloatChip({ className, delay, children, depth = 1, mx, my }: {
+  className: string; delay: number; children: React.ReactNode; depth?: number
+  mx: ReturnType<typeof useSpring>; my: ReturnType<typeof useSpring>
+}) {
+  const x = useTransform(mx, (v) => v * 18 * depth)
+  const y = useTransform(my, (v) => v * 14 * depth)
+  return (
+    <motion.div style={{ x, y }} className={`absolute z-10 ${className}`}>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.9, ease: EASE, delay }}
+        className="animate-float rounded-tile border border-white/60 bg-surface/80 p-3 shadow-lift backdrop-blur-xl dark:border-white/10"
+        style={{ animationDelay: `${delay}s` }}
+      >
+        {children}
+      </motion.div>
+    </motion.div>
+  )
+}
 
 export default function Hero() {
-  const reduceMotion = useReducedMotion()
+  const ref = useRef<HTMLElement>(null)
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
+  const textY = useTransform(scrollYProgress, [0, 1], [0, 120])
+  const sceneY = useTransform(scrollYProgress, [0, 1], [0, -80])
+  const fade = useTransform(scrollYProgress, [0, 0.8], [1, 0])
+
+  const rawX = useMotionValue(0)
+  const rawY = useMotionValue(0)
+  const mx = useSpring(rawX, { stiffness: 60, damping: 18 })
+  const my = useSpring(rawY, { stiffness: 60, damping: 18 })
 
   return (
-    <section aria-label="Hero Overview" className="relative flex min-h-screen items-center justify-center overflow-hidden bg-bg px-[5%] pb-20 pt-[140px]">
-      {/* Background elements */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-        {/* Premium Blur Glow 1 */}
-        <motion.div
-          animate={reduceMotion ? {} : { scale: [1, 1.2, 1], opacity: [0.15, 0.25, 0.15], x: [0, 40, 0], y: [0, -40, 0] }}
-          transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute -left-[10%] top-[0%] h-[700px] w-[700px] rounded-full blur-[120px]"
-          style={{ background: 'radial-gradient(circle, rgba(91,95,239,0.35) 0%, transparent 70%)' }}
-        />
-        {/* Premium Blur Glow 2 */}
-        <motion.div
-          animate={reduceMotion ? {} : { scale: [1, 1.3, 1], opacity: [0.1, 0.2, 0.1], x: [0, -30, 0], y: [0, 50, 0] }}
-          transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-          className="absolute -right-[5%] bottom-[10%] h-[600px] w-[600px] rounded-full blur-[100px]"
-          style={{ background: 'radial-gradient(circle, rgba(167,139,250,0.25) 0%, transparent 70%)' }}
-        />
-        <div
-          className="absolute inset-0 [background-size:60px_60px]"
-          style={{
-            backgroundImage:
-              'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
-            maskImage: 'radial-gradient(ellipse 80% 60% at 50% 40%, black, transparent)',
-            WebkitMaskImage: 'radial-gradient(ellipse 80% 60% at 50% 40%, black, transparent)',
-          }}
-        />
-      </div>
+    <section
+      ref={ref}
+      aria-labelledby="hero-heading"
+      onPointerMove={(e) => {
+        if (e.pointerType !== 'mouse') return
+        rawX.set(e.clientX / window.innerWidth - 0.5)
+        rawY.set(e.clientY / window.innerHeight - 0.5)
+      }}
+      className="relative isolate pb-10 pt-28 [overflow-x:clip] sm:pt-36"
+    >
+      {/* backdrop */}
+      <div aria-hidden className="bg-dots absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)]" />
+      <div aria-hidden className="absolute -right-40 top-10 -z-10 h-[620px] w-[620px] rounded-full bg-brand/20 blur-[120px]" />
+      <div aria-hidden className="absolute -left-32 bottom-0 -z-10 h-[420px] w-[420px] rounded-full bg-gold/25 blur-[120px]" />
 
-      <div className="relative z-10 flex w-full max-w-[1280px] flex-wrap items-center gap-[60px]">
-        {/* LEFT: Text and CTAs */}
-        <div className="flex w-full flex-[1_1_100%] flex-col text-left lg:flex-[1_1_500px]">
-          <motion.h1
-            initial={false}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-8 font-display text-[clamp(36px,8vw,72px)] font-extrabold leading-[1.08] tracking-[-0.03em] text-white"
+      <div className="container-x grid items-center gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+        <motion.div style={{ y: textY, opacity: fade }} className="relative z-10 flex flex-col items-start gap-7">
+          <motion.span
+            initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: EASE }}
+            className="eyebrow"
           >
-            Apply to India&apos;s
-            <br />
-            Top Universities
-            <br />
-            <span className="bg-gradient-to-br from-[#818CF8] via-[#5B5FEF] to-[#A78BFA] bg-clip-text text-transparent">
-              In One Place
-            </span>
-          </motion.h1>
+            <Sparkles size={13} className="text-brand" />
+            India&apos;s unified admissions platform
+          </motion.span>
+
+          <WordReveal
+            as="h1"
+            id="hero-heading"
+            delay={0.1}
+            className="text-hero font-bold text-ink"
+            parts={[
+              'Apply to India’s\n',
+              { text: 'top universities,', className: 'text-gradient' },
+              '\nall in one ',
+              { text: 'place.', className: 'hero-underline' },
+            ]}
+          />
 
           <motion.p
-            initial={false}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.24, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-10 max-w-[560px] text-[clamp(17px,1.5vw,19px)] leading-relaxed text-white/70 font-medium"
+            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: EASE, delay: 0.55 }}
+            className="max-w-[46ch] text-[17px] leading-relaxed text-ink/65 sm:text-lg"
           >
-            Explore universities, compare programs, submit applications, and track every step of your admission journey—all from a single account.
+            Explore universities, compare programs, submit applications, and track every step of your
+            admission journey — all from a single account.
           </motion.p>
 
           <motion.div
-            initial={false}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.24, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col gap-8"
+            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: EASE, delay: 0.7 }}
+            className="flex flex-wrap items-center gap-3"
           >
-            <div className="relative flex flex-wrap gap-4 group">
-              <div
-                className="pointer-events-none absolute -inset-4 z-0 rounded-full bg-[#5B5FEF]/20 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
-                aria-hidden="true"
-              />
-
-              <motion.a
-                href={APP_URL}
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.02, boxShadow: '0 0 30px rgba(91,95,239,0.3)' }}
-                whileTap={{ scale: 0.98 }}
-                className="relative z-10 inline-flex items-center justify-center rounded-full border border-white/10 bg-white px-8 py-4 text-[15px] font-semibold text-black no-underline transition-all duration-300 hover:bg-white/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#5B5FEF] focus-visible:outline-offset-2"
-              >
-                Start Application
-              </motion.a>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-[13px] font-medium text-white/50">
-              <div className="flex items-center gap-1.5"><span className="text-emerald-400">✓</span> 500+ Universities</div>
-              <div className="flex items-center gap-1.5"><span className="text-emerald-400">✓</span> One Profile</div>
-              <div className="flex items-center gap-1.5"><span className="text-emerald-400">✓</span> Track Applications</div>
-              <div className="flex items-center gap-1.5"><span className="text-emerald-400">✓</span> Secure Platform</div>
-            </div>
+            <a href={APP_URL} className="btn-primary group">
+              <span className="pointer-events-none absolute inset-y-0 left-0 w-1/3 animate-shine bg-white/25" aria-hidden />
+              Start Application
+              <ArrowRight size={17} className="transition-transform duration-300 group-hover:translate-x-1" />
+            </a>
+            <a href="#how-it-works" className="btn-ghost">See how it works</a>
           </motion.div>
-        </div>
 
-        {/* RIGHT: realistic SaaS dashboard mockup */}
-        <motion.div
-          initial={false}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.25, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-          className="relative mt-12 flex w-full flex-[1_1_100%] justify-center overflow-visible lg:mt-0 lg:flex-[1_1_600px] [perspective:1000px] -mb-[160px] sm:-mb-[100px] md:-mb-[60px] lg:mb-0"
-          aria-hidden="true"
-        >
-          <HeroDashboardMockup />
+          <motion.div
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 0.95 }}
+            className="flex flex-wrap items-center gap-x-6 gap-y-3"
+          >
+            <div className="flex items-center gap-3">
+              <div className="flex -space-x-2.5">
+                {[['AK', 'bg-brand'], ['PS', 'bg-gold text-[#17142B]'], ['RV', 'bg-mint'], ['NJ', 'bg-coral']].map(([t, c]) => (
+                  <span key={t} className={`flex h-9 w-9 items-center justify-center rounded-full border-2 border-canvas text-[11px] font-bold text-white ${c}`}>{t}</span>
+                ))}
+              </div>
+              <div className="text-[13px] leading-tight text-ink/60">
+                <strong className="block text-[15px] text-ink">50K+ students</strong>
+                applying with one profile
+              </div>
+            </div>
+            <ul className="flex flex-wrap gap-x-4 gap-y-2 text-[13px] font-medium text-ink/60">
+              {['500+ Universities', 'One Profile', 'Secure Platform'].map((t) => (
+                <li key={t} className="flex items-center gap-1.5"><CheckCircle2 size={15} className="text-mint" />{t}</li>
+              ))}
+            </ul>
+          </motion.div>
+        </motion.div>
+
+        {/* 3D stage */}
+        <motion.div style={{ y: sceneY }} className="relative mx-auto h-[380px] w-full max-w-[620px] sm:h-[520px] lg:h-[600px]">
+          <div aria-hidden className="absolute inset-[12%] rounded-full bg-gradient-to-br from-brand-soft via-surface to-gold-soft opacity-90 dark:opacity-40" />
+          <div aria-hidden className="absolute inset-[6%] animate-spin-slow rounded-full border border-dashed border-ink/10" />
+          <div aria-hidden className="absolute bottom-[8%] left-1/2 h-8 w-1/2 -translate-x-1/2 rounded-[50%] bg-ink/20 blur-xl" />
+          <Hero3D />
+
+          <FloatChip className="left-0 top-[14%] sm:-left-4" delay={1.2} mx={mx} my={my} depth={1.4}>
+            <div className="flex items-center gap-2.5">
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand text-[11px] font-bold text-white">BITS</span>
+              <div className="pr-1 text-[12px] leading-tight">
+                <strong className="block text-[13px] text-ink">BITS Pilani</strong>
+                <span className="text-mint">96% match</span>
+              </div>
+            </div>
+          </FloatChip>
+
+          <FloatChip className="right-0 top-[6%]" delay={1.4} mx={mx} my={my} depth={-1}>
+            <div className="flex items-center gap-2 pr-1 text-[12.5px] font-semibold text-ink">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gold-soft text-gold"><PartyPopper size={16} /></span>
+              Offer received · VIT
+            </div>
+          </FloatChip>
+
+          <FloatChip className="bottom-[10%] right-[2%]" delay={1.6} mx={mx} my={my} depth={1.8}>
+            <div className="w-[170px] text-[12px]">
+              <div className="mb-2 flex items-center justify-between text-ink/60"><span>Profile</span><strong className="text-ink">92%</strong></div>
+              <div className="h-2 overflow-hidden rounded-full bg-ink/10">
+                <motion.div className="h-full rounded-full bg-gradient-to-r from-brand to-gold" initial={{ width: 0 }} animate={{ width: '92%' }} transition={{ duration: 1.6, delay: 1.9, ease: EASE }} />
+              </div>
+            </div>
+          </FloatChip>
+
+          <FloatChip className="bottom-[22%] left-[2%]" delay={1.8} mx={mx} my={my} depth={-1.6}>
+            <div className="flex items-center gap-2 pr-1 text-[12.5px] font-semibold text-ink">
+              <BadgeCheck size={18} className="text-mint" /> Documents verified
+            </div>
+          </FloatChip>
         </motion.div>
       </div>
     </section>

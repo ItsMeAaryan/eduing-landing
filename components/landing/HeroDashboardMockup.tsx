@@ -1,333 +1,232 @@
 'use client'
-import { motion, useReducedMotion } from 'framer-motion'
 
-export default function HeroDashboardMockup() {
-  const reduceMotion = useReducedMotion()
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
+import {
+  Bell, BookOpen, Building2, CalendarDays, ChevronLeft, ChevronRight, FileText, LayoutDashboard,
+  MessageSquare, Plus, Search, Settings, Sparkles, Sun, Moon, Clock, MoreHorizontal, HelpCircle,
+} from 'lucide-react'
+import SectionHeader from '@/components/ui/SectionHeader'
+
+/* ── tiny illustrative tiles, echoing the playful shapes in the reference ── */
+function Shapes({ v }: { v: number }) {
+  const sets = [
+    <g key="a"><circle cx="34" cy="34" r="20" fill="#F5B829" /><rect x="52" y="20" width="34" height="34" rx="8" fill="#4B2FC9" transform="rotate(12 69 37)" /><circle cx="70" cy="62" r="7" fill="#17142B" /></g>,
+    <g key="b"><path d="M14 64 L44 14 L74 64Z" fill="#7C66F6" /><circle cx="70" cy="34" r="16" fill="#F5B829" /><rect x="22" y="44" width="22" height="22" rx="6" fill="#17142B" /></g>,
+    <g key="c"><rect x="16" y="16" width="40" height="40" rx="20" fill="#4B2FC9" /><rect x="46" y="34" width="34" height="26" rx="6" fill="#F5B829" /><circle cx="30" cy="66" r="6" fill="#F46846" /></g>,
+    <g key="d"><path d="M20 60 Q 46 6 76 46" stroke="#17142B" strokeWidth="9" fill="none" strokeLinecap="round" /><circle cx="26" cy="28" r="12" fill="#F5B829" /><rect x="54" y="52" width="22" height="16" rx="5" fill="#7C66F6" /></g>,
+  ]
+  return <svg viewBox="0 0 90 80" className="h-[72px] w-[84px]">{sets[v]}</svg>
+}
+
+function Ring({ pct, label, sub, tone }: { pct: number; label: string; sub: string; tone: string }) {
+  const c = 2 * Math.PI * 22
+  return (
+    <div className="flex items-center gap-3 rounded-[18px] bg-surface p-3.5 shadow-card">
+      <svg viewBox="0 0 56 56" className="h-14 w-14 -rotate-90">
+        <circle cx="28" cy="28" r="22" fill="none" strokeWidth="6" className="stroke-ink/10" />
+        <motion.circle
+          cx="28" cy="28" r="22" fill="none" strokeWidth="6" strokeLinecap="round" className={tone}
+          strokeDasharray={c} initial={{ strokeDashoffset: c }} whileInView={{ strokeDashoffset: c * (1 - pct / 100) }}
+          viewport={{ once: true }} transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
+        />
+      </svg>
+      <div className="min-w-0">
+        <div className="text-[10px] font-semibold uppercase tracking-wider text-ink/40">{sub}</div>
+        <div className="text-[14px] font-bold text-ink">{label}</div>
+        <div className="text-[11px] text-ink/50">{pct}% complete</div>
+      </div>
+    </div>
+  )
+}
+
+function Dashboard() {
+  return (
+    <div className="flex h-[700px] w-[1180px] gap-4 rounded-[34px] bg-canvas p-4 text-left">
+      {/* sidebar */}
+      <aside className="flex w-[200px] shrink-0 flex-col rounded-[26px] bg-surface p-4 shadow-card">
+        <div className="mb-6 flex items-center gap-2 font-display text-[17px] font-bold text-ink">
+          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-brand text-[11px] text-white">e</span>EDUING
+        </div>
+        <div className="mb-6 flex flex-col items-center text-center">
+          <div className="mb-2 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-brand to-brand-2 text-lg font-bold text-white ring-4 ring-gold-soft">AS</div>
+          <div className="text-[14px] font-bold text-ink">Aarav Sharma</div>
+          <div className="text-[11px] text-ink/50">Jaipur, Rajasthan</div>
+        </div>
+        <nav className="flex flex-col gap-1 text-[13px]">
+          {[
+            [LayoutDashboard, 'Dashboard', true], [Building2, 'Universities'], [FileText, 'Applications', false, '3'],
+            [BookOpen, 'Documents'], [MessageSquare, 'Messages', false, '2'], [CalendarDays, 'Calendar'], [Settings, 'Settings'],
+          ].map(([Icon, label, active, badge]) => {
+            const I = Icon as typeof LayoutDashboard
+            return (
+              <div key={label as string} className={`flex items-center gap-2.5 rounded-xl px-3 py-2 ${active ? 'bg-brand-soft font-semibold text-brand' : 'text-ink/60'}`}>
+                <I size={15} />{label as string}
+                {badge && <span className="ml-auto rounded-full bg-gold px-1.5 text-[10px] font-bold text-[#17142B]">{badge as string}</span>}
+              </div>
+            )
+          })}
+        </nav>
+        <div className="relative mt-auto overflow-hidden rounded-[20px] bg-night p-4 pt-7 text-center text-white">
+          <span className="absolute left-1/2 top-0 flex h-9 w-9 -translate-x-1/2 -translate-y-1/3 items-center justify-center rounded-full border-4 border-surface bg-gold text-[#17142B]"><HelpCircle size={16} /></span>
+          <div className="text-[13px] font-bold">Need guidance?</div>
+          <div className="mb-3 text-[10.5px] text-white/60">Talk to an admission expert</div>
+          <div className="rounded-full bg-white py-1.5 text-[11px] font-semibold text-[#17142B]">Book a call</div>
+        </div>
+      </aside>
+
+      {/* main */}
+      <div className="flex min-w-0 flex-1 flex-col gap-4 rounded-[26px] bg-surface-2 p-5">
+        <div className="flex items-center gap-3">
+          <div className="flex gap-1 rounded-full bg-surface p-1 text-[12px] font-medium shadow-card">
+            {['Engineering', 'Medical', 'Management'].map((t, i) => (
+              <span key={t} className={`rounded-full px-3 py-1.5 ${i === 0 ? 'bg-ink text-canvas' : 'text-ink/50'}`}>{t}</span>
+            ))}
+          </div>
+          <div className="flex flex-1 items-center gap-2 rounded-full bg-surface px-4 py-2 text-[12px] text-ink/40 shadow-card"><Search size={14} />Search universities, programs…</div>
+          <div className="flex items-center gap-1 rounded-full bg-surface p-1 text-[11px] shadow-card">
+            <span className="flex items-center gap-1 rounded-full bg-gold px-2 py-1 font-semibold text-[#17142B]"><Sun size={11} />Light</span>
+            <span className="flex items-center gap-1 px-2 text-ink/50"><Moon size={11} />Dark</span>
+          </div>
+          <span className="relative flex h-9 w-9 items-center justify-center rounded-full bg-surface shadow-card"><Bell size={15} className="text-ink/70" /><span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-coral" /></span>
+          <span className="rounded-full bg-brand px-4 py-2 text-[12px] font-semibold text-white">+ New application</span>
+        </div>
+
+        <div className="flex gap-4">
+          <div className="flex w-[300px] shrink-0 flex-col justify-center">
+            <div className="font-display text-[34px] font-bold leading-[1.05] tracking-tight text-ink">
+              Hi, Aarav! 👋<br />Where do you want to <span className="text-gold">study</span> next?
+            </div>
+            <p className="mt-3 text-[12.5px] text-ink/50">Your profile is 92% complete — 3 universities are waiting on you.</p>
+          </div>
+          <div className="flex flex-1 gap-3">
+            <div className="flex w-14 items-center justify-center rounded-[22px] border-2 border-dashed border-ink/10 text-ink/30"><Plus /></div>
+            {[['IIT Bombay', 'Engineering'], ['NID', 'Design'], ['AIIMS', 'Medicine'], ['NLSIU', 'Law']].map(([n, s], i) => (
+              <div key={n} className={`flex flex-1 flex-col items-center justify-end rounded-[22px] p-3 text-center shadow-card ${i === 3 ? 'bg-night text-white' : 'bg-surface'}`}>
+                <Shapes v={i} />
+                <div className={`mt-2 text-[13px] font-bold ${i === 3 ? 'text-white' : 'text-ink'}`}>{n}</div>
+                <div className={`text-[10.5px] ${i === 3 ? 'text-white/50' : 'text-ink/45'}`}>{s}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid flex-1 grid-cols-[1fr_300px] gap-4">
+          <div className="flex min-w-0 flex-col gap-4">
+            <div className="grid grid-cols-3 gap-3">
+              <Ring pct={92} label="Profile" sub="Step 1" tone="stroke-brand" />
+              <Ring pct={60} label="Documents" sub="Step 2" tone="stroke-gold" />
+              <Ring pct={30} label="Applications" sub="Step 3" tone="stroke-mint" />
+            </div>
+            <div className="flex-1 rounded-[22px] bg-surface p-4 shadow-card">
+              <div className="mb-3 flex items-center justify-between">
+                <div className="text-[15px] font-bold text-ink">Your applications</div>
+                <div className="flex items-center gap-2 text-[11px] text-ink/45"><span className="flex -space-x-1.5">{['bg-brand', 'bg-gold', 'bg-mint'].map((c) => <span key={c} className={`h-5 w-5 rounded-full border-2 border-surface ${c}`} />)}</span>View all</div>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="rounded-[18px] bg-night p-4 text-white">
+                  <div className="mb-3 flex items-start justify-between">
+                    <div className="text-[14px] font-bold leading-snug">VIT Chennai<br /><span className="text-[11px] font-normal text-white/55">B.Tech Computer Science</span></div>
+                    <span className="rounded-full bg-gold px-2 py-0.5 text-[10px] font-bold text-[#17142B]">Offer 🎉</span>
+                  </div>
+                  <div className="mb-1.5 h-1.5 overflow-hidden rounded-full bg-white/15"><div className="h-full w-full rounded-full bg-gold" /></div>
+                  <div className="flex justify-between text-[10.5px] text-white/50"><span>Updated 2h ago</span><span className="text-white">Accept offer →</span></div>
+                </div>
+                <div className="rounded-[18px] bg-brand-soft p-4">
+                  <div className="mb-3 flex items-start justify-between">
+                    <div className="text-[14px] font-bold leading-snug text-ink">SRM University<br /><span className="text-[11px] font-normal text-ink/55">B.Tech Information Tech</span></div>
+                    <span className="rounded-full bg-surface px-2 py-0.5 text-[10px] font-semibold text-brand">Under review</span>
+                  </div>
+                  <div className="mb-1.5 h-1.5 overflow-hidden rounded-full bg-ink/10"><div className="h-full w-3/4 rounded-full bg-brand" /></div>
+                  <div className="flex justify-between text-[10.5px] text-ink/50"><span>Updated 1d ago</span><span className="text-brand">75%</span></div>
+                </div>
+              </div>
+              <div className="mt-3 flex items-center gap-3 rounded-[16px] border border-line/10 p-3 text-[12px]">
+                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gold-soft text-gold"><Sparkles size={15} /></span>
+                <div className="flex-1"><strong className="text-ink">Manipal MAHE</strong><span className="text-ink/50"> · AI match 91% · scholarship eligible</span></div>
+                <span className="rounded-full bg-ink px-3 py-1 text-[11px] font-semibold text-canvas">Apply</span>
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col gap-4">
+            <div className="rounded-[22px] bg-surface p-4 shadow-card">
+              <div className="mb-3 flex items-center justify-between text-[14px] font-bold text-ink">May 2026<span className="flex gap-1 text-ink/40"><ChevronLeft size={15} /><ChevronRight size={15} /></span></div>
+              <div className="grid grid-cols-7 gap-1 text-center text-[10px] text-ink/40">
+                {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => <span key={i}>{d}</span>)}
+                {[11, 12, 13, 14, 15, 16, 17].map((d) => (
+                  <span key={d} className={`mx-auto flex h-7 w-7 items-center justify-center rounded-full text-[11.5px] font-semibold ${d === 15 ? 'bg-gold text-[#17142B]' : d === 13 ? 'bg-brand text-white' : 'text-ink/70'}`}>{d}</span>
+                ))}
+              </div>
+              <div className="mt-3 flex flex-col gap-2 text-[11.5px]">
+                {[['JEE counselling round 2', '10:30 – 12:00', 'bg-brand'], ['Ashoka interview', '4:00 PM · Online', 'bg-gold']].map(([t, s, c]) => (
+                  <div key={t} className="flex items-center gap-2.5 rounded-xl bg-surface-2 p-2.5">
+                    <span className={`h-8 w-1 rounded-full ${c}`} />
+                    <div className="flex-1"><div className="font-semibold text-ink">{t}</div><div className="text-ink/45">{s}</div></div>
+                    <MoreHorizontal size={14} className="text-ink/30" />
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="flex-1 rounded-[22px] bg-surface p-4 shadow-card">
+              <div className="mb-2 text-[14px] font-bold text-ink">Deadline alert</div>
+              <div className="rounded-xl bg-coral/10 p-3 text-[11.5px]">
+                <div className="flex items-center gap-1.5 font-semibold text-coral"><Clock size={12} />2 days left</div>
+                <div className="mt-1 text-ink/70">KREA University · Round 2 application closes Friday</div>
+              </div>
+              <div className="mt-3 flex gap-2 text-[11px] font-semibold">
+                <span className="flex-1 rounded-full border border-line/15 py-1.5 text-center text-ink/70">Remind me</span>
+                <span className="flex-1 rounded-full bg-brand py-1.5 text-center text-white">Finish now</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/** Scales the fixed-size dashboard down to fit any viewport. */
+function Fit({ children, w = 1180, h = 700 }: { children: React.ReactNode; w?: number; h?: number }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [s, setS] = useState(1)
+  useEffect(() => {
+    const el = ref.current!
+    const ro = new ResizeObserver(([e]) => setS(Math.min(1, e.contentRect.width / w)))
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [w])
+  return (
+    <div ref={ref} className="w-full" style={{ height: h * s }}>
+      <div style={{ width: w, height: h, transform: `scale(${s})`, transformOrigin: 'top left' }}>{children}</div>
+    </div>
+  )
+}
+
+export default function DashboardShowcase() {
+  const ref = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'start 0.25'] })
+  const rotateX = useTransform(scrollYProgress, [0, 1], [32, 0])
+  const scale = useTransform(scrollYProgress, [0, 1], [0.86, 1])
+  const y = useTransform(scrollYProgress, [0, 1], [60, 0])
 
   return (
-    <motion.div
-      animate={reduceMotion ? {} : { y: [0, -10, 0] }}
-      transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-      className="flex w-[800px] max-w-none flex-col overflow-hidden rounded-3xl border border-white/[0.08] shadow-[0_30px_60px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-xl origin-top scale-[0.4] sm:scale-[0.6] md:scale-[0.75] lg:scale-100 lg:w-full lg:max-w-[720px] [transform:rotateY(-5deg)_rotateX(5deg)] [transform-style:preserve-3d] min-h-[480px]"
-      style={{ background: 'linear-gradient(145deg, rgba(22,22,26,0.95) 0%, rgba(15,15,20,0.95) 100%)' }}
-    >
-      {/* Top Bar */}
-      <div className="flex h-14 items-center justify-between border-b border-white/5 bg-white/[0.02] px-6">
-        <div className="flex items-center gap-6">
-          <div className="flex items-center gap-2 font-display text-[15px] font-bold tracking-wide text-white">
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-[#818CF8] to-[#5B5FEF] text-white shadow-lg">
-              E
-            </div>
-            EDUING
-          </div>
-          <div className="flex h-8 w-64 items-center gap-2 rounded-md border border-white/10 bg-black/20 px-3 text-[13px] text-white/40 shadow-inner transition-colors duration-200 hover:border-white/20 hover:text-white/60">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <span>Search applications...</span>
-            <div className="ml-auto flex gap-1">
-              <kbd className="rounded bg-white/10 px-1.5 py-0.5 text-[9px] font-medium text-white/50">⌘</kbd>
-              <kbd className="rounded bg-white/10 px-1.5 py-0.5 text-[9px] font-medium text-white/50">K</kbd>
-            </div>
-          </div>
-        </div>
-        
-        <div className="flex items-center gap-4">
-          <div className="hidden sm:flex items-center gap-3 mr-2">
-            <span className="text-[10px] font-medium text-white/40">Last synced 2 min ago</span>
-            <div className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2 py-1">
-              <div className="h-1 w-12 overflow-hidden rounded-full bg-white/10">
-                <motion.div initial={{ width: 0 }} animate={{ width: '92%' }} transition={{ duration: 0.24 }} className="h-full bg-emerald-400" />
-              </div>
-              <span className="text-[9px] font-bold text-white/70">92%</span>
-            </div>
-          </div>
-          <button className="relative flex h-8 w-8 items-center justify-center rounded-full text-white/50 transition-colors duration-200 hover:bg-white/10 hover:text-white">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-            <span className="absolute -top-0.5 -right-0.5 flex h-[14px] w-[14px] items-center justify-center rounded-full bg-[#5B5FEF] ring-2 ring-[#16161A] text-[8px] font-bold text-white">3</span>
-          </button>
-          <button className="relative flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-tr from-emerald-400 to-cyan-400 p-[2px] transition-transform duration-200 hover:scale-105">
-            <div className="flex h-full w-full items-center justify-center rounded-full bg-[#16161A] text-[11px] font-bold text-white">
-              JS
-            </div>
-            <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-500 ring-2 ring-[#16161A]"></span>
-          </button>
+    <section aria-labelledby="showcase-heading" className="relative pb-10 pt-16 sm:pt-24">
+      <div className="container-x">
+        <SectionHeader
+          id="showcase-heading"
+          eyebrow="Your admission HQ"
+          title={['Every application, deadline and offer — ', { text: 'one calm dashboard.', className: 'text-gradient' }]}
+          subtitle="Track progress, get AI-matched programs and never miss a deadline. This is what your EDUING workspace looks like."
+        />
+        <div ref={ref} className="mt-14" style={{ perspective: 1400 }}>
+          <motion.div
+            style={{ rotateX, scale, y, transformOrigin: 'center top' }}
+            className="rounded-[40px] border border-line/10 bg-surface/60 p-2 shadow-lift backdrop-blur sm:p-3"
+          >
+            <Fit><Dashboard /></Fit>
+          </motion.div>
         </div>
       </div>
-
-      <div className="flex flex-1 overflow-hidden">
-        {/* Left Sidebar */}
-        <div className="flex w-16 flex-col items-center border-r border-white/5 bg-white/[0.01] py-4">
-          <div className="flex w-full flex-col items-center gap-2">
-            <button className="group relative flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-white shadow-sm transition-all duration-200 hover:-translate-y-[1px] hover:bg-white/15">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
-              <div className="absolute left-12 z-50 rounded bg-white/10 px-2 py-1 text-[10px] font-medium text-white opacity-0 backdrop-blur-md transition-opacity duration-200 group-hover:opacity-100 pointer-events-none whitespace-nowrap">Dashboard</div>
-            </button>
-            <button className="group relative flex h-10 w-10 items-center justify-center rounded-xl text-white/40 transition-all duration-200 hover:-translate-y-[1px] hover:bg-white/5 hover:text-white">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-              <div className="absolute left-12 z-50 rounded bg-white/10 px-2 py-1 text-[10px] font-medium text-white opacity-0 backdrop-blur-md transition-opacity duration-200 group-hover:opacity-100 pointer-events-none whitespace-nowrap">Applications</div>
-            </button>
-            <button className="group relative flex h-10 w-10 items-center justify-center rounded-xl text-white/40 transition-all duration-200 hover:-translate-y-[1px] hover:bg-white/5 hover:text-white">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-              <div className="absolute left-12 z-50 rounded bg-white/10 px-2 py-1 text-[10px] font-medium text-white opacity-0 backdrop-blur-md transition-opacity duration-200 group-hover:opacity-100 pointer-events-none whitespace-nowrap">Saved Universities</div>
-            </button>
-            <button className="group relative flex h-10 w-10 items-center justify-center rounded-xl text-white/40 transition-all duration-200 hover:-translate-y-[1px] hover:bg-white/5 hover:text-white">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>
-              <div className="absolute left-12 z-50 rounded bg-white/10 px-2 py-1 text-[10px] font-medium text-white opacity-0 backdrop-blur-md transition-opacity duration-200 group-hover:opacity-100 pointer-events-none whitespace-nowrap">Scholarships</div>
-            </button>
-            <button className="group relative flex h-10 w-10 items-center justify-center rounded-xl text-white/40 transition-all duration-200 hover:-translate-y-[1px] hover:bg-white/5 hover:text-white">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-              <div className="absolute left-12 z-50 rounded bg-white/10 px-2 py-1 text-[10px] font-medium text-white opacity-0 backdrop-blur-md transition-opacity duration-200 group-hover:opacity-100 pointer-events-none whitespace-nowrap">Documents</div>
-            </button>
-          </div>
-          <div className="mt-auto">
-            <button className="group relative flex h-10 w-10 items-center justify-center rounded-xl text-white/40 transition-all duration-200 hover:-translate-y-[1px] hover:bg-white/5 hover:text-white">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-              <div className="absolute left-12 z-50 rounded bg-white/10 px-2 py-1 text-[10px] font-medium text-white opacity-0 backdrop-blur-md transition-opacity duration-200 group-hover:opacity-100 pointer-events-none whitespace-nowrap">Settings</div>
-            </button>
-          </div>
-        </div>
-
-        {/* Dashboard Content */}
-        <div className="flex flex-1 gap-6 overflow-y-auto bg-black/20 p-6">
-          {/* Left Col: Application Cards */}
-          <div className="flex flex-[3] flex-col gap-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-[14px] font-bold text-white">Your Applications</h2>
-              <button className="text-[12px] font-medium text-[#818CF8] transition-colors duration-200 hover:text-white">View All</button>
-            </div>
-
-            <motion.div
-              className="group relative flex flex-col gap-3 rounded-2xl border border-emerald-500/40 bg-emerald-500/[0.04] p-4 shadow-[0_8px_24px_-8px_rgba(16,185,129,0.25)] transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/60 hover:bg-emerald-500/[0.06] hover:shadow-[0_8px_24px_-8px_rgba(16,185,129,0.35)]"
-            >
-              <motion.div 
-                animate={reduceMotion ? {} : { opacity: [0.3, 0.6, 0.3] }}
-                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-                className="absolute inset-0 rounded-2xl bg-gradient-to-br from-emerald-500/10 to-transparent pointer-events-none"
-              />
-              <div className="relative z-10 flex items-start justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-emerald-500/30 bg-white overflow-hidden shadow-inner">
-                    <span className="text-[12px] font-extrabold text-[#1e40af]">VIT</span>
-                  </div>
-                  <div className="flex flex-col">
-                    <h3 className="text-[13px] font-bold text-white">VIT Chennai</h3>
-                    <p className="text-[11px] font-medium text-white/50">B.Tech Computer Science</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/15 px-2.5 py-1 shadow-[0_0_10px_rgba(16,185,129,0.2)]">
-                  <span className="text-[10px]">✨</span>
-                  <span className="text-[10px] font-bold text-emerald-400">Offer Received</span>
-                </div>
-              </div>
-              
-              <div className="relative z-10 mt-1 flex flex-col gap-1.5">
-                <div className="flex justify-between text-[10px] font-medium text-white/40">
-                  <span>Application Progress</span>
-                  <span className="text-white/70">100%</span>
-                </div>
-                <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/10">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: '100%' }}
-                    transition={{ duration: 0.24, ease: 'easeOut' }}
-                    className="h-full rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]"
-                  />
-                </div>
-              </div>
-
-              <div className="relative z-10 mt-1 flex items-center justify-between border-t border-emerald-500/20 pt-3">
-                <span className="text-[10px] font-medium text-white/40">Updated 2h ago</span>
-                <button className="flex items-center gap-1 text-[11px] font-semibold text-emerald-400/90 transition-all duration-200 hover:text-emerald-300">
-                  View Details <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </button>
-              </div>
-            </motion.div>
-
-            <motion.div
-              className="group relative flex flex-col gap-3 rounded-2xl border border-orange-500/20 bg-white/[0.02] p-4 shadow-[0_4px_12px_-4px_rgba(249,115,22,0.1)] transition-all duration-200 hover:-translate-y-1 hover:border-orange-500/40 hover:bg-white/[0.04] hover:shadow-[0_8px_24px_-8px_rgba(249,115,22,0.2)]"
-            >
-              <div className="flex items-start justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white overflow-hidden shadow-inner">
-                    <span className="text-[12px] font-extrabold text-[#b91c1c]">SRM</span>
-                  </div>
-                  <div className="flex flex-col">
-                    <h3 className="text-[13px] font-bold text-white">SRM University</h3>
-                    <p className="text-[11px] font-medium text-white/50">B.Tech Information Tech</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-1.5 rounded-full border border-orange-500/30 bg-orange-500/10 px-2.5 py-1">
-                  <motion.div
-                    animate={reduceMotion ? {} : { opacity: [0.4, 1, 0.4] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-                    className="h-1.5 w-1.5 rounded-full bg-orange-400"
-                  />
-                  <span className="text-[10px] font-bold text-orange-400">Under Review</span>
-                </div>
-              </div>
-              
-              <div className="mt-1 flex flex-col gap-1.5">
-                <div className="flex justify-between text-[10px] font-medium text-white/40">
-                  <span>Application Progress</span>
-                  <span className="text-white/70">75%</span>
-                </div>
-                <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/10">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: '75%' }}
-                    transition={{ duration: 0.24, ease: 'easeOut' }}
-                    className="h-full rounded-full bg-orange-500"
-                  />
-                </div>
-              </div>
-
-              <div className="mt-1 flex items-center justify-between border-t border-white/5 pt-3">
-                <span className="text-[10px] font-medium text-white/40">Updated 1d ago</span>
-                <button className="flex items-center gap-1 text-[11px] font-semibold text-white/70 transition-all duration-200 hover:text-white group-hover:text-orange-400">
-                  View Details <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </button>
-              </div>
-            </motion.div>
-
-            <motion.div
-              className="group relative flex flex-col gap-3 rounded-2xl border border-white/5 bg-white/[0.02] p-4 shadow-[0_4px_12px_-4px_rgba(255,255,255,0.05)] transition-all duration-200 hover:-translate-y-1 hover:border-white/15 hover:bg-white/[0.04] hover:shadow-[0_8px_24px_-8px_rgba(255,255,255,0.1)]"
-            >
-              <div className="flex items-start justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white overflow-hidden shadow-inner">
-                    <span className="text-[13px] font-extrabold text-[#ea580c]">MU</span>
-                  </div>
-                  <div className="flex flex-col">
-                    <h3 className="text-[13px] font-bold text-white">Manipal University</h3>
-                    <p className="text-[11px] font-medium text-white/50">B.Tech Software Eng</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2.5 py-1">
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="text-white/60" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                  <span className="text-[10px] font-bold text-white/60">Docs Pending</span>
-                </div>
-              </div>
-              
-              <div className="mt-1 flex flex-col gap-1.5">
-                <div className="flex justify-between text-[10px] font-medium text-white/40">
-                  <span>Application Progress</span>
-                  <span className="text-white/70">40%</span>
-                </div>
-                <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/10">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: '40%' }}
-                    transition={{ duration: 0.24, ease: 'easeOut' }}
-                    className="h-full rounded-full bg-white/40"
-                  />
-                </div>
-              </div>
-
-              <div className="mt-1 flex items-center justify-between border-t border-white/5 pt-3">
-                <span className="text-[10px] font-medium text-white/40">Updated 3d ago</span>
-                <button className="flex items-center gap-1 text-[11px] font-semibold text-white/70 transition-all duration-200 hover:text-white group-hover:text-white">
-                  View Details <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </button>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Right Col: Widgets */}
-          <div className="flex flex-[2] flex-col gap-5">
-            <div className="flex flex-col gap-3">
-              <h2 className="text-[13px] font-bold text-white">Recommended for you</h2>
-              <motion.div
-                className="group relative overflow-hidden rounded-2xl border border-[#818CF8]/30 bg-gradient-to-b from-[#818CF8]/10 to-transparent p-4 shadow-[0_4px_24px_-8px_rgba(129,140,248,0.2)] backdrop-blur-md transition-all duration-200 hover:-translate-y-1 hover:border-[#818CF8]/50 hover:shadow-[0_8px_32px_-8px_rgba(129,140,248,0.3)]"
-              >
-                <div className="relative z-10 flex flex-col gap-3">
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white text-sm shadow-inner overflow-hidden">
-                        <span className="text-[10px] font-extrabold text-[#1d4ed8]">BITS</span>
-                      </div>
-                      <div className="flex flex-col">
-                        <h3 className="text-[13px] font-bold text-white">BITS Pilani</h3>
-                        <p className="text-[11px] font-medium text-white/60">96% Match</p>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="mt-2 flex items-center justify-between border-t border-white/5 pt-3">
-                    <div className="text-[10px] font-medium text-white/50">Based on your profile</div>
-                    <button className="flex items-center gap-1 rounded-full bg-[#5B5FEF] px-3 py-1.5 text-[11px] font-bold text-white transition-all duration-200 hover:bg-[#818CF8] hover:shadow-[0_0_12px_rgba(129,140,248,0.6)]">
-                      Apply <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-
-            <div className="flex flex-col gap-3">
-              <h2 className="text-[13px] font-bold text-white">Upcoming Deadlines</h2>
-              <div className="flex flex-col gap-2">
-                <motion.div
-                  className="group flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.02] p-3 shadow-[0_2px_8px_-2px_rgba(255,255,255,0.02)] transition-all duration-200 hover:-translate-y-[1px] hover:border-white/10 hover:bg-white/[0.04]"
-                >
-                  <div className="flex flex-col gap-0.5">
-                    <span className="text-[12px] font-bold text-white">Ashoka University</span>
-                    <span className="text-[10px] font-medium text-white/50">Round 2 Application</span>
-                  </div>
-                  <div className="flex flex-col items-end gap-0.5">
-                    <span className="rounded bg-orange-500/10 px-1.5 py-0.5 text-[10px] font-bold text-orange-400">2 Days Left</span>
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  className="group flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.02] p-3 shadow-[0_2px_8px_-2px_rgba(255,255,255,0.02)] transition-all duration-200 hover:-translate-y-[1px] hover:border-white/10 hover:bg-white/[0.04]"
-                >
-                  <div className="flex flex-col gap-0.5">
-                    <span className="text-[12px] font-bold text-white">KREA University</span>
-                    <span className="text-[10px] font-medium text-white/50">Financial Aid</span>
-                  </div>
-                  <div className="flex flex-col items-end gap-0.5">
-                    <span className="rounded bg-white/10 px-1.5 py-0.5 text-[10px] font-bold text-white/70">1 Week Left</span>
-                  </div>
-                </motion.div>
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-3">
-              <h2 className="text-[13px] font-bold text-white">Quick Stats</h2>
-              <div className="grid grid-cols-3 gap-2">
-                <motion.div
-                  className="flex flex-col items-center justify-center gap-1 rounded-xl border border-white/5 bg-white/[0.02] py-3 shadow-[0_2px_8px_-2px_rgba(255,255,255,0.02)] transition-all duration-200 hover:-translate-y-[1px] hover:border-white/10 hover:bg-white/[0.04]"
-                >
-                  <span className="text-[16px] font-extrabold text-white">3</span>
-                  <span className="text-[9px] font-medium uppercase tracking-wider text-white/50">Applied</span>
-                </motion.div>
-                <motion.div
-                  className="flex flex-col items-center justify-center gap-1 rounded-xl border border-emerald-500/20 bg-emerald-500/[0.05] py-3 shadow-[0_2px_8px_-2px_rgba(16,185,129,0.05)] transition-all duration-200 hover:-translate-y-[1px] hover:border-emerald-500/40 hover:bg-emerald-500/[0.1]"
-                >
-                  <span className="text-[16px] font-extrabold text-emerald-400">1</span>
-                  <span className="text-[9px] font-medium uppercase tracking-wider text-emerald-400/70">Offers</span>
-                </motion.div>
-                <motion.div
-                  className="flex flex-col items-center justify-center gap-1 rounded-xl border border-white/5 bg-white/[0.02] py-3 shadow-[0_2px_8px_-2px_rgba(255,255,255,0.02)] transition-all duration-200 hover:-translate-y-[1px] hover:border-white/10 hover:bg-white/[0.04]"
-                >
-                  <span className="text-[16px] font-extrabold text-white">12</span>
-                  <span className="text-[9px] font-medium uppercase tracking-wider text-white/50">Saved</span>
-                </motion.div>
-              </div>
-            </div>
-
-            <div className="mt-1 flex flex-col gap-2 rounded-xl border border-white/5 bg-white/[0.01] p-3 shadow-[0_2px_8px_-2px_rgba(255,255,255,0.02)]">
-              <div className="flex items-center gap-2 text-[10px] text-white/50">
-                <span className="flex h-3 w-3 items-center justify-center rounded-full bg-emerald-500/20 text-[7px] text-emerald-400">✓</span> Documents verified
-              </div>
-              <div className="flex items-center gap-2 text-[10px] text-white/50">
-                <span className="flex h-3 w-3 items-center justify-center rounded-full bg-[#818CF8]/20 text-[7px] text-[#818CF8]">✨</span> AI recommended BITS Pilani
-              </div>
-              <div className="flex items-center gap-2 text-[10px] text-white/50">
-                <span className="flex h-3 w-3 items-center justify-center rounded-full bg-orange-400/20 text-[7px] text-orange-400">!</span> Deadline reminder tomorrow
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </motion.div>
+    </section>
   )
 }

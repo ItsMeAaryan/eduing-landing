@@ -1,200 +1,97 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { CheckCircle2, ArrowRight, CheckSquare, Users, Clock, Activity, Zap } from 'lucide-react'
+import { useRef } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { ArrowUpRight, BarChart3, Check, ClipboardCheck, FileCheck2, LayoutDashboard, Sparkles, Users } from 'lucide-react'
+import WordReveal from '@/components/ui/WordReveal'
+import Reveal from '@/components/ui/Reveal'
+import Counter from '@/components/ui/Counter'
+import { UNI_URL } from '@/lib/links'
 
+const EASE = [0.16, 1, 0.3, 1] as const
 const features = [
-  'Admission Dashboard',
-  'Student Application Review',
-  'AI Candidate Insights',
-  'Document Verification',
-  'Department Analytics',
-  'Seat Management'
+  { icon: LayoutDashboard, label: 'Admission dashboard' },
+  { icon: Users, label: 'Student application review' },
+  { icon: Sparkles, label: 'AI candidate insights' },
+  { icon: FileCheck2, label: 'Document verification' },
+  { icon: BarChart3, label: 'Department analytics' },
+  { icon: ClipboardCheck, label: 'Seat management' },
 ]
 
 export default function ForUniversitiesSection() {
+  const ref = useRef<HTMLElement>(null)
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
+  const consoleY = useTransform(scrollYProgress, [0, 1], [80, -80])
+  const orbY = useTransform(scrollYProgress, [0, 1], [-60, 120])
+
   return (
-    <section className="relative overflow-hidden bg-bg px-6 py-24 lg:py-32" id="for-universities" aria-labelledby="for-universities-heading">
-      <div className="mx-auto flex max-w-[1200px] flex-col gap-16 md:flex-row md:items-center lg:gap-16">
-        
-        {/* LEFT COLUMN */}
-        <div className="flex w-full flex-col md:w-2/5 lg:w-1/2">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            viewport={{ once: true }}
-            className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 self-start"
-          >
-            <span className="text-[11px] font-bold uppercase tracking-[0.1em] text-white/70">
-              FOR UNIVERSITIES
-            </span>
-          </motion.div>
+    <section ref={ref} id="for-universities" aria-labelledby="uni-heading" className="section">
+      <div className="container-x">
+        <div className="card-night grain relative overflow-hidden px-6 py-14 sm:px-12 sm:py-20">
+          <motion.div aria-hidden style={{ y: orbY }} className="absolute -left-24 top-0 h-[420px] w-[420px] rounded-full bg-brand/60 blur-[110px]" />
+          <div aria-hidden className="absolute -bottom-32 right-0 h-[360px] w-[360px] rounded-full bg-gold/25 blur-[110px]" />
 
-          <motion.h2 
-            id="for-universities-heading"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.1 }}
-            viewport={{ once: true }}
-            className="mb-6 font-display text-4xl font-extrabold leading-[1.15] tracking-[-0.02em] text-white lg:text-5xl"
-          >
-            Built for Universities,<br />
-            <span className="bg-gradient-to-br from-[#818CF8] via-[#5B5FEF] to-[#A78BFA] bg-clip-text text-transparent">Not Just Students.</span>
-          </motion.h2>
-
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="mb-10 text-base leading-relaxed text-white/50"
-          >
-            Manage admissions, review applications, communicate with applicants, verify documents and gain AI-powered insights — all from one modern dashboard.
-          </motion.p>
-
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.3 }}
-            viewport={{ once: true }}
-            className="mb-10 grid grid-cols-1 gap-4 sm:grid-cols-2"
-          >
-            {features.map((feature, i) => (
-              <div key={i} className="flex items-center gap-3">
-                <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5">
-                  <CheckCircle2 size={12} className="text-white/70" />
-                </div>
-                <span className="text-[14px] font-medium text-white/80">{feature}</span>
-              </div>
-            ))}
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.4 }}
-            viewport={{ once: true }}
-          >
-            <a href="/universities" className="group inline-flex items-center gap-2 rounded-lg bg-white/5 px-4 py-2.5 text-[14px] font-medium text-white transition-all duration-200 hover:bg-white/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.05)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-white/50">
-              Learn More <ArrowRight size={16} className="transition-transform duration-200 group-hover:translate-x-1" />
-            </a>
-          </motion.div>
-        </div>
-
-        {/* RIGHT COLUMN - Dashboard Mockup */}
-        <div className="w-full flex-1 md:w-3/5 lg:w-1/2">
-          <motion.div 
-            initial={{ opacity: 0, y: 40, scale: 0.98 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            viewport={{ once: true }}
-            className="relative flex w-full flex-col overflow-hidden rounded-[16px] border border-white/10 bg-[#0A0A0A] shadow-[0_20px_40px_-10px_rgba(0,0,0,0.5)]"
-          >
-            {/* Top Bar */}
-            <div className="flex items-center justify-between border-b border-white/5 bg-white/[0.02] px-5 py-3">
-              <div className="flex items-center gap-3">
-                <div className="flex h-3 space-x-1.5">
-                  <div className="h-2.5 w-2.5 rounded-full bg-white/20" />
-                  <div className="h-2.5 w-2.5 rounded-full bg-white/20" />
-                  <div className="h-2.5 w-2.5 rounded-full bg-white/20" />
-                </div>
-                <div className="h-4 w-[1px] bg-white/10 mx-1" />
-                <span className="text-[11px] font-medium tracking-wider text-white/40">ADMIN CONSOLE</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2 py-0.5">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="text-[10px] font-bold text-emerald-400">Live</span>
-                </div>
-                <div className="h-6 w-6 rounded-full bg-gradient-to-br from-[#5B5FEF] to-[#818CF8]" />
-              </div>
-            </div>
-
-            {/* Dashboard Content */}
-            <div className="flex flex-col gap-4 p-5 bg-[#050505]">
-              {/* Stats Row */}
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                {[
-                  { label: 'Admissions Today', value: '142', icon: Activity, trend: '+12%', positive: true },
-                  { label: 'Pending Reviews', value: '38', icon: Clock, trend: '-5%', positive: false },
-                  { label: 'Verified Docs', value: '1,204', icon: CheckSquare, trend: '+24%', positive: true },
-                  { label: 'Seat Occupancy', value: '86%', icon: Users, trend: '+2%', positive: true },
-                ].map((stat, i) => (
-                  <div key={i} className="group flex flex-col justify-between rounded-xl border border-white/5 bg-white/[0.02] p-3 transition-all duration-200 hover:-translate-y-1 hover:border-white/15 hover:bg-white/[0.04]">
-                    <div className="mb-2 flex items-center justify-between">
-                      <stat.icon size={14} className="text-white/30 transition-colors group-hover:text-white/60" />
-                      <span className={`text-[10px] font-bold ${stat.positive ? 'text-emerald-400/80' : 'text-red-400/80'}`}>{stat.trend}</span>
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="text-[10px] font-medium text-white/50">{stat.label}</span>
-                      <span className="font-display text-[18px] font-bold text-white">{stat.value}</span>
-                    </div>
-                  </div>
+          <div className="relative grid items-center gap-14 lg:grid-cols-[0.95fr_1.05fr]">
+            <div className="flex flex-col items-start gap-6">
+              <Reveal><span className="inline-flex items-center gap-2 rounded-chip bg-white/10 px-3.5 py-1.5 text-[12px] font-semibold text-white/80"><span className="h-1.5 w-1.5 rounded-full bg-gold" />For universities</span></Reveal>
+              <WordReveal id="uni-heading" className="text-display font-bold text-white" parts={['Built for universities, ', { text: 'not just students.', className: 'text-gold' }]} />
+              <Reveal delay={0.1}><p className="max-w-[46ch] text-[17px] leading-relaxed text-white/60">Manage admissions, review applications, verify documents and gain AI-powered insights — all from one modern dashboard.</p></Reveal>
+              <ul className="grid w-full gap-2.5 sm:grid-cols-2">
+                {features.map(({ icon: Icon, label }, i) => (
+                  <motion.li key={label} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 + i * 0.06, ease: EASE, duration: 0.6 }}
+                    className="flex items-center gap-3 rounded-2xl bg-white/[0.06] px-4 py-3 text-[14.5px] font-medium text-white/85">
+                    <Icon size={17} className="text-gold" />{label}
+                  </motion.li>
                 ))}
-              </div>
-
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                {/* AI Insights Widget */}
-                <div className="group flex flex-col rounded-xl border border-[#5B5FEF]/20 bg-gradient-to-b from-[#5B5FEF]/10 to-transparent p-4 sm:col-span-2 transition-all duration-200 hover:-translate-y-1 hover:border-[#5B5FEF]/40">
-                  <div className="mb-4 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Zap size={14} className="text-[#5B5FEF]" />
-                      <h4 className="text-[12px] font-bold text-white">AI Candidate Insights</h4>
-                    </div>
-                    <span className="text-[10px] text-white/40">Updated just now</span>
-                  </div>
-                  
-                  <div className="flex flex-col gap-3">
-                    {[
-                      { name: 'Computer Science', match: '98%', applicants: 245 },
-                      { name: 'Data Science & ML', match: '95%', applicants: 182 },
-                      { name: 'Electronics Eng.', match: '92%', applicants: 156 },
-                    ].map((prog, i) => (
-                      <div key={i} className="flex items-center justify-between rounded-lg border border-white/5 bg-black/40 px-3 py-2 transition-colors duration-200 hover:border-white/10 hover:bg-white/5">
-                        <div className="flex flex-col">
-                          <span className="text-[11px] font-bold text-white">{prog.name}</span>
-                          <span className="text-[10px] text-white/40">{prog.applicants} highly matched applicants</span>
-                        </div>
-                        <div className="flex items-center gap-1.5 rounded-full bg-[#5B5FEF]/20 px-2 py-0.5">
-                          <span className="text-[10px] font-bold text-[#818CF8]">{prog.match}</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Recent Activity */}
-                <div className="group flex flex-col rounded-xl border border-white/5 bg-white/[0.02] p-4 transition-all duration-200 hover:-translate-y-1 hover:border-white/15">
-                  <div className="mb-4 flex items-center justify-between">
-                    <h4 className="text-[12px] font-bold text-white">Recent Activity</h4>
-                  </div>
-                  <div className="flex flex-1 flex-col justify-between">
-                    {[
-                      { action: 'Document Verified', time: '2m ago' },
-                      { action: 'Offer Letter Sent', time: '15m ago' },
-                      { action: 'New Application', time: '1h ago' },
-                      { action: 'Fee Processed', time: '2h ago' },
-                    ].map((activity, i) => (
-                      <div key={i} className="flex items-center gap-3">
-                        <div className="relative flex h-2 w-2 shrink-0 items-center justify-center">
-                          <div className="absolute h-full w-full rounded-full bg-white/20" />
-                          <div className="h-1 w-1 rounded-full bg-white/60" />
-                        </div>
-                        <div className="flex flex-1 items-center justify-between">
-                          <span className="text-[11px] text-white/70">{activity.action}</span>
-                          <span className="text-[9px] text-white/30">{activity.time}</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
+              </ul>
+              <Reveal delay={0.2}>
+                <a href={UNI_URL} rel="noopener noreferrer" className="btn-gold group">
+                  Explore the university portal <ArrowUpRight size={17} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </a>
+              </Reveal>
             </div>
-          </motion.div>
-        </div>
 
+            <motion.div style={{ y: consoleY }} className="relative">
+              <div className="rounded-[26px] border border-white/10 bg-white/[0.06] p-4 backdrop-blur-xl sm:p-5">
+                <div className="mb-4 flex items-center justify-between">
+                  <div className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-coral" /><span className="h-2.5 w-2.5 rounded-full bg-gold" /><span className="h-2.5 w-2.5 rounded-full bg-mint" /><span className="ml-2 text-[12px] font-semibold uppercase tracking-wider text-white/45">Admin console</span></div>
+                  <span className="flex items-center gap-1.5 rounded-chip bg-mint/15 px-2.5 py-1 text-[11px] font-semibold text-mint"><span className="h-1.5 w-1.5 animate-pulse rounded-full bg-mint" />Live</span>
+                </div>
+                <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+                  {[['Admissions today', 142, ''], ['Pending reviews', 38, ''], ['Verified docs', 1204, ''], ['Seat occupancy', 86, '%']].map(([l, v, s]) => (
+                    <div key={l as string} className="rounded-2xl bg-white/[0.07] p-3">
+                      <div className="text-[10.5px] text-white/50">{l}</div>
+                      <div className="font-display text-[24px] font-bold text-white"><Counter to={v as number} suffix={s as string} /></div>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-3 grid gap-3 sm:grid-cols-[1.3fr_1fr]">
+                  <div className="rounded-2xl bg-white/[0.07] p-4">
+                    <div className="mb-3 flex items-center justify-between text-[12.5px]"><span className="flex items-center gap-1.5 font-semibold text-white"><Sparkles size={13} className="text-gold" />AI candidate insights</span><span className="text-white/40">just now</span></div>
+                    {[['Computer Science', '245 highly matched', 98], ['Data Science & ML', '162 highly matched', 95], ['Electronics Eng.', '156 highly matched', 92]].map(([p, s, m], i) => (
+                      <div key={p as string} className="mb-2.5 last:mb-0">
+                        <div className="mb-1 flex justify-between text-[12px]"><span className="font-medium text-white">{p}</span><span className="font-bold text-gold">{m}%</span></div>
+                        <div className="h-1.5 overflow-hidden rounded-full bg-white/10"><motion.div className="h-full rounded-full bg-gradient-to-r from-brand-2 to-gold" initial={{ width: 0 }} whileInView={{ width: `${m}%` }} viewport={{ once: true }} transition={{ duration: 1.2, delay: 0.2 + i * 0.12, ease: EASE }} /></div>
+                        <div className="mt-0.5 text-[10.5px] text-white/40">{s}</div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="rounded-2xl bg-white/[0.07] p-4">
+                    <div className="mb-3 text-[12.5px] font-semibold text-white">Applications / week</div>
+                    <div className="flex h-24 items-end gap-1.5">
+                      {[35, 52, 44, 70, 58, 86, 74].map((h, i) => (
+                        <motion.div key={i} className={`flex-1 rounded-t-md ${i === 5 ? 'bg-gold' : 'bg-white/20'}`} initial={{ height: 0 }} whileInView={{ height: `${h}%` }} viewport={{ once: true }} transition={{ duration: 0.9, delay: 0.1 + i * 0.06, ease: EASE }} />
+                      ))}
+                    </div>
+                    <div className="mt-3 flex flex-col gap-1.5 text-[11px] text-white/60">
+                      {['Document verified', 'Offer letter sent', 'Fee processed'].map((a) => <span key={a} className="flex items-center gap-1.5"><Check size={12} className="text-mint" />{a}</span>)}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
       </div>
     </section>
   )

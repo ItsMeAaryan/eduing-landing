@@ -1,182 +1,133 @@
 'use client'
+
 import { motion } from 'framer-motion'
-import { User, Activity, Sparkles, ShieldCheck, CheckCircle2, FileText, Check, Lock } from 'lucide-react'
+import { BadgeCheck, Bell, Check, FileText, Lock, ShieldCheck, Sparkles, UserRound } from 'lucide-react'
+import SectionHeader from '@/components/ui/SectionHeader'
+import Reveal from '@/components/ui/Reveal'
+import TiltCard from '@/components/ui/TiltCard'
+
+const EASE = [0.16, 1, 0.3, 1] as const
+
+function Tile({ children, className = '', delay = 0, dark = false }: { children: React.ReactNode; className?: string; delay?: number; dark?: boolean }) {
+  return (
+    <Reveal delay={delay} className={className}>
+      <TiltCard max={6} className="rounded-card">
+        <div className={`relative flex h-full flex-col overflow-hidden p-6 sm:p-7 ${dark ? 'card-night' : 'card'}`}>{children}</div>
+      </TiltCard>
+    </Reveal>
+  )
+}
+
+function TileHead({ icon: Icon, title, text, dark = false }: { icon: typeof Sparkles; title: string; text: string; dark?: boolean }) {
+  return (
+    <div className="mb-6 flex items-start gap-3">
+      <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl ${dark ? 'bg-white/10 text-gold' : 'bg-brand-soft text-brand'}`}><Icon size={19} /></span>
+      <div>
+        <h3 className={`text-[19px] font-bold tracking-tight ${dark ? 'text-white' : 'text-ink'}`}>{title}</h3>
+        <p className={`mt-1 text-[14px] leading-relaxed ${dark ? 'text-white/60' : 'text-ink/55'}`}>{text}</p>
+      </div>
+    </div>
+  )
+}
 
 export default function Features() {
   return (
-    <section id="features" className="relative overflow-hidden bg-bg px-6 py-24 lg:py-32" aria-labelledby="features-heading">
-      <div className="mx-auto flex max-w-[1200px] flex-col items-center gap-16 lg:flex-row lg:items-start lg:gap-24">
-        
-        {/* Left Column (40%) */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
-          viewport={{ once: true }}
-          className="flex flex-1 flex-col items-center text-center lg:max-w-[40%] lg:items-start lg:text-left"
-        >
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent/10 px-3 py-1">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent-lighter" />
-            <span className="text-[11px] font-bold uppercase tracking-[0.1em] text-accent-lighter">
-              Why Students Choose EDUING
-            </span>
-          </div>
+    <section className="section relative" id="features" aria-labelledby="features-heading">
+      <div className="container-x">
+        <SectionHeader
+          id="features-heading"
+          eyebrow="Why students choose EDUING"
+          title={['One Profile. Every University. ', { text: 'Zero Repetition.', className: 'text-gradient' }]}
+          subtitle="Build your academic profile once and use it to apply to hundreds of universities — without ever filling the same form twice."
+        />
 
-          <h2 id="features-heading" className="mb-6 font-display text-4xl font-extrabold leading-[1.15] tracking-[-0.02em] text-white lg:text-5xl">
-            One Profile.<br />
-            Every University.<br />
-            <span className="bg-gradient-to-br from-[#818CF8] via-[#5B5FEF] to-[#A78BFA] bg-clip-text text-transparent">Zero Repetition.</span>
-          </h2>
-
-          <p className="max-w-md text-base leading-relaxed text-white/50">
-            Build your comprehensive academic profile once, and use it to seamlessly apply to hundreds of top universities worldwide without ever filling out repetitive forms.
-          </p>
-        </motion.div>
-
-        {/* Right Column (60%) */}
-        <div className="relative flex w-full flex-1 justify-center lg:max-w-[60%] lg:justify-end">
-          {/* Background Glow */}
-          <div className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#5B5FEF]/10 blur-[100px]" aria-hidden="true" />
-          
-          <div className="grid w-full max-w-[600px] grid-cols-1 gap-5 sm:grid-cols-2">
-            
-            {/* Column 1 - Staggered */}
-            <div className="flex flex-col gap-5 sm:mt-10">
-              {/* Card 1: Single Profile */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.24, delay: 0.1 }}
-                viewport={{ once: true }}
-                className="group relative flex flex-col overflow-hidden rounded-[24px] border border-white/5 bg-white/[0.02] p-5 shadow-sm backdrop-blur-xl transition-all duration-200 hover:-translate-y-1 hover:border-white/15 hover:bg-white/[0.04] hover:shadow-[0_8px_32px_-8px_rgba(255,255,255,0.05)]"
-              >
-                <div className="mb-4 flex items-center justify-between">
-                  <h3 className="font-display text-[14px] font-bold text-white">Single Profile</h3>
-                  <User size={16} className="text-white/30 transition-colors duration-200 group-hover:text-[#5B5FEF]" />
+        <div className="mt-16 grid auto-rows-[minmax(0,auto)] gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {/* Single profile */}
+          <Tile className="md:col-span-2 lg:row-span-2">
+            <TileHead icon={UserRound} title="Single profile" text="Marks, entrance scores and documents — entered once, reused for every application." />
+            <div className="relative flex flex-1 flex-col justify-center rounded-[22px] bg-surface-2 p-5">
+              <div className="flex items-center gap-4">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-brand to-brand-2 text-xl font-bold text-white ring-4 ring-gold-soft">PS</div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-1.5 text-[17px] font-bold text-ink">Priya Singh <BadgeCheck size={17} className="text-mint" /></div>
+                  <div className="text-[13px] text-ink/55">B.Tech aspirant · Lucknow</div>
                 </div>
-                <div className="flex flex-col gap-3 rounded-[16px] border border-white/5 bg-black/20 p-4">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#818CF8] to-[#5B5FEF] text-[13px] font-bold text-white shadow-inner">
-                      JS
-                    </div>
-                    <div className="flex flex-col gap-0.5">
-                      <div className="text-[13px] font-bold text-white">John Smith</div>
-                      <div className="text-[10px] font-medium text-white/50">B.Tech Computer Science</div>
-                    </div>
+              </div>
+              <div className="mt-5 grid grid-cols-3 gap-2">
+                {[['12th', '94.2%'], ['JEE Main', '98.1 %ile'], ['CUET', '712']].map(([l, v]) => (
+                  <div key={l} className="rounded-2xl bg-surface p-3 text-center shadow-card">
+                    <div className="text-[11px] text-ink/45">{l}</div>
+                    <div className="font-display text-[17px] font-bold text-ink">{v}</div>
                   </div>
-                  <div className="flex gap-2">
-                    <div className="flex items-center gap-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2 py-1 text-[9px] font-bold text-emerald-400">
-                      <CheckCircle2 size={10} /> Verified
-                    </div>
-                    <div className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2 py-1 text-[9px] font-bold text-white/70">
-                      <FileText size={10} /> 5 Docs
-                    </div>
-                  </div>
+                ))}
+              </div>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {['Marksheets', 'Aadhaar', 'Photo', 'Scorecards', 'Certificates'].map((d, i) => (
+                  <motion.span
+                    key={d}
+                    initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
+                    transition={{ delay: 0.3 + i * 0.12, ease: EASE, duration: 0.5 }}
+                    className="flex items-center gap-1.5 rounded-chip bg-surface px-3 py-1.5 text-[12.5px] font-medium text-ink/70 shadow-card"
+                  >
+                    <FileText size={13} className="text-brand" />{d}<Check size={13} className="text-mint" />
+                  </motion.span>
+                ))}
+              </div>
+              <div className="mt-5">
+                <div className="mb-1.5 flex justify-between text-[12px]"><span className="text-ink/55">Profile complete</span><strong className="text-ink">92%</strong></div>
+                <div className="h-2.5 overflow-hidden rounded-full bg-ink/10">
+                  <motion.div className="h-full rounded-full bg-gradient-to-r from-brand via-brand-2 to-gold" initial={{ width: 0 }} whileInView={{ width: '92%' }} viewport={{ once: true }} transition={{ duration: 1.6, ease: EASE }} />
                 </div>
-              </motion.div>
-
-              {/* Card 2: AI Recommendations */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.24, delay: 0.2 }}
-                viewport={{ once: true }}
-                className="group relative flex flex-col overflow-hidden rounded-[24px] border border-white/5 bg-white/[0.02] p-5 shadow-sm backdrop-blur-xl transition-all duration-200 hover:-translate-y-1 hover:border-white/15 hover:bg-white/[0.04] hover:shadow-[0_8px_32px_-8px_rgba(255,255,255,0.05)]"
-              >
-                <div className="mb-4 flex items-center justify-between">
-                  <h3 className="font-display text-[14px] font-bold text-white">AI Recommendations</h3>
-                  <Sparkles size={16} className="text-white/30 transition-colors duration-200 group-hover:text-[#F59E0B]" />
-                </div>
-                <div className="flex flex-col gap-2 rounded-[16px] border border-white/5 bg-black/20 p-3">
-                  <div className="flex items-center justify-between rounded-[12px] border border-white/5 bg-white/5 p-2.5 transition-colors duration-200 group-hover:bg-white/10">
-                    <div className="flex items-center gap-2">
-                      <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-white text-[9px] font-extrabold text-[#1d4ed8]">BITS</div>
-                      <div className="text-[11px] font-bold text-white">BITS Pilani</div>
-                    </div>
-                    <div className="flex items-center gap-1 rounded-full bg-emerald-500/20 px-2 py-0.5 text-[9px] font-bold text-emerald-400">
-                      98% Match
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between rounded-[12px] border border-white/5 bg-white/5 p-2.5 transition-colors duration-200 group-hover:bg-white/10">
-                    <div className="flex items-center gap-2">
-                      <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-white text-[9px] font-extrabold text-[#b91c1c]">SRM</div>
-                      <div className="text-[11px] font-bold text-white">SRM University</div>
-                    </div>
-                    <div className="flex items-center gap-1 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[9px] font-bold text-emerald-400/80">
-                      92% Match
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
+              </div>
             </div>
+          </Tile>
 
-            {/* Column 2 */}
-            <div className="flex flex-col gap-5 sm:mt-0">
-              {/* Card 3: Real-Time Tracking */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.24, delay: 0.15 }}
-                viewport={{ once: true }}
-                className="group relative flex flex-col overflow-hidden rounded-[24px] border border-white/5 bg-white/[0.02] p-5 shadow-sm backdrop-blur-xl transition-all duration-200 hover:-translate-y-1 hover:border-white/15 hover:bg-white/[0.04] hover:shadow-[0_8px_32px_-8px_rgba(255,255,255,0.05)]"
-              >
-                <div className="mb-4 flex items-center justify-between">
-                  <h3 className="font-display text-[14px] font-bold text-white">Real-Time Tracking</h3>
-                  <Activity size={16} className="text-white/30 transition-colors duration-200 group-hover:text-emerald-400" />
-                </div>
-                <div className="relative flex flex-col gap-4 rounded-[16px] border border-white/5 bg-black/20 p-5">
-                  <div className="absolute bottom-6 left-[29px] top-6 w-[2px] bg-white/10" />
-                  
-                  <div className="relative z-10 flex items-start gap-4">
-                    <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-emerald-500/30 bg-emerald-500/20 text-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.2)]">
-                      <Check size={10} strokeWidth={3} />
-                    </div>
-                    <div className="flex flex-col">
-                      <div className="text-[12px] font-bold text-white">Application Submitted</div>
-                      <div className="text-[10px] text-white/40">Oct 24, 10:30 AM</div>
-                    </div>
-                  </div>
-                  
-                  <div className="relative z-10 flex items-start gap-4">
-                    <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-orange-500/30 bg-orange-500/20">
-                      <div className="h-1.5 w-1.5 rounded-full bg-orange-400" />
-                    </div>
-                    <div className="flex flex-col">
-                      <div className="text-[12px] font-bold text-white">Under Review</div>
-                      <div className="text-[10px] text-orange-400/80">Pending decision</div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
+          {/* Real-time tracking */}
+          <Tile delay={0.08}>
+            <TileHead icon={Bell} title="Real-time tracking" text="Know the moment anything changes." />
+            <ol className="mt-auto flex flex-col gap-3">
+              {[['Application submitted', 'Oct 24, 10:30 AM', 'done'], ['Documents verified', 'Oct 25', 'done'], ['Under review', 'Pending decision', 'now']].map(([t, s, st], i) => (
+                <motion.li key={t} initial={{ opacity: 0, x: -14 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 + i * 0.18, ease: EASE, duration: 0.6 }} className="flex items-center gap-3">
+                  <span className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${st === 'done' ? 'bg-mint text-white' : 'bg-gold text-[#17142B]'}`}>
+                    {st === 'done' ? <Check size={14} /> : <span className="h-2 w-2 animate-ping rounded-full bg-[#17142B]" />}
+                  </span>
+                  <div className="text-[13px]"><div className="font-semibold text-ink">{t}</div><div className="text-ink/45">{s}</div></div>
+                </motion.li>
+              ))}
+            </ol>
+          </Tile>
 
-              {/* Card 4: Secure Verification */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.24, delay: 0.25 }}
-                viewport={{ once: true }}
-                className="group relative flex flex-col overflow-hidden rounded-[24px] border border-white/5 bg-white/[0.02] p-5 shadow-sm backdrop-blur-xl transition-all duration-200 hover:-translate-y-1 hover:border-white/15 hover:bg-white/[0.04] hover:shadow-[0_8px_32px_-8px_rgba(255,255,255,0.05)]"
+          {/* Secure */}
+          <Tile delay={0.16}>
+            <TileHead icon={ShieldCheck} title="Secure verification" text="Bank-grade encryption for every document." />
+            <div className="relative mx-auto mt-auto flex h-36 w-36 items-center justify-center">
+              <span className="absolute inset-0 animate-spin-slow rounded-full border-2 border-dashed border-brand/30" />
+              <span className="absolute inset-4 rounded-full bg-brand-soft" />
+              <motion.span
+                initial={{ scale: 0.6, rotate: -20 }} whileInView={{ scale: 1, rotate: 0 }} viewport={{ once: true }}
+                transition={{ type: 'spring', stiffness: 180, damping: 12, delay: 0.3 }}
+                className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-brand text-white shadow-glow"
               >
-                <div className="mb-4 flex items-center justify-between">
-                  <h3 className="font-display text-[14px] font-bold text-white">Secure Verification</h3>
-                  <ShieldCheck size={16} className="text-white/30 transition-colors duration-200 group-hover:text-cyan-400" />
-                </div>
-                <div className="flex flex-1 flex-col items-center justify-center gap-4 rounded-[16px] border border-white/5 bg-black/20 p-6 py-8">
-                  <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl border border-cyan-500/30 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 shadow-[0_0_16px_rgba(6,182,212,0.15)] transition-transform duration-200 group-hover:scale-110 group-hover:shadow-[0_0_24px_rgba(6,182,212,0.25)]">
-                    <Lock size={24} className="text-cyan-400" />
-                    <div className="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full border border-white/10 bg-[#16161A]">
-                      <Check size={12} className="text-emerald-400" strokeWidth={3} />
-                    </div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-[13px] font-bold text-white">End-to-End Encrypted</div>
-                    <div className="mt-1 text-[11px] text-white/50">Bank-grade data security</div>
-                  </div>
-                </div>
-              </motion.div>
+                <Lock size={26} />
+                <span className="absolute -bottom-1.5 -right-1.5 flex h-6 w-6 items-center justify-center rounded-full border-2 border-surface bg-mint"><Check size={12} /></span>
+              </motion.span>
             </div>
+          </Tile>
 
-          </div>
+          {/* AI recommendations */}
+          <Tile className="md:col-span-2" delay={0.1} dark>
+            <div aria-hidden className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-brand/50 blur-3xl" />
+            <TileHead dark icon={Sparkles} title="AI recommendations" text="Programs ranked by your real chance of admission — not just by rank." />
+            <div className="relative mt-auto grid gap-2.5 sm:grid-cols-2">
+              {[['BITS Pilani', 'Computer Science', 98], ['SRM University', 'AI & ML', 92], ['Manipal MAHE', 'Data Science', 90], ['VIT Vellore', 'Cyber Security', 87]].map(([u, p, m], i) => (
+                <motion.div key={u as string} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 + i * 0.1, ease: EASE, duration: 0.6 }} className="flex items-center gap-3 rounded-2xl bg-white/[0.07] p-3 backdrop-blur">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white text-[10px] font-bold text-[#17142B]">{(u as string).slice(0, 4).toUpperCase()}</span>
+                  <div className="flex-1 text-[13px]"><div className="font-semibold">{u}</div><div className="text-white/50">{p}</div></div>
+                  <span className="rounded-chip bg-gold px-2 py-0.5 text-[11.5px] font-bold text-[#17142B]">{m}%</span>
+                </motion.div>
+              ))}
+            </div>
+          </Tile>
         </div>
       </div>
     </section>
